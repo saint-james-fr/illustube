@@ -3,9 +3,49 @@
   import Konva from "konva";
   import uploadedImage from "assets/img/CHUWANAGA006_COVER-FRONT.png";
   import { onMount } from "svelte";
+  import { settingsStore, stageConfigStore } from "stores";
 
-  const minBlurValue = 0;
-  const maxBlurValue = 25;
+  const imageSettingsModel = {
+    minBlurValue: 0,
+    maxBlurValue: 25,
+    minBrightnessValue: 0,
+    maxBrightnessValue: 100,
+    minContrastValue: 0,
+    maxContrastValue: 2,
+    minGrayscaleValue: 0,
+    maxGrayscaleValue: 1,
+    minHueRotateValue: 0,
+    maxHueRotateValue: 360,
+    minInvertValue: 0,
+    maxInvertValue: 1,
+    minOpacityValue: 0,
+    maxOpacityValue: 1,
+    minSaturateValue: 0,
+    maxSaturateValue: 2,
+    minNoiseValue: 0,
+    maxNoiseValue: 0.3,
+  };
+
+  const {
+    minBlurValue,
+    maxBlurValue,
+    minBrightnessValue,
+    maxBrightnessValue,
+    minContrastValue,
+    maxContrastValue,
+    minGrayscaleValue,
+    maxGrayscaleValue,
+    minHueRotateValue,
+    maxHueRotateValue,
+    minInvertValue,
+    maxInvertValue,
+    minNoiseValue,
+    maxNoiseValue,
+    minOpacityValue,
+    maxOpacityValue,
+    minSaturateValue,
+    maxSaturateValue,
+  } = imageSettingsModel;
 
   const transformer = new Konva.Transformer({
     rotationSnaps: [0, 90, 180, 270],
@@ -15,47 +55,153 @@
     rotateEnabled: true,
     rotationSnapTolerance: 5,
     borderEnabled: true,
-    borderStroke: "black",
+    borderStroke: "#fffaf2",
     borderStrokeWidth: 3,
-    borderDash: [2, 2],
+    borderDash: [1, 1],
     enabledAnchors: ["top-left", "top-right", "bottom-left", "bottom-right"],
-    anchorFill: "white",
+    anchorFill: "#fffaf2",
     anchorStrokeWidth: 2,
     anchorCornerRadius: 10,
-    anchorStroke: "blue",
+    anchorStroke: "#1e90ff",
     anchorSize: 10,
     centeredScaling: true,
     flipEnabled: false,
   });
 
   let canvasContainer: HTMLDivElement;
-  let initStageConfig: StageConfig;
-  let blurValue = 0;
   let img: Konva.Image;
   let stage: Konva.Stage;
   let backgroundLayer: Konva.Layer;
-  let upperLayer: Konva.Layer;
   let canvasContainerScalingRatio: number;
   let innerWidth: number;
   let aspectRatio: number;
   let backgroundImage: HTMLImageElement;
-  let automaticMode: boolean = true;
+  let blurActivated: boolean = false;
+
+  let blurValue = 0;
 
   $: {
-    applyBlur(img, Konva.Filters.Blur, blurValue);
+    applyBlur(img, Konva.Filters.Blur);
+    applyBrightness(
+      img,
+      Konva.Filters.Brighten,
+      $settingsStore.imageSettings.brightnessValue
+    );
+    applyContrast(
+      img,
+      Konva.Filters.Contrast,
+      $settingsStore.imageSettings.contrastValue
+    );
+    applyGrayscale(
+      img,
+      Konva.Filters.Grayscale,
+      $settingsStore.imageSettings.grayscaleValue
+    );
+    applyHueRotate(
+      img,
+      Konva.Filters.HSL,
+      $settingsStore.imageSettings.hueRotateValue
+    );
+    applyInvert(img, Konva.Filters.Invert);
+    applyNoise(
+      img,
+      Konva.Filters.Noise,
+      $settingsStore.imageSettings.noiseValue
+    );
     canvasContainerScalingRatio = innerWidth / 1280;
+    if (canvasContainerScalingRatio > 1) {
+      canvasContainerScalingRatio = 1;
+    }
   }
 
   // IMAGE MODIFICATIONS
   const applyBlur = (
     node: Konva.Node,
     filter: typeof Konva.Filters.Blur,
+  ) => {
+    if (!node) return;
+    node.cache();
+    node.filters([filter]);
+    node.blurRadius($settingsStore.imageSettings.blurValue);
+    // if (!blurActivated) {
+    //   const previousScaleX = node.scaleX();
+    //   const previousScaleY = node.scaleY();
+    //   node.scaleX(1.1 * previousScaleX);
+    //   node.scaleY(1.1 * previousScaleY);
+    //   blurActivated = true;
+    // }
+    console.log(blurActivated)
+    console.log(node.scaleX())
+    console.log(node)
+    node.getLayer()?.batchDraw();
+  };
+
+  const applyBrightness = (
+    node: Konva.Node,
+    filter: typeof Konva.Filters.Brighten,
     amount: number
   ) => {
     if (!node) return;
     node.cache();
     node.filters([filter]);
-    node.blurRadius(amount);
+    node.brightness(amount);
+    node.getLayer()?.batchDraw();
+  };
+
+  const applyContrast = (
+    node: Konva.Node,
+    filter: typeof Konva.Filters.Contrast,
+    amount: number
+  ) => {
+    if (!node) return;
+    node.cache();
+    node.filters([filter]);
+    node.contrast(amount);
+    node.getLayer()?.batchDraw();
+  };
+
+  const applyGrayscale = (
+    node: Konva.Node,
+    filter: typeof Konva.Filters.Grayscale,
+    amount: number
+  ) => {
+    if (!node) return;
+    node.cache();
+    node.filters([filter]);
+    node.getLayer()?.batchDraw();
+  };
+
+  const applyHueRotate = (
+    node: Konva.Node,
+    filter: typeof Konva.Filters.HSL,
+    amount: number
+  ) => {
+    if (!node) return;
+    node.cache();
+    node.filters([filter]);
+    node.hue(amount);
+    node.getLayer()?.batchDraw();
+  };
+
+  const applyInvert = (
+    node: Konva.Node,
+    filter: typeof Konva.Filters.Invert
+  ) => {
+    if (!node) return;
+    node.cache();
+    node.filters([filter]);
+    node.getLayer()?.batchDraw();
+  };
+
+  const applyNoise = (
+    node: Konva.Node,
+    filter: typeof Konva.Filters.Noise,
+    amount: number
+  ) => {
+    if (!node) return;
+    node.cache();
+    node.filters([filter]);
+    node.noise(amount);
     node.getLayer()?.batchDraw();
   };
 
@@ -64,7 +210,7 @@
   const adjustImagePosition = (img: Konva.Image, delta: number) => {
     if (img === undefined) return;
     const oldScale = img.scaleX();
-    const scaleBy = delta * 0.001;
+    const scaleBy = -1 * delta * 0.002;
     let newScale = oldScale + scaleBy;
     newScale = Math.max(newScale, 0.1);
     const oldPos = {
@@ -134,17 +280,17 @@
   };
 
   transformer.on("transformstart", () => {
-    transformer.anchorFill("blue");
+    transformer.anchorFill("#1e90ff");
   });
   transformer.on("transformend", () => {
-    transformer.anchorFill("white");
+    transformer.anchorFill("#fffaf2");
   });
 
   transformer.on("dragstart", () => {
-    transformer.anchorFill("blue");
+    transformer.anchorFill("#1e90ff");
   });
   transformer.on("dragend", () => {
-    transformer.anchorFill("white");
+    transformer.anchorFill("#fffaf2");
   });
 
   const calculateImageDimensions = () => {
@@ -153,7 +299,7 @@
     aspectRatio = backgroundImage.width / backgroundImage.height;
     let calculatedWidth, calculatedHeight;
 
-    if (automaticMode) {
+    if ($settingsStore.automaticMode) {
       calculatedWidth = stage.width();
       calculatedHeight = stage.width() / aspectRatio;
     } else {
@@ -167,7 +313,7 @@
   const calculateImagePosition = (width: number, height: number) => {
     let calculatedXPosition, calculatedYPosition;
 
-    if (automaticMode) {
+    if ($settingsStore.automaticMode) {
       calculatedXPosition = 0;
       calculatedYPosition = (stage.height() / 2) * -1;
     } else {
@@ -234,12 +380,12 @@
   };
 
   onMount(() => {
-    initStageConfig = {
+    $stageConfigStore = {
       container: canvasContainer,
       width: canvasContainer.clientWidth,
       height: canvasContainer.clientHeight,
     };
-    createStage(initStageConfig);
+    createStage($stageConfigStore);
     // TODO : add a real input to upload image
     importImage(uploadedImage);
   });
@@ -254,12 +400,113 @@
     style="transform: scale({canvasContainerScalingRatio})"
   ></div>
   <div class="settings">
-    <input
-      type="range"
-      min={minBlurValue}
-      max={maxBlurValue}
-      bind:value={blurValue}
-    />
+    <form>
+      <div class="line">
+        <label for="automaticMode">Automatic</label>
+        <input
+          type="checkbox"
+          id="automaticMode"
+          bind:checked={$settingsStore.automaticMode}
+        />
+      </div>
+      <div class="line">
+        <label for="blurValue">Blur</label>
+        <input
+          type="range"
+          id="blurValue"
+          min={minBlurValue}
+          max={maxBlurValue}
+          bind:value={$settingsStore.imageSettings.blurValue}
+        />
+      </div>
+      <div class="line">
+        <label for="brightnessValue">Brightness</label>
+        <input
+          type="range"
+          id="brightnessValue"
+          min={minBrightnessValue}
+          max={maxBrightnessValue}
+          bind:value={$settingsStore.imageSettings.brightnessValue}
+        />
+      </div>
+
+      <div class="line">
+        <label for="contrastValue">Contrast</label>
+        <input
+          type="range"
+          id="contrastValue"
+          min={minContrastValue}
+          max={maxContrastValue}
+          bind:value={$settingsStore.imageSettings.contrastValue}
+        />
+      </div>
+
+      <div class="line">
+        <label for="grayscaleValue">Grayscale</label>
+        <input
+          type="range"
+          id="grayscaleValue"
+          min={minGrayscaleValue}
+          max={maxGrayscaleValue}
+          bind:value={$settingsStore.imageSettings.grayscaleValue}
+        />
+      </div>
+
+      <div class="line">
+        <label for="hueRotateValue">Hue Rotate</label>
+        <input
+          type="range"
+          id="hueRotateValue"
+          min={minHueRotateValue}
+          max={maxHueRotateValue}
+          bind:value={$settingsStore.imageSettings.hueRotateValue}
+        />
+      </div>
+
+      <div class="line">
+        <label for="invertValue">Invert</label>
+        <input
+          type="range"
+          id="invertValue"
+          min={minInvertValue}
+          max={maxInvertValue}
+          bind:value={$settingsStore.imageSettings.invertValue}
+        />
+      </div>
+
+      <div class="line">
+        <label for="opacityValue">Opacity</label>
+        <input
+          type="range"
+          id="opacityValue"
+          min={minOpacityValue}
+          max={maxOpacityValue}
+          bind:value={$settingsStore.imageSettings.opacityValue}
+        />
+      </div>
+
+      <div class="line">
+        <label for="saturateValue">Saturate</label>
+        <input
+          type="range"
+          id="saturateValue"
+          min={minSaturateValue}
+          max={maxSaturateValue}
+          bind:value={$settingsStore.imageSettings.saturateValue}
+        />
+      </div>
+      <div class="line">
+        <label for="noiseValue">Noise</label>
+        <input
+          type="range"
+          id="noiseValue"
+          min={minNoiseValue}
+          max={maxNoiseValue}
+          step="0.01"
+          bind:value={$settingsStore.imageSettings.noiseValue}
+        />
+      </div>
+    </form>
     <button on:click={exportImage}>Download</button>
   </div>
 </div>
@@ -271,14 +518,13 @@
     padding-inline: 2rem;
     display: grid;
     grid-template-columns: 4fr 1fr;
-    background-color: gray;
+    background-color: $workzone-background;
   }
 
   #canvasContainer {
     width: 100%;
-    border: 1px blue solid;
     aspect-ratio: 16 / 9;
-    background-color: #eee;
+    background-color: $black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -292,29 +538,41 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: pink;
+    background-color: $workzone-settings;
 
     input[type="range"] {
       width: 100%;
-      height: 30px;
-      background-color: #d7dcdf;
+      height: 20px;
+      background-color: $workzone-settings-button;
       border: none;
       -webkit-appearance: none;
-      border-radius: 5px;
+      border-radius: 1px;
       outline: none;
       padding: 0;
-      margin: 7px;
+      cursor: pointer;
     }
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 17px;
-      height: 33px;
+      width: 8px;
+      height: 20px;
       border: none;
-      border-radius: 2px;
-      background: #3498db;
+      border-radius: 1px;
+      background: $workzone-border;
       cursor: pointer;
       transition: background 0.15s ease-in-out;
+    }
+
+    .line {
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-bottom: 1rem;
+
+      & > label {
+        width: 100%;
+      }
     }
   }
 </style>

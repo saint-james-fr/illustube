@@ -1,0 +1,28 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  font-size: 16px;
+  background-color: $workzone-background;
+  color: $white;
+  overflow-x: hidden;
+}
+
+button {
+  all:unset;
+  font-family: sans-serif;
+  font-size: 0.6rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  border: 1px solid $workzone-settings-button;
+  text-transform: uppercase;
+  background-color: $workzone-background;
+  text-align:center;
+  color: $white;
+
+  &:hover {
+    background-color: $workzone-settings-button;
+  }
+}
