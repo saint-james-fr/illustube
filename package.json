@@ -29,6 +29,7 @@
   "dependencies": {
     "@zerodevx/svelte-toast": "^0.9.5",
     "ismobilejs": "^1.1.1",
-    "konva": "^9.2.3"
+    "konva": "^9.2.3",
+    "svelte-konva": "^0.3.1"
   }
 }
