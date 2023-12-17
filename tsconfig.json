@@ -8,6 +8,7 @@
       "assets/*": ["./src/assets/*"],
       "config/*": ["./src/config/*"]
     },
+    "lib": ["ESNext", "DOM"],
 
     "target": "ESNext",
     "useDefineForClassFields": true,
