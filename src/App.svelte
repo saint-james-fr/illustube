@@ -5,7 +5,6 @@
   import { onMount } from "svelte";
   import { settingsStore, stageConfigStore } from "stores";
   import Settings from "components/Settings/Settings.svelte";
-  import type { Filter } from "konva/lib/Node";
 
   const transformer = new Konva.Transformer({
     rotationSnaps: [0, 90, 180, 270],
@@ -37,85 +36,8 @@
   let aspectRatio: number;
   let backgroundImage: HTMLImageElement;
 
-  const applyFilters = (node: Konva.Node, filters: Filter[], values: any[]) => {
-    if (!node) return;
-    node.filters(filters);
-
-    // Appliquer les valeurs pour chaque filtre
-    for (let i = 0; i < filters.length; i++) {
-      const filter = filters[i];
-      const value = values[i];
-      switch (filter) {
-        case Konva.Filters.Blur:
-          node.blurRadius(value);
-          break;
-        case Konva.Filters.Brighten:
-          node.brightness(value);
-          break;
-        case Konva.Filters.Contrast:
-          node.contrast(value);
-          break;
-        case Konva.Filters.HSL:
-          node.hue(value);
-          break;
-        case Konva.Filters.Noise:
-          node.noise(value);
-          break;
-        default:
-          break;
-      }
-    }
-    node.cache();
-
-    node.getLayer()?.batchDraw();
-  };
-
-  const applyFilterWithoutValue = (
-    filters: FilterType[],
-    filter: FilterType,
-    values: (number | null)[],
-    value = null
-  ) => {
-    if ($settingsStore.imageSettings.invertValue) {
-      filters.push(filter);
-      values.push(value);
-    } else {
-      let index = filters.indexOf(filter);
-      filters.splice(index, 1);
-      values.splice(index, 1);
-    }
-  };
 
   $: {
-    const filters = [
-      Konva.Filters.Blur,
-      Konva.Filters.Brighten,
-      Konva.Filters.Contrast,
-      Konva.Filters.HSL,
-      Konva.Filters.Noise,
-    ];
-    const values = [
-      $settingsStore.imageSettings.blurValue,
-      $settingsStore.imageSettings.brightnessValue,
-      $settingsStore.imageSettings.contrastValue,
-      $settingsStore.imageSettings.hueRotateValue,
-      $settingsStore.imageSettings.noiseValue,
-    ] as (number | null)[];
-
-    // Ajouter le filtre Invert si invertValue est vrai
-    if ($settingsStore.imageSettings.invertValue) {
-      filters.push(Konva.Filters.Invert);
-      values.push(null);
-    } else {
-      let index = filters.indexOf(Konva.Filters.Invert);
-      filters.splice(index, 1);
-      values.splice(index, 1);
-    }
-
-    applyFilters(img, filters, values);
-    applyFilterWithoutValue(filters, Konva.Filters.Invert, values);
-    if (img) img.opacity($settingsStore.imageSettings.opacityValue);
-
     canvasContainerScalingRatio = innerWidth / 1280;
     if (canvasContainerScalingRatio > 1) {
       canvasContainerScalingRatio = 1;
