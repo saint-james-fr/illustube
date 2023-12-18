@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settingsStore, initialImageSettings2 } from "stores";
+  import { settingsStore } from "stores";
   import { exportImage } from "lib/io";
   import type { Filter } from "konva/lib/Node";
 
