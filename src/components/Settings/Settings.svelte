@@ -1,7 +1,6 @@
 <script lang="ts">
   import { settingsStore } from "stores";
   import { exportImage } from "lib/io";
-  import type { Filter } from "konva/lib/Node";
 
   import Konva from "konva";
   import { onMount } from "svelte";
@@ -9,129 +8,22 @@
   export let stage: Konva.Stage;
   export let img: Konva.Image;
 
-  const imageSettingsModel = {
-    minBlurValue: 0,
-    maxBlurValue: 25,
-    minBrightnessValue: -1,
-    maxBrightnessValue: 1,
-    minContrastValue: -70,
-    maxContrastValue: 70,
-    minHueRotateValue: -180,
-    maxHueRotateValue: 180,
-    minOpacityValue: 0,
-    maxOpacityValue: 1,
-    minNoiseValue: 0,
-    maxNoiseValue: 0.3,
-    minKaleidoscopeValue: 0,
-    maxKaleidoscopeValue: 20,
-    minPixelateValue: 1,
-    maxPixelateValue: 60,
-  };
-
   const {
-    minBlurValue,
-    maxBlurValue,
-    minBrightnessValue,
-    maxBrightnessValue,
-    minContrastValue,
-    maxContrastValue,
-    minHueRotateValue,
-    maxHueRotateValue,
-    minNoiseValue,
-    maxNoiseValue,
-    minOpacityValue,
-    maxOpacityValue,
-    minKaleidoscopeValue,
-    maxKaleidoscopeValue,
-    minPixelateValue,
-    maxPixelateValue,
-  } = imageSettingsModel;
-
-  const applyFilter = (node: Konva.Node, filter: Filter, value: any) => {
-    if (!node) return;
-    console.log(img)
-    // check if filter already applied in node.filters() else add it
-    const filters = node.filters() || [];
-    if (filters.length === 0) {
-      node.cache();
-    }
-    const index = filters.indexOf(filter);
-    if (index === -1) {
-      filters.push(filter);
-    }
-    console.log("filters", filters);
-    switch (filter) {
-      case Konva.Filters.Blur:
-        node.blurRadius(value);
-        console.log(value);
-        break;
-      // case Konva.Filters.Brighten:
-      //   node.brightness(value);
-      //   break;
-      // case Konva.Filters.Contrast:
-      //   node.contrast(value);
-      //   break;
-      // case Konva.Filters.HSL:
-      //   node.hue(value);
-      //   break;
-      // case Konva.Filters.Noise:
-      //   node.noise(value);
-      //   break;
-      // case Konva.Filters.Pixelate:
-      //   node.pixelSize(value);
-      //   break;
-      default:
-        break;
-    }
-
-    node.getLayer()?.batchDraw();
-  };
-
-  $: {
-    if (img) {
-      // applyFilter(
-      //   img,
-      //   Konva.Filters.Blur,
-      //   $settingsStore.imageSettings.blurValue
-      // );
-      // applyFilter(
-      //   img,
-      //   Konva.Filters.Brighten,
-      //   $settingsStore.imageSettings.brightnessValue
-      // );
-      // applyFilter(
-      //   img,
-      //   Konva.Filters.Contrast,
-      //   $settingsStore.imageSettings.contrastValue
-      // );
-      // applyFilter(
-      //   img,
-      //   Konva.Filters.HSL,
-      //   $settingsStore.imageSettings.hueRotateValue
-      // );
-      // applyFilter(
-      //   img,
-      //   Konva.Filters.Noise,
-      //   $settingsStore.imageSettings.noiseValue
-      // );
-      // applyFilter(
-      //   img,
-      //   Konva.Filters.Pixelate,
-      //   $settingsStore.imageSettings.pixelateValue
-      // );
-      img.opacity($settingsStore.imageSettings.opacityValue);
-    }
-  }
-
-  const handleDoubleClick = (key: keyof ImageSettings) => {
-    // console.log("double click", initialImageSettings2);
-    // const initialValue = initialImageSettings2[
-    //   key
-    // ] as number | boolean;
-    // $settingsStore.imageSettings[key] = initialValue;
-  };
-
-  onMount(() => {});
+    minBlurValue = 0,
+    maxBlurValue = 25,
+    minBrightnessValue = -1,
+    maxBrightnessValue = 1,
+    minContrastValue = -70,
+    maxContrastValue = 70,
+    minHueRotateValue = -180,
+    maxHueRotateValue = 180,
+    minOpacityValue = 0,
+    maxOpacityValue = 1,
+    minNoiseValue = 0,
+    maxNoiseValue = 0.3,
+    minPixelateValue = 1,
+    maxPixelateValue = 60,
+  } = {};
 </script>
 
 <div class="settings">
@@ -190,15 +82,6 @@
     </div>
 
     <div class="line">
-      <label for="invertValue">Invert</label>
-      <input
-        type="checkbox"
-        id="invertValue"
-        bind:checked={$settingsStore.imageSettings.invertValue}
-      />
-    </div>
-
-    <div class="line">
       <label for="opacityValue">Opacity</label>
       <input
         type="range"
@@ -230,17 +113,6 @@
         max={maxNoiseValue}
         step="0.01"
         bind:value={$settingsStore.imageSettings.noiseValue}
-      />
-    </div>
-    <div class="line">
-      <label for="kaleidoscopeValue">Kaleidoscope</label>
-      <input
-        type="range"
-        id="kaleidoscopeValue"
-        min={minKaleidoscopeValue}
-        max={maxKaleidoscopeValue}
-        step="0.01"
-        bind:value={$settingsStore.imageSettings.kaleidoscopeValue}
       />
     </div>
   </form>
