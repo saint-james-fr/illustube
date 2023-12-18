@@ -49,34 +49,37 @@
 
   const applyFilter = (node: Konva.Node, filter: Filter, value: any) => {
     if (!node) return;
-    node.cache();
+    console.log(img)
     // check if filter already applied in node.filters() else add it
     const filters = node.filters() || [];
+    if (filters.length === 0) {
+      node.cache();
+    }
     const index = filters.indexOf(filter);
     if (index === -1) {
       filters.push(filter);
-    } else {
-      filters[index] = filter;
     }
+    console.log("filters", filters);
     switch (filter) {
       case Konva.Filters.Blur:
         node.blurRadius(value);
+        console.log(value);
         break;
-      case Konva.Filters.Brighten:
-        node.brightness(value);
-        break;
-      case Konva.Filters.Contrast:
-        node.contrast(value);
-        break;
-      case Konva.Filters.HSL:
-        node.hue(value);
-        break;
-      case Konva.Filters.Noise:
-        node.noise(value);
-        break;
-      case Konva.Filters.Pixelate:
-        node.pixelSize(value);
-        break;
+      // case Konva.Filters.Brighten:
+      //   node.brightness(value);
+      //   break;
+      // case Konva.Filters.Contrast:
+      //   node.contrast(value);
+      //   break;
+      // case Konva.Filters.HSL:
+      //   node.hue(value);
+      //   break;
+      // case Konva.Filters.Noise:
+      //   node.noise(value);
+      //   break;
+      // case Konva.Filters.Pixelate:
+      //   node.pixelSize(value);
+      //   break;
       default:
         break;
     }
@@ -86,36 +89,36 @@
 
   $: {
     if (img) {
-      applyFilter(
-        img,
-        Konva.Filters.Blur,
-        $settingsStore.imageSettings.blurValue
-      );
-      applyFilter(
-        img,
-        Konva.Filters.Brighten,
-        $settingsStore.imageSettings.brightnessValue
-      );
-      applyFilter(
-        img,
-        Konva.Filters.Contrast,
-        $settingsStore.imageSettings.contrastValue
-      );
-      applyFilter(
-        img,
-        Konva.Filters.HSL,
-        $settingsStore.imageSettings.hueRotateValue
-      );
-      applyFilter(
-        img,
-        Konva.Filters.Noise,
-        $settingsStore.imageSettings.noiseValue
-      );
-      applyFilter(
-        img,
-        Konva.Filters.Pixelate,
-        $settingsStore.imageSettings.pixelateValue
-      );
+      // applyFilter(
+      //   img,
+      //   Konva.Filters.Blur,
+      //   $settingsStore.imageSettings.blurValue
+      // );
+      // applyFilter(
+      //   img,
+      //   Konva.Filters.Brighten,
+      //   $settingsStore.imageSettings.brightnessValue
+      // );
+      // applyFilter(
+      //   img,
+      //   Konva.Filters.Contrast,
+      //   $settingsStore.imageSettings.contrastValue
+      // );
+      // applyFilter(
+      //   img,
+      //   Konva.Filters.HSL,
+      //   $settingsStore.imageSettings.hueRotateValue
+      // );
+      // applyFilter(
+      //   img,
+      //   Konva.Filters.Noise,
+      //   $settingsStore.imageSettings.noiseValue
+      // );
+      // applyFilter(
+      //   img,
+      //   Konva.Filters.Pixelate,
+      //   $settingsStore.imageSettings.pixelateValue
+      // );
       img.opacity($settingsStore.imageSettings.opacityValue);
     }
   }
@@ -128,18 +131,7 @@
     // $settingsStore.imageSettings[key] = initialValue;
   };
 
-  onMount(() => {
-    // document
-    //   .querySelectorAll(".settings input[type=range]")
-    //   .forEach((el: HTMLInputElement) => {
-    //     const key = el.id as keyof ImageSettings;
-    //     if (Number(el.value) == $settingsStore.imageSettings[key]) return;
-
-    //     el.addEventListener("dblclick", (e) => {
-    //       handleDoubleClick(key);
-    //     });
-    //   });
-  });
+  onMount(() => {});
 </script>
 
 <div class="settings">
@@ -290,7 +282,6 @@
       border-radius: 1px;
       background: $workzone-border;
       cursor: pointer;
-      transition: background 0.15s ease-in-out;
     }
 
     .line {

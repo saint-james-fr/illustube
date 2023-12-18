@@ -2,7 +2,7 @@ import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
 import Konva from "konva";
 
-export const initialImageSettings: ImageSettings = {
+const initialImageSettings: ImageSettings = {
   blurValue: 0,
   brightnessValue: 0,
   contrastValue: 0,
