@@ -14,17 +14,6 @@ export const initialImageSettings: ImageSettings = {
   kaleidoscopeValue: false,
 };
 
-export const initialImageSettings2: ImageSettings = {
-  blurValue: 0,
-  brightnessValue: 0,
-  contrastValue: 0,
-  hueRotateValue: 0,
-  invertValue: false,
-  opacityValue: 1,
-  pixelateValue: 1,
-  noiseValue: 0,
-  kaleidoscopeValue: false,
-};
 
 const initialStageConfig = {
   container: "canvasContainer",

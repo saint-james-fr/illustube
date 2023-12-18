@@ -121,18 +121,24 @@
   }
 
   const handleDoubleClick = (key: keyof ImageSettings) => {
-    console.log("double click", initialImageSettings2)
-    $settingsStore.imageSettings[key] = initialImageSettings2[key] as ImageSettings[keyof ImageSettings];
-
+    // console.log("double click", initialImageSettings2);
+    // const initialValue = initialImageSettings2[
+    //   key
+    // ] as number | boolean;
+    // $settingsStore.imageSettings[key] = initialValue;
   };
 
   onMount(() => {
-    document.querySelectorAll(".settings input[type=range]").forEach((el) => {
-      el.addEventListener("dblclick", (e) => {
-        const key = (e.target as HTMLInputElement).id as keyof ImageSettings;
-        handleDoubleClick(key);
-      });
-    });
+    // document
+    //   .querySelectorAll(".settings input[type=range]")
+    //   .forEach((el: HTMLInputElement) => {
+    //     const key = el.id as keyof ImageSettings;
+    //     if (Number(el.value) == $settingsStore.imageSettings[key]) return;
+
+    //     el.addEventListener("dblclick", (e) => {
+    //       handleDoubleClick(key);
+    //     });
+    //   });
   });
 </script>
 
@@ -219,7 +225,7 @@
         id="pixelateValue"
         min={minPixelateValue}
         max={maxPixelateValue}
-        step= "0.5"
+        step="0.5"
         bind:value={$settingsStore.imageSettings.pixelateValue}
       />
     </div>
