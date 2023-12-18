@@ -1,3 +1,6 @@
+type FilterType = typeof Konva.Filters[keyof typeof Konva.Filters];
+
+
 interface LayerType {
   id?: string;
   name?: string;
@@ -22,10 +25,11 @@ interface ImageSettings {
   blurValue: number;
   brightnessValue: number;
   contrastValue: number;
-  grayscaleValue: number;
   hueRotateValue: number;
-  invertValue: number;
+  invertValue: boolean;
   opacityValue: number;
-  saturateValue: number;
+  pixelateValue: number;
   noiseValue: number;
+  kaleidoscopeValue: boolean;
+  
 }

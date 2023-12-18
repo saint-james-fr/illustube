@@ -2,16 +2,28 @@ import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
 import Konva from "konva";
 
-const initialImageSettings: ImageSettings = {
+export const initialImageSettings: ImageSettings = {
   blurValue: 0,
   brightnessValue: 0,
   contrastValue: 0,
-  grayscaleValue: 0,
   hueRotateValue: 0,
-  invertValue: 0,
-  opacityValue: 0,
-  saturateValue: 0,
+  invertValue: false,
+  opacityValue: 1,
+  pixelateValue: 1,
   noiseValue: 0,
+  kaleidoscopeValue: false,
+};
+
+export const initialImageSettings2: ImageSettings = {
+  blurValue: 0,
+  brightnessValue: 0,
+  contrastValue: 0,
+  hueRotateValue: 0,
+  invertValue: false,
+  opacityValue: 1,
+  pixelateValue: 1,
+  noiseValue: 0,
+  kaleidoscopeValue: false,
 };
 
 const initialStageConfig = {
