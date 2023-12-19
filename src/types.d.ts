@@ -1,6 +1,7 @@
 interface AppStore {
   imageShouldBeSquare: boolean;
   automaticMode: boolean;
+  pixelRatio: number;
 }
 
 interface RouteStore {

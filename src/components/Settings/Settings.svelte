@@ -8,6 +8,8 @@
   export let stage: Konva.Stage;
   export let img: Konva.Image;
 
+  let pixelRatio: number;
+
   const {
     minBlurValue = 0,
     maxBlurValue = 100,
@@ -25,6 +27,9 @@
     maxPixelateValue = 100,
   } = {};
 
+  $: {
+    pixelRatio = $appStore.pixelRatio;
+  }
 
   // Type union of all filter functions
   type FilterFunction = (typeof Konva.Filters)[keyof typeof Konva.Filters];
@@ -56,10 +61,14 @@
         $konvaStore.backgroundImage.blurRadius($filterSettingsStore.blurValue);
         break;
       case Konva.Filters.Brighten:
-        $konvaStore.backgroundImage.brightness($filterSettingsStore.brightnessValue);
+        $konvaStore.backgroundImage.brightness(
+          $filterSettingsStore.brightnessValue
+        );
         break;
       case Konva.Filters.Contrast:
-        $konvaStore.backgroundImage.contrast($filterSettingsStore.contrastValue);
+        $konvaStore.backgroundImage.contrast(
+          $filterSettingsStore.contrastValue
+        );
         break;
       case Konva.Filters.HSL:
         $konvaStore.backgroundImage.hue($filterSettingsStore.hueRotateValue);
@@ -68,7 +77,9 @@
         $konvaStore.backgroundImage.noise($filterSettingsStore.noiseValue);
         break;
       case Konva.Filters.Pixelate:
-        $konvaStore.backgroundImage.pixelSize($filterSettingsStore.pixelateValue);
+        $konvaStore.backgroundImage.pixelSize(
+          $filterSettingsStore.pixelateValue
+        );
         break;
       default:
         break;
@@ -76,7 +87,6 @@
     cache($konvaStore.backgroundImage, $konvaStore.backgroundLayer);
     $konvaStore.backgroundLayer.batchDraw();
   };
-
 </script>
 
 <div class="settings">
@@ -98,7 +108,7 @@
         max={maxBlurValue}
         step="0.3"
         bind:value={$filterSettingsStore.blurValue}
-        on:input={() => handleFilterchange(Konva.Filters.Blur)}
+        on:change={() => handleFilterchange(Konva.Filters.Blur)}
       />
     </div>
     <div class="line">
@@ -177,7 +187,7 @@
   </form>
   <button
     on:click={() => {
-      exportImage(stage, img);
+      exportImage(stage, img, pixelRatio);
     }}>Download</button
   >
 </div>

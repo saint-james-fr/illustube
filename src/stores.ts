@@ -45,6 +45,7 @@ export const userStore: Writable<UserStore> = writable({
 export const appStore: Writable<AppStore> = writable({
   imageShouldBeSquare: true,
   automaticMode: true,
+  pixelRatio: 3,
 });
 
 export const routeStore: Writable<RouteStore> = writable({

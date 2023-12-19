@@ -13,7 +13,7 @@ export const handleDownload = (uri: string, name: string) => {
   document.body.removeChild(link);
 };
 
-export const exportImage = (stage: Konva.Stage, img: Konva.Image) => {
+export const exportImage = (stage: Konva.Stage, img: Konva.Image, pixelRatio: number) => {
   const name = "export";
   if (stage === undefined || img === undefined) return;
 
@@ -28,7 +28,8 @@ export const exportImage = (stage: Konva.Stage, img: Konva.Image) => {
   }
   // Exportez la scène
   // 
-  const uri = stage.toDataURL({ pixelRatio: 3});
+  // TODO: HD MODe
+  const uri = stage.toDataURL({ pixelRatio});
   handleDownload(uri, name);
   // Réaffichez le Transformer
   if (transformer) {

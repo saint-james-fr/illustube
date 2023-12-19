@@ -24,19 +24,19 @@
   };
 
   $: {
+    // Assign proper Image Element to the image variable
     image =
       $appStore.imageShouldBeSquare && $userStore.croppedImage
         ? $userStore.croppedImage
         : $userStore.image.element;
 
+    // Get the image dimensions
     width = image.width;
     height = image.height;
+    // Fix target Dimensions (should be 1/3 of the canvas here)
     targetWidth = canvasContainer.clientWidth / 3;
     targetHeight = targetWidth;
     // Centering the image
-
-    // TODO : was this useful to get the ratio ?
-
     x = centerImage(
       canvasContainer.clientWidth,
       canvasContainer.clientHeight,
@@ -49,6 +49,7 @@
       targetWidth,
       targetHeight
     ).y;
+    // Scale the image
     if (mainImage) {
       scaleRatio = findScaleRatio(width, targetWidth);
       mainImage.scaleX(scaleRatio);
