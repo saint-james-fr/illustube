@@ -284,7 +284,7 @@
   .settings {
     width: 100%;
     height: 100%;
-    padding-inline: 2rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
