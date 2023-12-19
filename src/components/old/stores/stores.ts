@@ -25,29 +25,9 @@ const initialSettings = {
   imageSettings: initialImageSettings,
 };
 
-const initialTransformer = new Konva.Transformer({
-  rotationSnaps: [0, 90, 180, 270],
-  rotateAnchorOffset: 20,
-  padding: 10,
-  rotateAnchorCursor: "grab",
-  rotateEnabled: true,
-  rotationSnapTolerance: 5,
-  borderEnabled: true,
-  borderStroke: "#fffaf2",
-  borderStrokeWidth: 3,
-  borderDash: [1, 1],
-  enabledAnchors: ["top-left", "top-right", "bottom-left", "bottom-right"],
-  anchorFill: "#fffaf2",
-  anchorStrokeWidth: 2,
-  anchorCornerRadius: 10,
-  anchorStroke: "#1e90ff",
-  anchorSize: 10,
-  centeredScaling: true,
-  flipEnabled: false,
-});
+
 
 export const layersStore = writable([]);
 export const settingsStore: Writable<SettingsType> = writable(initialSettings);
 export const stageConfigStore: Writable<Konva.StageConfig> =
   writable(initialStageConfig);
-export const transformerStore: Writable<Konva.Transformer> = writable(initialTransformer);

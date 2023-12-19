@@ -1,11 +1,10 @@
 <script lang="ts">
   import { appStore, routeStore, userStore } from "stores";
-  import { Stage, Layer, Image as KonvaImage } from "svelte-konva";
   import { validateSize, validateType } from "lib/file";
   import { createImageFromFile, cropImage, validateRatio } from "lib/media";
 
   let file: File;
-  let img: HTMLImageElement;
+  const nextRoute = "modification";
 
   $: console.log($userStore.image);
 
@@ -28,14 +27,20 @@
         });
 
         if (!validateRatio(ratio) && $appStore.imageShouldBeSquare) {
+          console.log("cropping");
           // If we need to crop, we crop then assign the cropped image to the store for later use
           const croppedImageUrl = await cropImage(createdImage);
           const croppedImage = new Image();
-          croppedImage.onload = () => ($userStore.croppedImage = croppedImage);
+          croppedImage.onload = () => {
+
+            $userStore.croppedImage = croppedImage
+            console.log($userStore.croppedImage)
+          };
+
           croppedImage.src = croppedImageUrl;
         }
         // finaly we update the route
-        $routeStore.currentRoute = "metadata";
+        $routeStore.currentRoute = nextRoute;
       } catch (error) {
         console.error(error);
       }

@@ -1,5 +1,7 @@
 import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
+import Konva from "konva";
+
 
 const initialImageSettings = {
   element: new Image(),
@@ -51,8 +53,42 @@ export const routeStore: Writable<RouteStore> = writable({
 
 export const konvaStore: Writable<KonvaStore> = writable({
   stage: null,
-  bgLayer: null,
-  bgImage: null,
+  backgroundLayer: null,
+  backgroundImage: null,
   mainLayer: null,
   mainImage: null,
 });
+
+export const filterSettingsStore: Writable<FilterSetting> = writable({
+  blurValue: 0,
+  brightnessValue: 0,
+  contrastValue: 0,
+  hueRotateValue: 0,
+  opacityValue: 100,
+  saturateValue: 0,
+  grayscaleValue: 0,
+  pixelateValue: 1,
+  noiseValue: 0,
+});
+
+const initialTransformer = new Konva.Transformer({
+  rotationSnaps: [0, 90, 180, 270],
+  rotateAnchorOffset: 20,
+  padding: 10,
+  rotateAnchorCursor: "grab",
+  rotateEnabled: true,
+  rotationSnapTolerance: 5,
+  borderEnabled: true,
+  borderStroke: "#fffaf2",
+  borderStrokeWidth: 3,
+  borderDash: [1, 1],
+  enabledAnchors: ["top-left", "top-right", "bottom-left", "bottom-right"],
+  anchorFill: "#fffaf2",
+  anchorStrokeWidth: 2,
+  anchorCornerRadius: 10,
+  anchorStroke: "#1e90ff",
+  anchorSize: 10,
+  centeredScaling: true,
+  flipEnabled: false,
+});
+export const transformerStore: Writable<Konva.Transformer> = writable(initialTransformer);

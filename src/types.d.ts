@@ -4,7 +4,7 @@ interface AppStore {
 }
 
 interface RouteStore {
-  currentRoute: "upload" | "metadata" | "position" | "filter" | "download";
+  currentRoute: "upload" | "metadata" | "modification" | "filter" | "download";
 }
 
 interface UserStore {
@@ -28,8 +28,8 @@ interface ImportedImage {
 
 interface KonvaStore {
   stage: Konva.Stage | null;
-  bgLayer: Konva.Layer | null;
-  bgImage: Konva.Image | null;
+  backgroundLayer: Konva.Layer | null;
+  backgroundImage: Konva.Image | null;
   mainImage: Konva.Image | null;
   mainLayer: Konva.Layer | null;
 }
@@ -48,26 +48,26 @@ interface MetaData {
   showYear: boolean;
 }
 
-interface Position {
-  id: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
+// interface Position {
+//   id: number;
+//   x: number;
+//   y: number;
+//   width: number;
+//   height: number;
+// }
 
-type PositionsMap = Map<number, Position>;
+// type PositionsMap = Map<number, Position>;
 
 interface FilterSetting {
-  blur?: number;
-  brightness?: number;
-  contrast?: number;
-  hueRotate?: number;
-  invert?: boolean;
-  opacity?: number;
-  pixelate?: number;
-  noise?: number;
-  kaleidoscope?: boolean;
+  blurValue: number;
+  brightnessValue: number;
+  saturateValue: number;
+  contrastValue: number;
+  hueRotateValue: number;
+  opacityValue: number;
+  grayscaleValue: number;
+  pixelateValue: number;
+  noiseValue: number;
 }
 
 type FilterSettingsMap = Map<number, FilterSetting>;

@@ -1,29 +1,82 @@
 <script lang="ts">
-  import { settingsStore } from "stores";
-  import { exportImage } from "lib/io";
+  import { filterSettingsStore, appStore } from "stores";
+  import { exportImage } from "lib/download";
+  import { konvaStore } from "stores";
 
   import Konva from "konva";
-  import { onMount } from "svelte";
 
   export let stage: Konva.Stage;
   export let img: Konva.Image;
 
   const {
     minBlurValue = 0,
-    maxBlurValue = 25,
-    minBrightnessValue = -1,
-    maxBrightnessValue = 1,
-    minContrastValue = -70,
-    maxContrastValue = 70,
+    maxBlurValue = 100,
+    minBrightnessValue = -0.5,
+    maxBrightnessValue = 0.5,
+    minContrastValue = -20,
+    maxContrastValue = 20,
     minHueRotateValue = -180,
     maxHueRotateValue = 180,
     minOpacityValue = 0,
     maxOpacityValue = 1,
     minNoiseValue = 0,
-    maxNoiseValue = 0.3,
+    maxNoiseValue = 0.5,
     minPixelateValue = 1,
-    maxPixelateValue = 60,
+    maxPixelateValue = 100,
   } = {};
+
+
+  // Type union of all filter functions
+  type FilterFunction = (typeof Konva.Filters)[keyof typeof Konva.Filters];
+
+  const manageFiltersArray = (filterToApply: FilterFunction) => {
+    // there is no filter yet
+    if (!$konvaStore.backgroundImage.filters()) {
+      $konvaStore.backgroundImage.filters([filterToApply]);
+    } else {
+      (() => {
+        const oldFilters = $konvaStore.backgroundImage.filters();
+        if (oldFilters.includes(filterToApply)) return;
+        const newFilters = [...oldFilters, filterToApply];
+        $konvaStore.backgroundImage.filters(newFilters);
+      })();
+    }
+  };
+
+  const cache = (img: any, layer: Konva.Layer) => {
+    img.cache();
+    layer.batchDraw();
+  };
+
+  const handleFilterchange = (filterToApply: FilterFunction) => {
+    if (!$konvaStore.backgroundImage) return;
+    manageFiltersArray(filterToApply);
+    switch (filterToApply) {
+      case Konva.Filters.Blur:
+        $konvaStore.backgroundImage.blurRadius($filterSettingsStore.blurValue);
+        break;
+      case Konva.Filters.Brighten:
+        $konvaStore.backgroundImage.brightness($filterSettingsStore.brightnessValue);
+        break;
+      case Konva.Filters.Contrast:
+        $konvaStore.backgroundImage.contrast($filterSettingsStore.contrastValue);
+        break;
+      case Konva.Filters.HSL:
+        $konvaStore.backgroundImage.hue($filterSettingsStore.hueRotateValue);
+        break;
+      case Konva.Filters.Noise:
+        $konvaStore.backgroundImage.noise($filterSettingsStore.noiseValue);
+        break;
+      case Konva.Filters.Pixelate:
+        $konvaStore.backgroundImage.pixelSize($filterSettingsStore.pixelateValue);
+        break;
+      default:
+        break;
+    }
+    cache($konvaStore.backgroundImage, $konvaStore.backgroundLayer);
+    $konvaStore.backgroundLayer.batchDraw();
+  };
+
 </script>
 
 <div class="settings">
@@ -33,7 +86,7 @@
       <input
         type="checkbox"
         id="automaticMode"
-        bind:checked={$settingsStore.automaticMode}
+        bind:checked={$appStore.automaticMode}
       />
     </div>
     <div class="line">
@@ -44,7 +97,8 @@
         min={minBlurValue}
         max={maxBlurValue}
         step="0.3"
-        bind:value={$settingsStore.imageSettings.blurValue}
+        bind:value={$filterSettingsStore.blurValue}
+        on:input={() => handleFilterchange(Konva.Filters.Blur)}
       />
     </div>
     <div class="line">
@@ -55,7 +109,8 @@
         min={minBrightnessValue}
         max={maxBrightnessValue}
         step="0.01"
-        bind:value={$settingsStore.imageSettings.brightnessValue}
+        bind:value={$filterSettingsStore.brightnessValue}
+        on:input={() => handleFilterchange(Konva.Filters.Brighten)}
       />
     </div>
 
@@ -66,7 +121,8 @@
         id="contrastValue"
         min={minContrastValue}
         max={maxContrastValue}
-        bind:value={$settingsStore.imageSettings.contrastValue}
+        bind:value={$filterSettingsStore.contrastValue}
+        on:input={() => handleFilterchange(Konva.Filters.Contrast)}
       />
     </div>
 
@@ -77,7 +133,8 @@
         id="hueRotateValue"
         min={minHueRotateValue}
         max={maxHueRotateValue}
-        bind:value={$settingsStore.imageSettings.hueRotateValue}
+        bind:value={$filterSettingsStore.hueRotateValue}
+        on:input={() => handleFilterchange(Konva.Filters.HSL)}
       />
     </div>
 
@@ -89,7 +146,7 @@
         min={minOpacityValue}
         max={maxOpacityValue}
         step="0.01"
-        bind:value={$settingsStore.imageSettings.opacityValue}
+        bind:value={$filterSettingsStore.opacityValue}
       />
     </div>
 
@@ -101,7 +158,8 @@
         min={minPixelateValue}
         max={maxPixelateValue}
         step="0.5"
-        bind:value={$settingsStore.imageSettings.pixelateValue}
+        bind:value={$filterSettingsStore.pixelateValue}
+        on:input={() => handleFilterchange(Konva.Filters.Pixelate)}
       />
     </div>
     <div class="line">
@@ -112,7 +170,8 @@
         min={minNoiseValue}
         max={maxNoiseValue}
         step="0.01"
-        bind:value={$settingsStore.imageSettings.noiseValue}
+        bind:value={$filterSettingsStore.noiseValue}
+        on:input={() => handleFilterchange(Konva.Filters.Noise)}
       />
     </div>
   </form>

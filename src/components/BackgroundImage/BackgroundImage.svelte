@@ -1,22 +1,40 @@
 <script lang="ts">
   import { Image as KonvaImage } from "svelte-konva";
   import { centerImage } from "lib/media";
-  import { userStore, konvaStore } from "stores";
+  import { userStore, konvaStore, filterSettingsStore } from "stores";
   import { handleDragMove } from "lib/move";
-  import type Konva from "konva";
+  import Konva from "konva";
+  import { onMount, tick } from "svelte";
 
   export let canvasContainer: HTMLDivElement;
 
+  // This is binded to the Konva.Image component
   let backgroundImage: Konva.Image;
+
   $: {
-    $konvaStore.bgImage = backgroundImage;
+    if (backgroundImage) $konvaStore.backgroundImage = backgroundImage;
   }
+
+  onMount(async () => {
+    await tick();
+    backgroundImage.cache();
+  });
 </script>
 
 <KonvaImage
   bind:handle={backgroundImage}
   on:dragmove={(event) => {
-    handleDragMove(event.detail, backgroundImage, $konvaStore.bgLayer);
+    document.body.style.cursor = "grabbing";
+    handleDragMove(event.detail, backgroundImage, $konvaStore.backgroundLayer);
+  }}
+  on:dragend={() => {
+    document.body.style.cursor = "grab";
+  }}
+  on:mouseenter={() => {
+    document.body.style.cursor = "grab";
+  }}
+  on:mouseleave={() => {
+    document.body.style.cursor = "default";
   }}
   config={{
     image: $userStore.image.element,

@@ -20,14 +20,20 @@ export const exportImage = (stage: Konva.Stage, img: Konva.Image) => {
   // Obtenez le Transformer de la scène
   const transformer = stage.find("Transformer")[0];
   // Cachez le Transformer
-  transformer.visible(false);
-  // Redessinez la scène pour que le Transformer disparaisse
-  stage.batchDraw();
+  console.log(transformer);
+  if (transformer) {
+    transformer?.visible(false);
+    // Redessinez la scène pour que le Transformer disparaisse
+    stage.batchDraw();
+  }
   // Exportez la scène
-  const uri = stage.toDataURL();
+  // 
+  const uri = stage.toDataURL({ pixelRatio: 3});
   handleDownload(uri, name);
   // Réaffichez le Transformer
-  transformer.visible(true);
-  // Redessinez la scène pour que le Transformer réapparaisse
-  stage.batchDraw();
+  if (transformer) {
+    transformer.visible(true);
+    // Redessinez la scène pour que le Transformer réapparaisse
+    stage.batchDraw();
+  }
 };

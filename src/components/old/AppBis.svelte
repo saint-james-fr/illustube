@@ -4,7 +4,7 @@
   import uploadedImage from "assets/img/CHUWANAGA006_COVER-FRONT.png";
   import { onMount } from "svelte";
   import { settingsStore, stageConfigStore, transformerStore } from "stores";
-  import Settings from "components/old/Settings/Settings.svelte";
+  import Settings from "components/Settings/Settings.svelte";
 
   let canvasContainer: HTMLDivElement;
   let img: Konva.Image;

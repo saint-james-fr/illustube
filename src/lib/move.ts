@@ -1,23 +1,23 @@
 import type Konva from "konva";
 
-const centeredZoomOnWheel = (
+const zoom = (
   img: Konva.Image,
   newScale: number,
-  oldScale: number
-) => {
-  newScale = Math.max(newScale, 0.1);
+  oldScale: number,
+  cursorPos: { x: number; y: number }
+): { oldPos: { x: number; y: number }; newPos: { x: number; y: number } } => {
   const oldPos = {
     x: img.x(),
     y: img.y(),
   };
+  newScale = Math.max(newScale, 0.1);
   img.scaleX(newScale);
   img.scaleY(newScale);
-  // Reposition
   const newPos = {
-    x: oldPos.x - (img.width() * (newScale - oldScale)) / 2,
-    y: oldPos.y - (img.height() * (newScale - oldScale)) / 2,
+    x: cursorPos.x - (cursorPos.x - oldPos.x) * (newScale / oldScale),
+    y: cursorPos.y - (cursorPos.y - oldPos.y) * (newScale / oldScale),
   };
-  img.position(newPos);
+  return { oldPos, newPos };
 };
 
 const blockHorizontalMove = (img: Konva.Image, layer: Konva.Layer) => {
@@ -62,11 +62,18 @@ export const handleWheel = (e: any, img: Konva.Image, layer: Konva.Layer) => {
 
   const imageWidth = img.width() * img.scaleX();
   const stageWidth = layer.getStage().width();
+  const stageHeight = layer.getStage().height();
+
+  const cursorPos = layer.getStage().getPointerPosition() || {
+    x: stageWidth / 2,
+    y: stageHeight / 2,
+  };
 
   if (imageWidth < stageWidth && delta > 0) {
     const oldScale = img.scaleX();
     const newScale = stageWidth / img.width() + 0.01;
-    centeredZoomOnWheel(img, newScale, oldScale);
+    const { newPos } = zoom(img, newScale, oldScale, cursorPos);
+    img.position(newPos);
     wheelBlocked = true;
     setTimeout(() => {
       wheelBlocked = false;
@@ -78,7 +85,8 @@ export const handleWheel = (e: any, img: Konva.Image, layer: Konva.Layer) => {
     // Zooming
     const oldScale = img.scaleX();
     let newScale = oldScale + scaleBy;
-    centeredZoomOnWheel(img, newScale, oldScale);
+    const { newPos } = zoom(img, newScale, oldScale, cursorPos);
+    img.position(newPos);
   }
   layer.batchDraw();
 };

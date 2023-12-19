@@ -4,17 +4,20 @@
   import { handleWheel } from "lib/move";
   import { Stage, Layer } from "svelte-konva";
   import type Konva from "konva";
+  import MainImage from "components/MainImage/MainImage.svelte";
 
   let canvasContainer: HTMLDivElement;
   let canvasContainerScalingRatio: number;
   let innerWidth: number;
   let stage: Konva.Stage;
   let backgroundLayer: Konva.Layer;
+  let mainLayer: Konva.Layer;
 
   $: {
     canvasContainerScalingRatio = Math.min(innerWidth / 1280, 1);
     $konvaStore.stage = stage;
-    $konvaStore.bgLayer = backgroundLayer;
+    $konvaStore.backgroundLayer = backgroundLayer;
+    $konvaStore.mainLayer = mainLayer;
   }
 </script>
 
@@ -32,11 +35,20 @@
         width: canvasContainer.clientWidth,
         height: canvasContainer.clientHeight,
       }}
-      on:wheel={(event) =>
-        handleWheel(event.detail, $konvaStore.bgImage, $konvaStore.bgLayer)}
+      on:wheel={(event) => {
+        if (!$konvaStore.backgroundImage) return;
+        handleWheel(
+          event.detail,
+          $konvaStore.backgroundImage,
+          $konvaStore.backgroundLayer
+        );
+      }}
     >
       <Layer bind:handle={backgroundLayer}>
         <BackgroundImage {canvasContainer} />
+      </Layer>
+      <Layer bind:handle={mainLayer}>
+        <MainImage {canvasContainer} />
       </Layer>
     </Stage>
   {/if}
