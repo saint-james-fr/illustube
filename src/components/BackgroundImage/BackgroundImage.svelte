@@ -1,12 +1,23 @@
 <script lang="ts">
   import { Image as KonvaImage } from "svelte-konva";
   import { centerImage } from "lib/media";
-  import { userStore } from "stores";
+  import { userStore, konvaStore } from "stores";
+  import { handleDragMove } from "lib/move";
+  import type Konva from "konva";
 
   export let canvasContainer: HTMLDivElement;
+
+  let backgroundImage: Konva.Image;
+  $: {
+    $konvaStore.bgImage = backgroundImage;
+  }
 </script>
 
 <KonvaImage
+  bind:handle={backgroundImage}
+  on:dragmove={(event) => {
+    handleDragMove(event.detail, backgroundImage, $konvaStore.bgLayer);
+  }}
   config={{
     image: $userStore.image.element,
     width: $userStore.image.width,

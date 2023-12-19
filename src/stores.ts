@@ -48,3 +48,11 @@ export const appStore: Writable<AppStore> = writable({
 export const routeStore: Writable<RouteStore> = writable({
   currentRoute: "upload",
 });
+
+export const konvaStore: Writable<KonvaStore> = writable({
+  stage: null,
+  bgLayer: null,
+  bgImage: null,
+  mainLayer: null,
+  mainImage: null,
+});

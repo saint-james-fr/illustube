@@ -14,7 +14,6 @@ export const centerImage = (
 };
 
 
-
 export const cropImage = (img: HTMLImageElement): Promise<string> => {
   return new Promise((resolve, reject) => {
     try {

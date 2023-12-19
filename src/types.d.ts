@@ -26,6 +26,14 @@ interface ImportedImage {
   initialize: (img: HTMLImageElement, file: File) => void;
 }
 
+interface KonvaStore {
+  stage: Konva.Stage | null;
+  bgLayer: Konva.Layer | null;
+  bgImage: Konva.Image | null;
+  mainImage: Konva.Image | null;
+  mainLayer: Konva.Layer | null;
+}
+
 interface ImageManipulation {}
 
 interface MetaData {
