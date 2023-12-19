@@ -1,35 +1,63 @@
-type FilterType = typeof Konva.Filters[keyof typeof Konva.Filters];
+interface AppStore {
+  imageShouldBeSquare: boolean;
+}
 
+interface RouteStore {
+  currentRoute: "upload" | "metadata" | "position" | "filter" | "download";
+}
 
-interface LayerType {
-  id?: string;
-  name?: string;
-  type?: string;
-  visible?: boolean;
+interface UserStore {
+  image: ImportedImage;
+  metaData: MetaData;
+  choosedPosition?: number;
+  choosedFilter?: number;
+}
+
+interface ImportedImage {
+  element: HTMLImageElement;
+  name: string;
+  type: string;
+  width: number;
+  height: number;
+  ratio: number;
+  loaded: boolean;
+  initialize: (img: HTMLImageElement, file: File) => void;
+}
+
+interface ImageManipulation {}
+
+interface MetaData {
+  useMetaData: boolean;
+  artist: string;
+  title: string;
+  album: string;
+  year: string;
+  showArtist: boolean;
+  showTitle: boolean;
+  showAlbum: boolean;
+  showYear: boolean;
+}
+
+interface Position {
+  id: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+type PositionsMap = Map<number, Position>;
+
+interface FilterSetting {
+  blur?: number;
+  brightness?: number;
+  contrast?: number;
+  hueRotate?: number;
+  invert?: boolean;
   opacity?: number;
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
-  image?: string;
-  data?: number[];
+  pixelate?: number;
+  noise?: number;
+  kaleidoscope?: boolean;
 }
 
-interface SettingsType {
-  automaticMode: boolean;
-  imageSettings: ImageSettings;
-}
-
-
-interface ImageSettings {
-  blurValue: number;
-  brightnessValue: number;
-  contrastValue: number;
-  hueRotateValue: number;
-  invertValue: boolean;
-  opacityValue: number;
-  pixelateValue: number;
-  noiseValue: number;
-  kaleidoscopeValue: boolean;
-  
-}
+type FilterSettingsMap = Map<number, FilterSetting>;
