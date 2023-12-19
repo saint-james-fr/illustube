@@ -2,11 +2,7 @@
   import { appStore, routeStore, userStore } from "stores";
   import { Stage, Layer, Image as KonvaImage } from "svelte-konva";
   import { validateSize, validateType } from "lib/file";
-  import {
-    createImageFromFile,
-    cropImage,
-    validateRatio,
-  } from "lib/media";
+  import { createImageFromFile, cropImage, validateRatio } from "lib/media";
 
   let file: File;
   let img: HTMLImageElement;
@@ -17,33 +13,28 @@
     const input = event.target as HTMLInputElement;
     if (input.files) {
       file = input.files[0];
-      validateType(file);
-      validateSize(file);
-      console.log($userStore.image);
+      // we validate the file
       try {
+        validateType(file);
+        validateSize(file);
+        // we create an image from the file
         const createdImage = await createImageFromFile(file);
-        const {width, height }= createdImage;
-        const ratio = width / height
-        img = createdImage;
+        const { width, height } = createdImage;
+        const ratio = width / height;
+        // we update the store
+        userStore.update((store) => {
+          store.image?.initialize(createdImage, file);
+          return store;
+        });
 
         if (!validateRatio(ratio) && $appStore.imageShouldBeSquare) {
-          const croppedImage = await cropImage(createdImage);
-          img = new Image();
-          img.onload = () => {
-            userStore.update((store) => {
-              store.image?.initialize(img, file);
-              return store;
-            });
-          };
-          img.src = croppedImage;
-        } else {
-          img = createdImage;
-          userStore.update((store) => {
-            store.image?.initialize(img, file);
-            return store;
-          });
+          // If we need to crop, we crop then assign the cropped image to the store for later use
+          const croppedImageUrl = await cropImage(createdImage);
+          const croppedImage = new Image();
+          croppedImage.onload = () => ($userStore.croppedImage = croppedImage);
+          croppedImage.src = croppedImageUrl;
         }
-        // finaly change route
+        // finaly we update the route
         $routeStore.currentRoute = "metadata";
       } catch (error) {
         console.error(error);
@@ -61,5 +52,3 @@
     on:change={handleFileChange}
   />
 </form>
-
-

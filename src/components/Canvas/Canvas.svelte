@@ -1,33 +1,43 @@
 <script lang="ts">
   import { userStore } from "stores";
-  import { onMount } from "svelte";
-  import { Stage, Layer, Image as KonvaImage } from "svelte-konva";
-
-  let stageWidth: number;
-  let stageHeight: number;
-  let innerHeight: number;
+  import BackgroundImage from "components/BackgroundImage/BackgroundImage.svelte";
+  import { Stage, Layer } from "svelte-konva";
+  let canvasContainer: HTMLDivElement;
+  let canvasContainerScalingRatio: number;
   let innerWidth: number;
 
-  onMount(() => {
-    stageWidth = innerWidth / 2;
-    stageHeight = (stageWidth / 16) * 9;
-    console.log(stageHeight, stageWidth);
-  });
+  $: {
+    canvasContainerScalingRatio = Math.min(innerWidth / 1280, 1);
+  }
 </script>
 
-<svelte:window bind:innerWidth bind:innerHeight />
+<svelte:window bind:innerWidth />
 
-{#if $userStore.image.loaded}
-  <Stage config={{ width: stageWidth, height: stageHeight }}>
-    <Layer>
-      <KonvaImage
-        config={{
-          image: $userStore.image.element,
-          width: $userStore.image.width,
-          height: $userStore.image.height,
-          draggable: true,
-        }}
-      />
-    </Layer>
-  </Stage>
-{/if}
+<div
+  class="canvas_container"
+  bind:this={canvasContainer}
+  style="transform: scale({canvasContainerScalingRatio})"
+>
+  {#if $userStore.image.loaded}
+    <Stage
+      config={{
+        width: canvasContainer.clientWidth,
+        height: canvasContainer.clientHeight,
+      }}
+    >
+      <Layer>
+        <BackgroundImage {canvasContainer} />
+      </Layer>
+    </Stage>
+  {/if}
+</div>
+
+<style lang="scss">
+  .canvas_container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: $black;
+    max-width: 1000px;
+    transform-origin: center center;
+  }
+</style>

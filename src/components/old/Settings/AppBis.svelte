@@ -6,7 +6,6 @@
   import { settingsStore, stageConfigStore, transformerStore } from "stores";
   import Settings from "components/old/Settings/Settings.svelte";
 
-
   let canvasContainer: HTMLDivElement;
   let img: Konva.Image;
   let stage: Konva.Stage;
@@ -15,7 +14,6 @@
   let innerWidth: number;
   let aspectRatio: number;
   let backgroundImage: HTMLImageElement;
-
 
   $: {
     canvasContainerScalingRatio = innerWidth / 1280;
@@ -219,5 +217,4 @@
     background-color: $black;
     max-width: 1000px;
   }
-
 </style>

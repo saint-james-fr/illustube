@@ -2,6 +2,19 @@ export const validateRatio = (ratio: number) => {
   return ratio == 1;
 };
 
+export const centerImage = (
+  stageWidth: number,
+  stageHeight: number,
+  imageWidth: number,
+  imageHeight: number
+) => {
+  const x = (stageWidth - imageWidth) / 2;
+  const y = (stageHeight - imageHeight) / 2;
+  return { x, y };
+};
+
+
+
 export const cropImage = (img: HTMLImageElement): Promise<string> => {
   return new Promise((resolve, reject) => {
     try {

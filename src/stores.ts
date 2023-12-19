@@ -34,6 +34,7 @@ const initialMetaDataSettings = {
 
 export const userStore: Writable<UserStore> = writable({
   image: initialImageSettings,
+  croppedImage: null,
   metaData: initialMetaDataSettings,
   choosedPosition: undefined,
   choosedFilter: undefined,
@@ -41,7 +42,7 @@ export const userStore: Writable<UserStore> = writable({
 
 export const appStore: Writable<AppStore> = writable({
   imageShouldBeSquare: true,
-  imageHasBeenUploaded: false,
+  automaticMode: true,
 });
 
 export const routeStore: Writable<RouteStore> = writable({

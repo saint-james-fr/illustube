@@ -1,5 +1,6 @@
 interface AppStore {
   imageShouldBeSquare: boolean;
+  automaticMode: boolean;
 }
 
 interface RouteStore {
@@ -8,6 +9,7 @@ interface RouteStore {
 
 interface UserStore {
   image: ImportedImage;
+  croppedImage: HTMLImageElement | null;
   metaData: MetaData;
   choosedPosition?: number;
   choosedFilter?: number;
