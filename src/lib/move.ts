@@ -65,7 +65,7 @@ export const handleWheel = (e: any, img: Konva.Image, layer: Konva.Layer) => {
 
   if (imageWidth < stageWidth && delta > 0) {
     const oldScale = img.scaleX();
-    const newScale = stageWidth / img.width() + 0.1;
+    const newScale = stageWidth / img.width() + 0.01;
     centeredZoomOnWheel(img, newScale, oldScale);
     wheelBlocked = true;
     setTimeout(() => {
