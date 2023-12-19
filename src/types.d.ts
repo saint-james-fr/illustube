@@ -1,7 +1,8 @@
 interface AppStore {
   imageShouldBeSquare: boolean;
-  automaticMode: boolean;
+  backgroundImageCoverAndCenter: boolean;
   pixelRatio: number;
+  automaticMode: boolean;
 }
 
 interface RouteStore {
@@ -25,6 +26,7 @@ interface ImportedImage {
   ratio: number;
   loaded: boolean;
   initialize: (img: HTMLImageElement, file: File) => void;
+  reset: () => void;
 }
 
 interface KonvaStore {

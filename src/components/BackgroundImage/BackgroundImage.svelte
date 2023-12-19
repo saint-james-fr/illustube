@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Image as KonvaImage } from "svelte-konva";
   import { centerImage } from "lib/media";
-  import { userStore, konvaStore, filterSettingsStore } from "stores";
+  import { userStore, konvaStore, filterSettingStore } from "stores";
   import { handleDragMove } from "lib/move";
   import Konva from "konva";
   import { onMount, tick } from "svelte";

@@ -16,7 +16,7 @@ interface LayerType {
 }
 
 interface SettingsType {
-  automaticMode: boolean;
+  backgroundImageCoverAndCenter: boolean;
   imageSettings: ImageSettings;
 }
 

@@ -59,6 +59,8 @@ export const handleWheel = (e: any, img: Konva.Image, layer: Konva.Layer) => {
   e.evt.preventDefault();
   e.cancelBubble = true;
   if (wheelBlocked && delta > 0) return;
+  blockHorizontalMove(img, layer);
+  blockVerticalMove(img, layer);
 
   const imageWidth = img.width() * img.scaleX();
   const stageWidth = layer.getStage().width();
@@ -69,6 +71,7 @@ export const handleWheel = (e: any, img: Konva.Image, layer: Konva.Layer) => {
     y: stageHeight / 2,
   };
 
+  // We have to escape the function if the image is smaller than the stage
   if (imageWidth < stageWidth && delta > 0) {
     const oldScale = img.scaleX();
     const newScale = stageWidth / img.width() + 0.01;
@@ -80,7 +83,8 @@ export const handleWheel = (e: any, img: Konva.Image, layer: Konva.Layer) => {
     }, 1000);
   } else {
     // Zoom Factor
-    const speed = 2;
+    let speed = 2;
+    if (imageWidth - 500 < stageWidth) speed = 1;
     const scaleBy = (-1 * delta * speed) / 1000;
     // Zooming
     const oldScale = img.scaleX();

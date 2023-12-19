@@ -21,7 +21,7 @@ const initialStageConfig = {
 };
 
 const initialSettings = {
-  automaticMode: true,
+  backgroundImageCoverAndCenter: true,
   imageSettings: initialImageSettings,
 };
 

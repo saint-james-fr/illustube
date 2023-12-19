@@ -89,7 +89,7 @@
     aspectRatio = backgroundImage.width / backgroundImage.height;
     let calculatedWidth, calculatedHeight;
 
-    if ($settingsStore.automaticMode) {
+    if ($settingsStore.backgroundImageCoverAndCenter) {
       calculatedWidth = stage.width();
       calculatedHeight = stage.width() / aspectRatio;
     } else {
@@ -103,7 +103,7 @@
   const calculateImagePosition = (width: number, height: number) => {
     let calculatedXPosition, calculatedYPosition;
 
-    if ($settingsStore.automaticMode) {
+    if ($settingsStore.backgroundImageCoverAndCenter) {
       calculatedXPosition = 0;
       calculatedYPosition = (stage.height() / 2) * -1;
     } else {

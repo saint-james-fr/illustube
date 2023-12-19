@@ -2,7 +2,6 @@ import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
 import Konva from "konva";
 
-
 const initialImageSettings = {
   element: new Image(),
   name: "",
@@ -19,6 +18,15 @@ const initialImageSettings = {
     this.height = img.height;
     this.ratio = img.width / img.height;
     this.loaded = true;
+  },
+  reset: function () {
+    this.element = new Image();
+    this.name = "";
+    this.type = "";
+    this.width = 0;
+    this.height = 0;
+    this.ratio = 0;
+    this.loaded = false;
   },
 };
 
@@ -44,8 +52,9 @@ export const userStore: Writable<UserStore> = writable({
 
 export const appStore: Writable<AppStore> = writable({
   imageShouldBeSquare: true,
-  automaticMode: true,
+  backgroundImageCoverAndCenter: true,
   pixelRatio: 3,
+  automaticMode: true,
 });
 
 export const routeStore: Writable<RouteStore> = writable({
@@ -60,7 +69,19 @@ export const konvaStore: Writable<KonvaStore> = writable({
   mainImage: null,
 });
 
-export const filterSettingsStore: Writable<FilterSetting> = writable({
+export const filterSettingsAutomatic = {
+  blurValue: 30,
+  brightnessValue: 0,
+  contrastValue: 0,
+  hueRotateValue: 0,
+  opacityValue: 100,
+  saturateValue: 0,
+  grayscaleValue: 0,
+  pixelateValue: 1,
+  noiseValue: 0,
+};
+
+export const filterSettingsManual = {
   blurValue: 0,
   brightnessValue: 0,
   contrastValue: 0,
@@ -70,7 +91,10 @@ export const filterSettingsStore: Writable<FilterSetting> = writable({
   grayscaleValue: 0,
   pixelateValue: 1,
   noiseValue: 0,
-});
+};
+
+export const filterSettingStore: Writable<FilterSetting> =
+  writable(filterSettingsManual);
 
 const initialTransformer = new Konva.Transformer({
   rotationSnaps: [0, 90, 180, 270],
@@ -92,4 +116,5 @@ const initialTransformer = new Konva.Transformer({
   centeredScaling: true,
   flipEnabled: false,
 });
-export const transformerStore: Writable<Konva.Transformer> = writable(initialTransformer);
+export const transformerStore: Writable<Konva.Transformer> =
+  writable(initialTransformer);

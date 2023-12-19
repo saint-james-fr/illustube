@@ -6,9 +6,8 @@
   import { routeStore } from "stores";
 </script>
 
-{#if $routeStore.currentRoute === "upload"}
-  <Uploader />
-{:else if $routeStore.currentRoute === "metadata"}
+<Uploader />
+{#if $routeStore.currentRoute === "metadata"}
   <MetaData />
 {:else if $routeStore.currentRoute === "modification"}
   <Modification />
