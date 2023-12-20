@@ -3,7 +3,6 @@ interface AppStore {
   backgroundImageCoverAndCenter: boolean;
   pixelRatio: number;
   automaticMode: boolean;
-  mainImageSize: number;
 }
 
 interface RouteStore {

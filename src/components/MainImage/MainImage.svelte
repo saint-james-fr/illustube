@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { userStore, konvaStore, appStore } from "stores";
+  import { userStore, konvaStore, appStore, transformerStore } from "stores";
   import { Image as KonvaImage } from "svelte-konva";
   import { centerImage } from "lib/media";
   import type Konva from "konva";
+  import { onMount } from "svelte";
 
   export let canvasContainer: HTMLDivElement;
   let mainImage: Konva.Image;
@@ -34,8 +35,7 @@
     width = image.width;
     height = image.height;
     // Fix target Dimensions (should be 1/3 of the canvas here)
-    targetWidth =
-      canvasContainer.clientWidth / (9 / $appStore.mainImageSize);
+    targetWidth = canvasContainer.clientWidth / 3;
     targetHeight = targetWidth;
     // Centering the image
     x = centerImage(
@@ -57,7 +57,15 @@
       mainImage.scaleY(scaleRatio);
       $konvaStore.mainImage = mainImage;
     }
+    // attach transformer to the image
+    if (mainImage && $transformerStore) {
+      $transformerStore.nodes([mainImage]);
+    }
   }
+
+  onMount(() => {
+    $konvaStore.mainLayer.add($transformerStore);
+  });
 </script>
 
 <KonvaImage config={{ image, width, height, x, y }} bind:handle={mainImage} />

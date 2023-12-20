@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { appStore, routeStore, userStore } from "stores";
+  import { appStore, routeStore, userStore, transformerStore } from "stores";
   import { validateSize, validateType } from "lib/file";
   import { createImageFromFile, cropImage, validateRatio } from "lib/media";
 
@@ -13,6 +13,9 @@
     if (input.files) {
       file = input.files[0];
       // First we empty actual data from store
+      if ($transformerStore.nodes().length > 0) {
+        $transformerStore.nodes().forEach((node) => node.destroy());
+      }
       userStore.update((store) => {
         store.croppedImage = null;
         store.image.reset();
