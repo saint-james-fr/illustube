@@ -9,15 +9,15 @@
   $: console.log($userStore.image);
 
   const handleFileChange = async (event: Event) => {
-    // First we empty actual data from store
-    userStore.update((store) => {
-      store.croppedImage = null;
-      store.image.reset();
-      return store;
-    });
     const input = event.target as HTMLInputElement;
     if (input.files) {
       file = input.files[0];
+      // First we empty actual data from store
+      userStore.update((store) => {
+        store.croppedImage = null;
+        store.image.reset();
+        return store;
+      });
       // we validate the file
       try {
         validateType(file);
