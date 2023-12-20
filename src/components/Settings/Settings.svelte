@@ -17,6 +17,8 @@
   let pixelRatio: number;
 
   const {
+    minMainImageSize = 2.2,
+    maxMainImageSize = 4.2,
     minBlurValue = 0,
     maxBlurValue = 100,
     minBrightnessValue = -0.5,
@@ -36,6 +38,9 @@
   $: {
     pixelRatio = $appStore.pixelRatio;
     filterRoutine();
+    if ($appStore.mainImageSize) {
+      $konvaStore.mainLayer.redraw();
+    }
   }
 
   // Type union of all filter functions
@@ -174,11 +179,22 @@
         type="checkbox"
         id="backgroundImageCoverAndCenter"
         bind:checked={$appStore.automaticMode}
-        on:input={() => {
+        on:toggle={() => {
           console.log($appStore.automaticMode, $filterSettingStore, filterSettingsManual)
-          console.log("rtoggling")
+          console.log("rr")
           filterRoutine();
         }}
+      />
+    </div>
+    <div class="line">
+      <label for="mainImageSize">Blur</label>
+      <input
+        type="range"
+        id="mainImageSize"
+        min={minMainImageSize}
+        max={maxMainImageSize}
+        step="0.2"
+        bind:value={$appStore.mainImageSize}
       />
     </div>
     {#if !$appStore.automaticMode}

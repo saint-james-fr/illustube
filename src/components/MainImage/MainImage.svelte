@@ -34,7 +34,8 @@
     width = image.width;
     height = image.height;
     // Fix target Dimensions (should be 1/3 of the canvas here)
-    targetWidth = canvasContainer.clientWidth / 3;
+    targetWidth =
+      canvasContainer.clientWidth / (9 / $appStore.mainImageSize);
     targetHeight = targetWidth;
     // Centering the image
     x = centerImage(

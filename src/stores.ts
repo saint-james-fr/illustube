@@ -55,6 +55,7 @@ export const appStore: Writable<AppStore> = writable({
   backgroundImageCoverAndCenter: true,
   pixelRatio: 3,
   automaticMode: true,
+  mainImageSize: 3,
 });
 
 export const routeStore: Writable<RouteStore> = writable({
