@@ -59,7 +59,13 @@
     }
     // attach transformer to the image
     if (mainImage && $transformerStore) {
+      // We empty the transformer
+      $transformerStore.nodes([]);
+      // We add the image to the transformer
       $transformerStore.nodes([mainImage]);
+      console.log($transformerStore.nodes())
+      // We redraw
+      $konvaStore.backgroundLayer.draw();
     }
   }
 

@@ -13,9 +13,6 @@
     if (input.files) {
       file = input.files[0];
       // First we empty actual data from store
-      if ($transformerStore.nodes().length > 0) {
-        $transformerStore.nodes().forEach((node) => node.destroy());
-      }
       userStore.update((store) => {
         store.croppedImage = null;
         store.image.reset();
