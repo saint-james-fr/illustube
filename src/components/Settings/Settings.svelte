@@ -38,9 +38,6 @@
   $: {
     pixelRatio = $appStore.pixelRatio;
     filterRoutine();
-    if ($appStore.mainImageSize) {
-      $konvaStore.mainLayer.redraw();
-    }
   }
 
   // Type union of all filter functions
