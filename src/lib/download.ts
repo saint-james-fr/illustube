@@ -20,7 +20,6 @@ export const exportImage = (stage: Konva.Stage, img: Konva.Image, pixelRatio: nu
   // Obtenez le Transformer de la scène
   const transformer = stage.find("Transformer")[0];
   // Cachez le Transformer
-  console.log(transformer);
   if (transformer) {
     transformer?.visible(false);
     // Redessinez la scène pour que le Transformer disparaisse

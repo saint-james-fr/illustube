@@ -35,9 +35,7 @@
 
   $: {
     pixelRatio = $appStore.pixelRatio;
-    if ($appStore.automaticMode) filterRoutine();
-    console.log(filterSettingsAutomatic, "automatic");
-    console.log(filterSettingsManual, "manual");
+    filterRoutine();
   }
 
   // Type union of all filter functions
@@ -106,8 +104,6 @@
       opacityValue,
     } = config;
 
-    console.log($appStore.automaticMode);
-    console.log(config);
     console.log("applying");
 
     if (blurValue) {
@@ -154,7 +150,8 @@
   const loadSetting = () => {
     const setting = $appStore.automaticMode
       ? filterSettingsAutomatic
-      : filterSettingsManual;
+      : $filterSettingStore;
+    console.log(setting);
     return setting;
   };
 
@@ -177,6 +174,11 @@
         type="checkbox"
         id="backgroundImageCoverAndCenter"
         bind:checked={$appStore.automaticMode}
+        on:input={() => {
+          console.log($appStore.automaticMode, $filterSettingStore, filterSettingsManual)
+          console.log("rtoggling")
+          filterRoutine();
+        }}
       />
     </div>
     {#if !$appStore.automaticMode}
