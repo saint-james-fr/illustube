@@ -35,7 +35,9 @@
 
   $: {
     pixelRatio = $appStore.pixelRatio;
-    updateFilterSettingStore($filterSettingStore);
+    if ($appStore.automaticMode) filterRoutine();
+    console.log(filterSettingsAutomatic, "automatic");
+    console.log(filterSettingsManual, "manual");
   }
 
   // Type union of all filter functions
@@ -104,6 +106,10 @@
       opacityValue,
     } = config;
 
+    console.log($appStore.automaticMode);
+    console.log(config);
+    console.log("applying");
+
     if (blurValue) {
       manageFiltersArray(Konva.Filters.Blur);
       $konvaStore.backgroundImage.blurRadius(blurValue);
@@ -137,34 +143,29 @@
     if (config.opacityValue) {
       $konvaStore.backgroundImage.opacity(opacityValue);
     }
+    $konvaStore.backgroundImage.cache();
+    $konvaStore.backgroundLayer.batchDraw();
   };
 
   const updateFilterSettingStore = (setting: FilterSetting) => {
-    console.log("loading setting");
-    $filterSettingStore = setting;
-  };
-
-  const chooseSetting = () => {
-    if ($appStore.automaticMode) {
-      return filterSettingsAutomatic;
-    } else {
-      return filterSettingsManual;
-    }
+    $filterSettingStore = { ...setting };
   };
 
   const loadSetting = () => {
-    const setting = chooseSetting();
+    const setting = $appStore.automaticMode
+      ? filterSettingsAutomatic
+      : filterSettingsManual;
     return setting;
   };
 
-  const settingRoutine = () => {
+  const filterRoutine = () => {
     const setting = loadSetting();
     updateFilterSettingStore(setting);
     applyFiltersFromSettings(setting);
   };
 
   onMount(() => {
-    settingRoutine();
+    filterRoutine();
   });
 </script>
 
@@ -176,9 +177,6 @@
         type="checkbox"
         id="backgroundImageCoverAndCenter"
         bind:checked={$appStore.automaticMode}
-        on:input={() => {
-          settingRoutine;
-        }}
       />
     </div>
     {#if !$appStore.automaticMode}

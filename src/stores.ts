@@ -93,8 +93,9 @@ export const filterSettingsManual = {
   noiseValue: 0,
 };
 
-export const filterSettingStore: Writable<FilterSetting> =
-  writable(filterSettingsManual);
+export const filterSettingStore: Writable<FilterSetting> = writable({
+  ...filterSettingsManual,
+});
 
 const initialTransformer = new Konva.Transformer({
   rotationSnaps: [0, 90, 180, 270],
