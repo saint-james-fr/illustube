@@ -14,14 +14,13 @@ const manageFiltersArray = (filterToApply: FilterFunction) => {
       return store;
     });
   } else {
-    (() => {
-      if (oldFilters.includes(filterToApply)) return;
+    if (!oldFilters.includes(filterToApply)) {
       konvaStore.update((store) => {
         const newFilters = [...oldFilters, filterToApply];
         store.backgroundImage.filters(newFilters);
         return store;
       });
-    })();
+    }
   }
 };
 
@@ -30,47 +29,55 @@ const cache = (img: any, layer: Konva.Layer) => {
   layer.batchDraw();
 };
 
+const applyFilter = (
+  filterMethod: (value: number) => void,
+  filterValue: number
+) => {
+  konvaStore.update((store) => {
+    filterMethod.call(store.backgroundImage, filterValue);
+    return store;
+  });
+};
+
 export const handleFilterchange = (filterToApply: FilterFunction) => {
   if (!get(konvaStore).backgroundImage) return;
   manageFiltersArray(filterToApply);
   switch (filterToApply) {
     case Konva.Filters.Blur:
-      konvaStore.update((store) => {
-        store.backgroundImage.blurRadius(get(filterSettingStore).blurValue);
-        return store;
-      });
+      applyFilter(
+        get(konvaStore).backgroundImage.blurRadius,
+        get(filterSettingStore).blurValue
+      );
       break;
     case Konva.Filters.Brighten:
-      konvaStore.update((store) => {
-        store.backgroundImage.brightness(
-          get(filterSettingStore).brightnessValue
-        );
-        return store;
-      });
+      applyFilter(
+        get(konvaStore).backgroundImage.brightness,
+        get(filterSettingStore).brightnessValue
+      );
       break;
     case Konva.Filters.Contrast:
-      konvaStore.update((store) => {
-        store.backgroundImage.contrast(get(filterSettingStore).contrastValue);
-        return store;
-      });
+      applyFilter(
+        get(konvaStore).backgroundImage.contrast,
+        get(filterSettingStore).contrastValue
+      );
       break;
     case Konva.Filters.HSL:
-      konvaStore.update((store) => {
-        store.backgroundImage.hue(get(filterSettingStore).hueRotateValue);
-        return store;
-      });
+      applyFilter(
+        get(konvaStore).backgroundImage.hue,
+        get(filterSettingStore).hueRotateValue
+      );
       break;
     case Konva.Filters.Noise:
-      konvaStore.update((store) => {
-        store.backgroundImage.noise(get(filterSettingStore).noiseValue);
-        return store;
-      });
+      applyFilter(
+        get(konvaStore).backgroundImage.noise,
+        get(filterSettingStore).noiseValue
+      );
       break;
     case Konva.Filters.Pixelate:
-      konvaStore.update((store) => {
-        store.backgroundImage.pixelSize(get(filterSettingStore).pixelateValue);
-        return store;
-      });
+      applyFilter(
+        get(konvaStore).backgroundImage.pixelSize,
+        get(filterSettingStore).pixelateValue
+      );
       break;
     default:
       break;
@@ -95,57 +102,36 @@ const applyFiltersFromSettings = (config: FilterSetting) => {
 
   if (blurValue) {
     manageFiltersArray(Konva.Filters.Blur);
-    konvaStore.update((store) => {
-      store.backgroundImage.blurRadius(blurValue);
-      return store;
-    });
+    applyFilter(get(konvaStore).backgroundImage.blurRadius, blurValue);
   }
 
   if (brightnessValue) {
     manageFiltersArray(Konva.Filters.Brighten);
-    konvaStore.update((store) => {
-      store.backgroundImage.brightness(brightnessValue);
-      return store;
-    });
+    applyFilter(get(konvaStore).backgroundImage.brightness, brightnessValue);
   }
 
   if (contrastValue) {
     manageFiltersArray(Konva.Filters.Contrast);
-    konvaStore.update((store) => {
-      store.backgroundImage.contrast(contrastValue);
-      return store;
-    });
+    applyFilter(get(konvaStore).backgroundImage.contrast, contrastValue);
   }
 
   if (hueRotateValue) {
     manageFiltersArray(Konva.Filters.HSL);
-    konvaStore.update((store) => {
-      store.backgroundImage.hue(hueRotateValue);
-      return store;
-    });
+    applyFilter(get(konvaStore).backgroundImage.hue, hueRotateValue);
   }
 
   if (noiseValue) {
     manageFiltersArray(Konva.Filters.Noise);
-    konvaStore.update((store) => {
-      store.backgroundImage.noise(noiseValue);
-      return store;
-    });
+    applyFilter(get(konvaStore).backgroundImage.noise, noiseValue);
   }
 
   if (pixelateValue) {
     manageFiltersArray(Konva.Filters.Pixelate);
-    konvaStore.update((store) => {
-      store.backgroundImage.pixelSize(pixelateValue);
-      return store;
-    });
+    applyFilter(get(konvaStore).backgroundImage.pixelSize, pixelateValue);
   }
 
   if (config.opacityValue) {
-    konvaStore.update((store) => {
-      store.backgroundImage.opacity(config.opacityValue);
-      return store;
-    });
+    applyFilter(get(konvaStore).backgroundImage.opacity, config.opacityValue);
   }
   let backgroundImage = get(konvaStore).backgroundImage;
   let backgroundLayer = get(konvaStore).backgroundLayer;
@@ -172,5 +158,3 @@ export const filterRoutine = () => {
   updateFilterSettingStore(setting);
   applyFiltersFromSettings(setting);
 };
-
-

@@ -17,6 +17,8 @@
 
   let pixelRatio: number;
 
+  $: filterRoutine;
+
   onMount(() => {
     filterRoutine();
   });
