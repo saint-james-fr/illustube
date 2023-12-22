@@ -6,18 +6,20 @@
     filterSettingStore,
     konvaStore,
   } from "stores";
+  import { onMount } from "svelte";
 
   import Konva from "konva";
   import { initFiltersValue } from "lib/settings";
-  import FiltersHandler from "components/FiltersHandler/FiltersHandler.svelte";
+  import { handleFilterchange, filterRoutine } from "lib/filters";
 
   export let stage: Konva.Stage;
   export let img: Konva.Image;
 
   let pixelRatio: number;
 
-  let filterRoutine: () => void;
-  let handleFilterchange: (filterToApply: any) => void;
+  onMount(() => {
+    filterRoutine();
+  });
 
   let {
     minBlurValue,
@@ -40,8 +42,6 @@
     pixelRatio = $appStore.pixelRatio;
   }
 </script>
-
-<FiltersHandler bind:filterRoutine bind:handleFilterchange></FiltersHandler>
 
 <div class="settings">
   <form>
