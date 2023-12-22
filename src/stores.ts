@@ -69,18 +69,6 @@ export const konvaStore: Writable<KonvaStore> = writable({
   mainImage: null,
 });
 
-export const filterSettingsAutomatic = {
-  blurValue: 30,
-  brightnessValue: 0,
-  contrastValue: 0,
-  hueRotateValue: 0,
-  opacityValue: 100,
-  saturateValue: 0,
-  grayscaleValue: 0,
-  pixelateValue: 1,
-  noiseValue: 0,
-};
-
 export const filterSettingsManual = {
   blurValue: 0,
   brightnessValue: 0,

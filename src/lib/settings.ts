@@ -14,3 +14,15 @@ export const initFiltersValue = {
   minPixelateValue: 1,
   maxPixelateValue: 100,
 };
+
+export const filterSettingsAutomatic = {
+  blurValue: 30,
+  brightnessValue: 0,
+  contrastValue: 0,
+  hueRotateValue: 0,
+  opacityValue: 100,
+  saturateValue: 0,
+  grayscaleValue: 0,
+  pixelateValue: 1,
+  noiseValue: 0,
+};

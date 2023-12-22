@@ -1,22 +1,11 @@
 <script lang="ts">
-  import { exportImage } from "lib/download";
-  import {
-    konvaStore,
-    appStore,
-    filterSettingsManual,
-    filterSettingsAutomatic,
-    filterSettingStore,
-  } from "stores";
+  import { konvaStore, appStore, filterSettingStore } from "stores";
+
+  import { filterSettingsAutomatic } from "lib/settings";
 
   import Konva from "konva";
   import { onMount } from "svelte";
-  import { initFiltersValue } from "lib/settings";
 
-  $: {
-    filterRoutine();
-  }
-
-  // Type union of all filter functions
   type FilterFunction = (typeof Konva.Filters)[keyof typeof Konva.Filters];
 
   const manageFiltersArray = (filterToApply: FilterFunction) => {
