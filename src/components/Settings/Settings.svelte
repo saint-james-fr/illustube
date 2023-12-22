@@ -10,6 +10,7 @@
 
   import Konva from "konva";
   import { onMount } from "svelte";
+  import { initFiltersValue } from "lib/settings";
 
   export let stage: Konva.Stage;
   export let img: Konva.Image;
@@ -17,24 +18,21 @@
   let pixelRatio: number;
 
   const {
-    minMainImageSize = 2.2,
-    maxMainImageSize = 4.2,
-    minBlurValue = 0,
-    maxBlurValue = 100,
-    minBrightnessValue = -0.5,
-    maxBrightnessValue = 0.5,
-    minContrastValue = -20,
-    maxContrastValue = 20,
-    minHueRotateValue = -180,
-    maxHueRotateValue = 180,
-    minOpacityValue = 0,
-    maxOpacityValue = 1,
-    minNoiseValue = 0,
-    maxNoiseValue = 0.5,
-    minPixelateValue = 1,
-    maxPixelateValue = 100,
-  } = {};
-
+    minBlurValue,
+    maxBlurValue,
+    minBrightnessValue,
+    maxBrightnessValue,
+    minContrastValue,
+    maxContrastValue,
+    minHueRotateValue,
+    maxHueRotateValue,
+    minOpacityValue,
+    maxOpacityValue,
+    minPixelateValue,
+    maxPixelateValue,
+    minNoiseValue,
+    maxNoiseValue,
+  } = initFiltersValue;
   $: {
     pixelRatio = $appStore.pixelRatio;
     filterRoutine();
@@ -177,23 +175,17 @@
         id="backgroundImageCoverAndCenter"
         bind:checked={$appStore.automaticMode}
         on:toggle={() => {
-          console.log($appStore.automaticMode, $filterSettingStore, filterSettingsManual)
-          console.log("rr")
+          console.log(
+            $appStore.automaticMode,
+            $filterSettingStore,
+            filterSettingsManual
+          );
+          console.log("rr");
           filterRoutine();
         }}
       />
     </div>
-    <div class="line">
-      <label for="mainImageSize">Blur</label>
-      <input
-        type="range"
-        id="mainImageSize"
-        min={minMainImageSize}
-        max={maxMainImageSize}
-        step="0.2"
-        bind:value={$appStore.mainImageSize}
-      />
-    </div>
+
     {#if !$appStore.automaticMode}
       <div class="line">
         <label for="blurValue">Blur</label>

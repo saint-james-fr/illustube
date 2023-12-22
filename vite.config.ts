@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   build: {
-    sourcemap: false,
+    sourcemap: true,
     outDir: "./dist",
   },
   clearScreen: false,
@@ -43,8 +43,5 @@ export default defineConfig({
       public: `${path.resolve(__dirname, "./public")}`,
       config: `${path.resolve(__dirname, "./src/config")}`,
     },
-  },
-  optimizeDeps: {
-    exclude: ["tinro"],
   },
 });
