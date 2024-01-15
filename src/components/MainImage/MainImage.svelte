@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { userStore, konvaStore, appStore, transformerStore } from "stores";
+  import { userStore, konvaStore, appStore } from "stores";
   import { Image as KonvaImage, Transformer } from "svelte-konva";
   import { centerImage } from "lib/media";
   import type Konva from "konva";

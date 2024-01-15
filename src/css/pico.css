@@ -1805,6 +1805,10 @@ details summary:not([role]) {
 details summary::-webkit-details-marker {
   display: none;
 }
+::marker {
+  display: none;
+
+}
 details summary::marker {
   display: none;
 }

@@ -2,16 +2,20 @@
   import { appStore, routeStore } from "stores";
   import { upload } from "lib/upload";
 
-  const handleManualMode = () => {
+  const enterApplication = (e: Event) => {
     $routeStore.siteRoute = "application";
+    const files = (e.target as HTMLInputElement).files;
+    if (files) upload(files);
+  };
+
+  const handleManualMode = (e: Event) => {
+    $routeStore.siteRoute = "application";
+    enterApplication(e);
   };
 
   const handleAutomaticMode = (e: Event) => {
-    $routeStore.siteRoute = "application";
     $appStore.automaticMode = true;
-    const files = (e.target as HTMLInputElement).files;
-    if (files) upload(files);
-
+    enterApplication(e);
   };
 </script>
 
@@ -22,17 +26,18 @@
         <h1>Video backgrounds made easy</h1>
         <p>
           Generate thumbnails and background for your youtube uploads in a
-          breeze.<br/>Free and easy.
+          breeze.<br />Free and easy.
         </p>
         <div class="hero_buttons">
-          <button on:click={handleManualMode}>Get started</button>
+          <label for="manualInput"><span role="button">Get started</span></label
+          >
+          <input id="manualInput" type="file" on:input={handleManualMode} />
           <label for="automaticInput"
             ><span role="button">automatic mode</span></label
           >
           <input
             id="automaticInput"
             type="file"
-            class="buttonsecondary"
             on:input={handleAutomaticMode}
           />
         </div>
@@ -55,12 +60,6 @@
     height: 100%;
   }
 
-  button {
-    font-weight: bold;
-    text-transform: uppercase;
-    width: 200px;
-  }
-
   .hero_element {
     height: 100%;
     display: flex;
@@ -70,7 +69,7 @@
 
     p {
       font-weight: bold;
-      text-align: center
+      text-align: center;
     }
   }
 
@@ -88,7 +87,8 @@
     gap: 2rem;
   }
 
-  #automaticInput {
+  #automaticInput,
+  #manualInput {
     display: none;
   }
 </style>

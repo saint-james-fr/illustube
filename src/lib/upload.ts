@@ -12,7 +12,7 @@ import { initialKonvaSettings, initialFilterSettings } from "lib/default";
 import { filterRoutine } from "lib/filters";
 
 export const upload = async (files: FileList) => {
-  const nextRoute = "modification";
+  const nextRoute = "settings";
 
   const emptyDataFromStores = () => {
     userStore.update((store) => {

@@ -8,10 +8,10 @@ export const validateType = (file: File) => {
 
 export const validateSize = (file: File) => {
   const mbToBytes = (mb: number): number => {
-    return mb * 1024 * 1024;
+    return mb * 1024 * 1024
   };
   // 10mb limit
-  const maxSizeInBytes = mbToBytes(10);
+  const maxSizeInBytes = mbToBytes(15);
   if (file.size > maxSizeInBytes) {
     alert("File too large");
     throw new Error("File too large");

@@ -7,14 +7,7 @@
   import { initFiltersValue } from "lib/default";
   import { handleFilterchange } from "lib/filters";
 
-  export let stage: Konva.Stage;
-  export let img: Konva.Image;
-
   let pixelRatio: number;
-
-  const handleReset = () => {
-    // TODO : reset all filters
-  };
 
   let {
     minBlurValue,
@@ -141,14 +134,6 @@
     {/if}
   </form>
 </div>
-<button
-  class="settings_button"
-  on:click={() => {
-    exportImage(stage, img, pixelRatio);
-  }}>DOWNLOAD</button
->
-<button class="settings_button outline" on:click={handleReset}>RESET</button>
-
 <style lang="scss">
   .settings {
     width: 100%;
@@ -185,7 +170,5 @@
       width: 100%;
     }
   }
-  .settings_button {
-    max-width: 90% !important;
-  }
+
 </style>

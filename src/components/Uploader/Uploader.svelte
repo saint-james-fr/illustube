@@ -1,5 +1,6 @@
 <script lang="ts">
   import { upload } from "lib/upload";
+  import uploadIcon from "assets/icons/upload.png";
 
   const handleUpload = (e: Event) => {
     const files = (e.target as HTMLInputElement).files;
@@ -8,7 +9,7 @@
 </script>
 
 <form>
-  <label for="imageUpload" role="button">UPLOAD</label>
+  <label for="imageUpload"><img src={uploadIcon} alt="upload icon" /></label>
   <input
     type="file"
     id="imageUpload"

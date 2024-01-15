@@ -1,6 +1,6 @@
 import { konvaStore, appStore, filterSettingStore } from "stores";
 import { get } from "svelte/store";
-import { filterSettingsAutomatic } from "lib/default";
+import { filterSettingsAutomatic, initialFilterSettings } from "lib/default";
 import Konva from "konva";
 
 type FilterFunction = (typeof Konva.Filters)[keyof typeof Konva.Filters];
@@ -25,7 +25,7 @@ const manageFiltersArray = (filterToApply: FilterFunction) => {
 };
 
 const cache = (img: any, layer: Konva.Layer) => {
-  img.cache();
+  img.cache({ pixelRatio: 0.5 });
   layer.batchDraw();
 };
 
@@ -148,6 +148,15 @@ const loadSetting = () => {
   return setting;
 };
 
+export const resetFilters = () => {
+  filterSettingStore.set(initialFilterSettings);
+
+  // Réinitialisez les filtres de l'image de fond
+  konvaStore.update((store) => {
+    store.backgroundImage.filters([]);
+    return store;
+  });
+};
 export const filterRoutine = () => {
   const setting = loadSetting();
   updateFilterSettingStore(setting);
