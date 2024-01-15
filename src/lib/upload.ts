@@ -1,4 +1,4 @@
-import { appStore, routeStore, userStore } from "stores";
+import { appStore, applicationRouteStore, userStore } from "stores";
 import { get } from "svelte/store";
 import { validateSize, validateType } from "lib/file";
 import { createImageFromFile, cropImage } from "lib/media";
@@ -38,7 +38,7 @@ export const upload = async (event: Event) => {
   };
 
   const updateRoute = () => {
-    routeStore.update((store) => {
+    applicationRouteStore.update((store) => {
       store.currentRoute = nextRoute;
       return store;
     });
