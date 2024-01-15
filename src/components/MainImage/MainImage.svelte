@@ -1,9 +1,10 @@
 <script lang="ts">
   import { userStore, konvaStore, appStore, transformerStore } from "stores";
-  import { Image as KonvaImage } from "svelte-konva";
+  import { Image as KonvaImage, Transformer } from "svelte-konva";
   import { centerImage } from "lib/media";
   import type Konva from "konva";
-  import { onMount } from "svelte";
+  import { initialTransformerSettings } from "lib/default";
+  // import MainImageTransformers from "components/MainImageTransformers/MainImageTransformers.svelte";
 
   export let canvasContainer: HTMLDivElement;
   let mainImage: Konva.Image;
@@ -15,6 +16,8 @@
   let x = 0;
   let y = 0;
   let scaleRatio;
+
+  let transformer: Konva.Transformer;
 
   // We should scale the image to fit the canvas so we maintain the aspect ratio
   // and also original quality of the image
@@ -30,50 +33,38 @@
       $appStore.imageShouldBeSquare && $userStore.croppedImage
         ? $userStore.croppedImage
         : $userStore.image.element;
-
-    // Get the image dimensions
-    width = image.width;
-    height = image.height;
-    // Fix target Dimensions (should be 1/3 of the canvas here)
-    targetWidth = canvasContainer.clientWidth / 3;
-    targetHeight = targetWidth;
-    // Centering the image
-    x = centerImage(
-      canvasContainer.clientWidth,
-      canvasContainer.clientHeight,
-      targetWidth,
-      targetHeight
-    ).x;
-    y = centerImage(
-      canvasContainer.clientWidth,
-      canvasContainer.clientHeight,
-      targetWidth,
-      targetHeight
-    ).y;
-    // Scale the image
+    if (image) {
+      // Get the image dimensions
+      width = image.width;
+      height = image.height;
+      // Fix target Dimensions (should be 1/3 of the canvas here)
+      targetWidth = canvasContainer.clientWidth / 3;
+      targetHeight = targetWidth;
+      // Centering the image
+      x = centerImage(
+        canvasContainer.clientWidth,
+        canvasContainer.clientHeight,
+        targetWidth,
+        targetHeight
+      ).x;
+      y = centerImage(
+        canvasContainer.clientWidth,
+        canvasContainer.clientHeight,
+        targetWidth,
+        targetHeight
+      ).y;
+    }
     if (mainImage) {
+      // Scale the image
       scaleRatio = findScaleRatio(width, targetWidth);
       mainImage.scaleX(scaleRatio);
       mainImage.scaleY(scaleRatio);
       $konvaStore.mainImage = mainImage;
-    }
-    // attach transformer to the image
-    if (mainImage) {
-      // We empty the transformer
-      $transformerStore.nodes([]);
-      // We add the image to the transformer
-      $transformerStore.nodes([mainImage]);
-      // We redraw
-      $konvaStore.backgroundLayer.draw();
+      transformer.nodes([mainImage]);
     }
   }
-
-  onMount(() => {
-    $konvaStore.mainLayer.add($transformerStore);
-    return () => {
-      $konvaStore.mainLayer.remove($transformerStore);
-    };
-  });
 </script>
 
-<!-- <KonvaImage config={{ image, width, height, x, y }} bind:handle={mainImage} /> -->
+<Transformer config={initialTransformerSettings} bind:handle={transformer} />
+
+<KonvaImage config={{ image, width, height, x, y }} bind:handle={mainImage} />

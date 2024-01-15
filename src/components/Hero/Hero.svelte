@@ -19,10 +19,10 @@
   <div class="mycontainer">
     <div class="fullheight">
       <div class="hero_element">
-        <h1>Video backgrounds made easy!</h1>
+        <h1>Video backgrounds made easy</h1>
         <p>
           Generate thumbnails and background for your youtube uploads in a
-          breeze. Free and easy.
+          breeze.<br/>Free and easy.
         </p>
         <div class="hero_buttons">
           <button on:click={handleManualMode}>Get started</button>
@@ -70,6 +70,7 @@
 
     p {
       font-weight: bold;
+      text-align: center
     }
   }
 

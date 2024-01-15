@@ -1,5 +1,5 @@
 import Konva from "konva";
-
+import type { TransformerConfig } from "konva/lib/shapes/Transformer";
 
 export const initialImageSettings: ImportedImage = {
   element: new Image(),
@@ -82,7 +82,7 @@ export const initialFilterSettings = {
   noiseValue: 0,
 };
 
-export const initialTransformerSettings = new Konva.Transformer({
+export const initialTransformerSettings: TransformerConfig = {
   rotationSnaps: [0, 90, 180, 270],
   rotateAnchorOffset: 20,
   padding: 10,
@@ -101,7 +101,7 @@ export const initialTransformerSettings = new Konva.Transformer({
   anchorSize: 10,
   centeredScaling: true,
   flipEnabled: false,
-});
+};
 
 export const initFiltersValue = {
   minBlurValue: 0,
