@@ -105,7 +105,7 @@ export const initialTransformerSettings: TransformerConfig = {
 
 export const initFiltersValue = {
   minBlurValue: 0,
-  maxBlurValue: 100,
+  maxBlurValue: 45,
   minBrightnessValue: -0.5,
   maxBrightnessValue: 0.5,
   minContrastValue: -20,

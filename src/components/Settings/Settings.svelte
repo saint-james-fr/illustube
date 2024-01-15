@@ -43,7 +43,7 @@
           max={maxBlurValue}
           step="0.3"
           bind:value={$filterSettingStore.blurValue}
-          on:change={() => handleFilterchange(Konva.Filters.Blur)}
+          on:input={() => handleFilterchange(Konva.Filters.Blur)}
         />
       </div>
       <div class="line">
