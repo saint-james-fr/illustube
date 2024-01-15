@@ -2,6 +2,7 @@
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
     "paths": {
+      "css/*": ["./src/css/*"],
       "components/*": ["./src/components/*"],
       "stores": ["./src/stores.ts"],
       "lib/*": ["./src/lib/*"],

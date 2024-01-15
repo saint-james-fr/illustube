@@ -36,6 +36,7 @@ export default defineConfig({
   resolve: {
     alias: {
       src: path.resolve(__dirname, "./src/"),
+      css: path.resolve(__dirname, "./src/css/"),
       components: `${path.resolve(__dirname, "./src/components/")}`,
       stores: `${path.resolve(__dirname, "./src/stores.ts")}`,
       lib: `${path.resolve(__dirname, "./src/lib/")}`,

@@ -2,19 +2,16 @@
   import { upload } from "lib/upload";
 </script>
 
-<div class="uploader_container">
-  <form>
-    <label for="imageUpload">Upload an image:</label>
-    <input type="file" id="imageUpload" accept="image/*" on:change={upload} />
-  </form>
-</div>
+<form>
+  <label for="imageUpload" role="button">UPLOAD</label>
+  <input type="file" id="imageUpload" accept="image/*" on:change={upload} />
+</form>
 
 <style lang="scss">
-  .uploader_container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  #imageUpload {
+    display: none;
+  }
+  label {
+    cursor: pointer;
   }
 </style>

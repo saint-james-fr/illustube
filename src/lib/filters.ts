@@ -1,6 +1,6 @@
 import { konvaStore, appStore, filterSettingStore } from "stores";
 import { get } from "svelte/store";
-import { filterSettingsAutomatic } from "lib/settings";
+import { filterSettingsAutomatic } from "lib/default";
 import Konva from "konva";
 
 type FilterFunction = (typeof Konva.Filters)[keyof typeof Konva.Filters];

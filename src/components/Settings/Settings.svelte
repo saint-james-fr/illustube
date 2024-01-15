@@ -1,15 +1,10 @@
 <script lang="ts">
   import { exportImage } from "lib/download";
-  import {
-    appStore,
-    filterSettingsManual,
-    filterSettingStore,
-    konvaStore,
-  } from "stores";
+  import { appStore, filterSettingStore, konvaStore } from "stores";
   import { onMount } from "svelte";
 
   import Konva from "konva";
-  import { initFiltersValue } from "lib/settings";
+  import { initFiltersValue } from "lib/default";
   import { handleFilterchange, filterRoutine } from "lib/filters";
 
   export let stage: Konva.Stage;
@@ -18,6 +13,10 @@
   let pixelRatio: number;
 
   $: if ($filterSettingStore) filterRoutine;
+
+  const handleReset = () => {
+    // TODO : reset all filters
+  };
 
   onMount(() => {
     filterRoutine();
@@ -47,27 +46,9 @@
 
 <div class="settings">
   <form>
-    <div class="line">
-      <label for="backgroundImageCoverAndCenter">Automatic</label>
-      <input
-        type="checkbox"
-        id="backgroundImageCoverAndCenter"
-        bind:checked={$appStore.automaticMode}
-        on:toggle={() => {
-          console.log(
-            $appStore.automaticMode,
-            $filterSettingStore,
-            filterSettingsManual
-          );
-          console.log("rr");
-          filterRoutine();
-        }}
-      />
-    </div>
-
     {#if !$appStore.automaticMode}
       <div class="line">
-        <label for="blurValue">Blur</label>
+        <label for="blurValue">blur</label>
         <input
           type="range"
           id="blurValue"
@@ -155,67 +136,62 @@
           on:input={() => handleFilterchange(Konva.Filters.Noise)}
         />
       </div>
+      <div class="row">
+        <input
+          type="checkbox"
+          id="hideMainImage"
+          bind:checked={$appStore.hideMainImage}
+        />
+        <label for="hideMainImage">Hide center image</label>
+      </div>
     {/if}
   </form>
-  <button
-    on:click={() => {
-      exportImage(stage, img, pixelRatio);
-    }}>Download</button
-  >
 </div>
+<button
+  class="settings_button"
+  on:click={() => {
+    exportImage(stage, img, pixelRatio);
+  }}>DOWNLOAD</button
+>
+<button class="settings_button outline" on:click={handleReset}>RESET</button>
 
 <style lang="scss">
   .settings {
     width: 100%;
     height: 100%;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: $workzone-settings;
 
     form {
-      width: 100%;
       height: 100%;
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: 1rem;
+      flex-direction: column;
     }
 
-    input[type="range"] {
-      width: 100%;
-      height: 20px;
-      background-color: $workzone-settings-button;
-      border: none;
-      -webkit-appearance: none;
-      border-radius: 1px;
-      outline: none;
-      padding: 0;
-      cursor: pointer;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 8px;
-      height: 20px;
-      border: none;
-      border-radius: 1px;
-      background: $workzone-border;
-      cursor: pointer;
+    label {
+      text-transform: capitalize;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      padding-top: 0.3rem;
     }
 
     .line {
-      font-size: 0.8rem;
       display: flex;
       flex-direction: column;
+      align-items: center;
       width: 100%;
-      margin-bottom: 1rem;
-
       & > label {
         width: 100%;
       }
     }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+  .settings_button {
+    max-width: 90% !important;
   }
 </style>

@@ -27,7 +27,6 @@ export const exportImage = (stage: Konva.Stage, img: Konva.Image, pixelRatio: nu
   }
   // Exportez la scène
   // 
-  // TODO: HD MODe
   const uri = stage.toDataURL({ pixelRatio});
   handleDownload(uri, name);
   // Réaffichez le Transformer

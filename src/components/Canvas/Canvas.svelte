@@ -1,6 +1,6 @@
 <script lang="ts">
   import BackgroundImage from "components/BackgroundImage/BackgroundImage.svelte";
-  import { userStore, konvaStore } from "stores";
+  import { userStore, konvaStore, appStore } from "stores";
   import { handleWheel } from "lib/move";
   import { Stage, Layer } from "svelte-konva";
   import type Konva from "konva";
@@ -18,6 +18,13 @@
     $konvaStore.stage = stage;
     $konvaStore.backgroundLayer = backgroundLayer;
     $konvaStore.mainLayer = mainLayer;
+    if (mainLayer) {
+      if ($appStore.hideMainImage) {
+        mainLayer.hide();
+      } else {
+        mainLayer.show();
+      }
+    }
   }
 </script>
 
@@ -56,11 +63,11 @@
 
 <style lang="scss">
   .canvas_container {
-    margin:1rem auto;
     width: 100%;
     aspect-ratio: 16 / 9;
     background-color: $black;
-    max-width: 1000px;
     transform-origin: center center;
+    display: flex;
+    align-items: center;
   }
 </style>

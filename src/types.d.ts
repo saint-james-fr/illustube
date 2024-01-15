@@ -3,6 +3,7 @@ interface AppStore {
   backgroundImageCoverAndCenter: boolean;
   pixelRatio: number;
   automaticMode: boolean;
+  hideMainImage: boolean;
 }
 
 interface RouteStore {
@@ -50,16 +51,6 @@ interface MetaData {
   showAlbum: boolean;
   showYear: boolean;
 }
-
-// interface Position {
-//   id: number;
-//   x: number;
-//   y: number;
-//   width: number;
-//   height: number;
-// }
-
-// type PositionsMap = Map<number, Position>;
 
 interface FilterSetting {
   blurValue: number;
