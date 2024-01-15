@@ -7,7 +7,8 @@ interface AppStore {
 }
 
 interface RouteStore {
-  currentRoute: "upload" | "metadata" | "modification" | "filter" | "download";
+  siteRoute: "home" | "application" | "credits";
+  applicationRoute: "upload" | "metadata" | "modification" | "filter" | "download";
 }
 
 interface UserStore {

@@ -95,8 +95,6 @@ const applyFiltersFromSettings = (config: FilterSetting) => {
     opacityValue,
   } = config;
 
-  console.log("applying");
-
   if (blurValue) {
     manageFiltersArray(Konva.Filters.Blur);
     setter(get(konvaStore).backgroundImage.blurRadius, blurValue);
@@ -143,10 +141,10 @@ const updateFilterSettingStore = (setting: FilterSetting) => {
 };
 
 const loadSetting = () => {
+  console.log("loading setting, automatic?", get(appStore).automaticMode);
   const setting = get(appStore).automaticMode
     ? filterSettingsAutomatic
     : get(filterSettingStore);
-  console.log(setting);
   return setting;
 };
 

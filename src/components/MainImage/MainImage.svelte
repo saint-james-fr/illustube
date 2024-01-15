@@ -58,7 +58,7 @@
       $konvaStore.mainImage = mainImage;
     }
     // attach transformer to the image
-    if (mainImage && $transformerStore) {
+    if (mainImage) {
       // We empty the transformer
       $transformerStore.nodes([]);
       // We add the image to the transformer
@@ -70,7 +70,10 @@
 
   onMount(() => {
     $konvaStore.mainLayer.add($transformerStore);
+    return () => {
+      $konvaStore.mainLayer.remove($transformerStore);
+    };
   });
 </script>
 
-<KonvaImage config={{ image, width, height, x, y }} bind:handle={mainImage} />
+<!-- <KonvaImage config={{ image, width, height, x, y }} bind:handle={mainImage} /> -->

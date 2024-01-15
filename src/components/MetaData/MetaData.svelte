@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { applicationRouteStore, userStore } from "stores";
+  import { routeStore, userStore } from "stores";
 
   const handleSubmit = (event: Event) => {
     event.preventDefault();
-    $applicationRouteStore.currentRoute = "position";
+    $routeStore.applicationRoute = "position";
   };
 </script>
 

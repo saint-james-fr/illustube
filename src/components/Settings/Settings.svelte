@@ -5,22 +5,16 @@
 
   import Konva from "konva";
   import { initFiltersValue } from "lib/default";
-  import { handleFilterchange, filterRoutine } from "lib/filters";
+  import { handleFilterchange } from "lib/filters";
 
   export let stage: Konva.Stage;
   export let img: Konva.Image;
 
   let pixelRatio: number;
 
-  $: if ($filterSettingStore) filterRoutine;
-
   const handleReset = () => {
     // TODO : reset all filters
   };
-
-  onMount(() => {
-    filterRoutine();
-  });
 
   let {
     minBlurValue,

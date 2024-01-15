@@ -1,16 +1,37 @@
-import { appStore, applicationRouteStore, userStore } from "stores";
+import {
+  appStore,
+  konvaStore,
+  routeStore,
+  userStore,
+  filterSettingStore,
+} from "stores";
 import { get } from "svelte/store";
 import { validateSize, validateType } from "lib/file";
 import { createImageFromFile, cropImage } from "lib/media";
+import { initialKonvaSettings, initialFilterSettings } from "lib/default";
+import { filterRoutine } from "lib/filters";
 
-export const upload = async (event: Event) => {
+export const upload = async (files: FileList) => {
   const nextRoute = "modification";
 
-  const emptyDataFromStore = () => {
+  const emptyDataFromStores = () => {
     userStore.update((store) => {
       store.croppedImage = null;
       store.image.reset();
       return store;
+    });
+
+    appStore.update((store) => {
+      store.hideMainImage = false;
+      return store;
+    });
+
+    konvaStore.update(() => {
+      return initialKonvaSettings;
+    });
+
+    filterSettingStore.update(() => {
+      return initialFilterSettings;
     });
   };
 
@@ -38,31 +59,35 @@ export const upload = async (event: Event) => {
   };
 
   const updateRoute = () => {
-    applicationRouteStore.update((store) => {
-      store.currentRoute = nextRoute;
+    if (get(routeStore)?.applicationRoute === nextRoute) return;
+
+    routeStore.update((store) => {
+      store.applicationRoute = nextRoute;
       return store;
     });
   };
 
-  const input = event.target as HTMLInputElement;
-  if (input.files) {
-    let file = input.files[0];
-    // we empty the data from the store
-    emptyDataFromStore();
-    try {
-      validateType(file);
-      validateSize(file);
-      // we create an image from the file
-      const createdImage = await createImageFromFile(file);
-      // we update the store
-      updateImageFromStore(createdImage, file);
+  let file = files[0];
+  // we empty the data from the stores
+  emptyDataFromStores();
+  console.log(get(appStore)?.automaticMode);
+  try {
+    validateType(file);
+    validateSize(file);
+    // we create an image from the file
+    const createdImage = await createImageFromFile(file);
+    console.log("created image", createdImage);
+    // we update the store
+    console.log("updating image from store");
+    updateImageFromStore(createdImage, file);
 
-      if (get(appStore)?.imageShouldBeSquare) {
-        await handleCroppedImageCreation(createdImage);
-      }
-      updateRoute();
-    } catch (error) {
-      console.error(error);
+    if (get(appStore)?.imageShouldBeSquare) {
+      console.log("image should be square");
+      await handleCroppedImageCreation(createdImage);
     }
+    updateRoute();
+    filterRoutine();
+  } catch (error) {
+    console.error(error);
   }
 };

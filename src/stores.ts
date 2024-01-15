@@ -9,7 +9,7 @@ export const userStore: Writable<UserStore> = writable(initialUserSettings);
 
 export const appStore: Writable<AppStore> = writable(initialAppSettings);
 
-export const applicationRouteStore: Writable<RouteStore> = writable(initialRouteSettings);
+export const routeStore: Writable<RouteStore> = writable(initialRouteSettings);
 
 export const konvaStore: Writable<KonvaStore> = writable(initialKonvaSettings);
 

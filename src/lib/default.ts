@@ -58,7 +58,8 @@ export const initialAppSettings: AppStore = {
 };
 
 export const initialRouteSettings: RouteStore = {
-  currentRoute: "upload",
+  siteRoute: "home",
+  applicationRoute: "upload",
 };
 
 export const initialKonvaSettings: KonvaStore = {

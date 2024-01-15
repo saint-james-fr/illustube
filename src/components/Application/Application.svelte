@@ -3,21 +3,23 @@
   import Uploader from "components/Uploader/Uploader.svelte";
   import MetaData from "components/MetaData/MetaData.svelte";
   import Modification from "components/Modification/Modification.svelte";
-  import { applicationRouteStore } from "stores";
-  import "css/pico.min.css";
+  import { routeStore } from "stores";
+  import "css/pico.css";
 </script>
 
-<div class="application_container">
-  <div class="settings_container">
-    <Uploader />
-    {#if $applicationRouteStore.currentRoute === "metadata"}
-      <MetaData />
-    {:else if $applicationRouteStore.currentRoute === "modification"}
-      <Modification />
-    {/if}
-  </div>
-  <div class="drawing_zone">
-    <Canvas />
+<div class="page_container">
+  <div class="application_container">
+    <div class="settings_container">
+      <Uploader />
+      {#if $routeStore.applicationRoute === "metadata"}
+        <MetaData />
+      {:else if $routeStore.applicationRoute === "modification"}
+        <Modification />
+      {/if}
+    </div>
+    <div class="drawing_zone">
+      <Canvas />
+    </div>
   </div>
 </div>
 
@@ -26,8 +28,7 @@
     display: grid;
     grid-template-columns: 300px auto;
     width: 100%;
-    aspect-ratio: 16 / 9;
-    height: 100%;
+    height: 100vh;
     max-height: 940px;
   }
 
@@ -36,8 +37,9 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-inline: 5%;
+    padding-inline: 10%;
     padding-top: 2rem;
+    background: $secondary;
   }
   .drawing_zone {
     background-color: $black;
