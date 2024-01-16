@@ -2,26 +2,48 @@
 // MainImage: image principale au centre
 // BackgroundImage: image de fond, en arrière plan
 
+
 /**
- * On stocke ici les réglages globaux de l'application, non liés aux imports de l'utilisateur ou à ses choix.
- */interface AppStore {
+ * On stocke ici les routes de l'application.
+ */
+interface RouteStore {
+  siteRoute: "home" | "application" | "credits";
+}
+
+
+/**
+ * On stocke ici les réglages globaux de l'application, non liés aux interactions de l'utilisateur.
+ */
+interface AppStore {
   mainImageShouldBeSquare: boolean;
   pixelRatio: number;
   downscaleThreshold: number;
 }
 
-interface RouteStore {
-  siteRoute: "home" | "application" | "credits";
-}
 
+/**
+ * On stocke ici les réglages de l'application, liés aux interactions de l'utilisateur.
+ */
 interface UserStore {
-  size: number,
+  size: number;
   image: ImportedImage;
   croppedImage: HTMLImageElement | null;
   automaticMode: boolean;
   hideMainImage: boolean;
 }
 
+
+/**
+ * On stocke ici les images importées.
+ */
+interface imageStore {
+  mainImage: ImportedImage;
+  backgroundImage: ImportedImage;
+}
+
+/**
+ * C'est le modèle d'une image importée par l'utilisateur dans l'application avant qu'elle ne soit traitée par Konva.
+ */
 interface ImportedImage {
   element: HTMLImageElement;
   name: string;
@@ -34,6 +56,9 @@ interface ImportedImage {
   reset: () => void;
 }
 
+/**
+ * On stocke ici les réglages liés à Konva (stage, layers, images, etc.)
+ */
 interface KonvaStore {
   stage: Konva.Stage | null;
   backgroundLayer: Konva.Layer | null;
@@ -42,20 +67,9 @@ interface KonvaStore {
   mainLayer: Konva.Layer | null;
 }
 
-interface ImageManipulation {}
-
-// interface MetaData {
-//   useMetaData: boolean;
-//   artist: string;
-//   title: string;
-//   album: string;
-//   year: string;
-//   showArtist: boolean;
-//   showTitle: boolean;
-//   showAlbum: boolean;
-//   showYear: boolean;
-// }
-
+/**
+ * On stocke ici les choix de l'utilisateur quant aux filtres de Konva.
+ */
 interface FilterSetting {
   blurValue: number;
   brightnessValue: number;
@@ -67,5 +81,3 @@ interface FilterSetting {
   pixelateValue: number;
   noiseValue: number;
 }
-
-type FilterSettingsMap = Map<number, FilterSetting>;

@@ -13,7 +13,7 @@
   import baguetteIcon from "assets/icons/baguette.png";
   import backgroundIcon from "assets/icons/background.png";
   import { exportImage } from "lib/download";
-  import { filterRoutine, resetFilters } from "lib/filters";
+  import { filterRoutine, resetFilters } from "lib/konva/filters";
   import { validateSize } from "lib/file";
 
   const handleHome = () => {

@@ -1,6 +1,8 @@
 import type Konva from "konva";
 
-const zoom = (
+// We handle here the Konva movements (drag, zoom, etc.) 
+
+const konvaZoom = (
   img: Konva.Image,
   newScale: number,
   oldScale: number,
@@ -75,7 +77,7 @@ export const handleWheel = (e: any, img: Konva.Image, layer: Konva.Layer) => {
   if (imageWidth < stageWidth && delta > 0) {
     const oldScale = img.scaleX();
     const newScale = stageWidth / img.width() + 0.01;
-    const { newPos } = zoom(img, newScale, oldScale, cursorPos);
+    const { newPos } = konvaZoom(img, newScale, oldScale, cursorPos);
     img.position(newPos);
     wheelBlocked = true;
     setTimeout(() => {
@@ -89,7 +91,7 @@ export const handleWheel = (e: any, img: Konva.Image, layer: Konva.Layer) => {
     // Zooming
     const oldScale = img.scaleX();
     let newScale = oldScale + scaleBy;
-    const { newPos } = zoom(img, newScale, oldScale, cursorPos);
+    const { newPos } = konvaZoom(img, newScale, oldScale, cursorPos);
     img.position(newPos);
   }
   layer.batchDraw();

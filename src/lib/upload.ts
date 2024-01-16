@@ -1,91 +1,77 @@
-import {
-  appStore,
-  konvaStore,
-  userStore,
-  filterSettingStore,
-} from "stores";
+import { appStore, konvaStore, userStore, filterSettingStore } from "stores";
 import { get } from "svelte/store";
 import { validateSize, validateType } from "lib/file";
 import { createImageFromFile, cropImage } from "lib/media";
 import { initialKonvaSettings, initialFilterSettings } from "lib/default";
-import { filterRoutine } from "lib/filters";
+import { filterRoutine } from "lib/konva/filters";
 
-export const upload = async (files: FileList) => {
-  const emptyDataFromStores = () => {
-    userStore.update((store) => {
-      store.size = 0;
-      store.croppedImage = null;
-      store.image.reset();
-      return store;
-    });
+const resetStores = () => {
+  userStore.update((store) => {
+    // TODO : why this line?
+    store.croppedImage = null;
+    store.image.reset();
+    return store;
+  });
 
-    konvaStore.update(() => {
-      return initialKonvaSettings;
-    });
+  konvaStore.update(() => {
+    return initialKonvaSettings;
+  });
 
-    filterSettingStore.update(() => {
-      return initialFilterSettings;
-    });
+  filterSettingStore.update(() => {
+    return initialFilterSettings;
+  });
+};
+
+const initializeImportedImageAndStoreIt = (
+  image: HTMLImageElement,
+  file: File
+) => {
+  userStore.update((store) => {
+    store.image?.initialize(image, file);
+    return store;
+  });
+};
+
+const updateCroppedImageFromStore = (image: HTMLImageElement) => {
+  userStore.update((store) => {
+    store.croppedImage = image;
+    return store;
+  });
+};
+const handleCroppedImageCreation = async (image: HTMLImageElement) => {
+  // If we need to crop, we crop then assign the cropped image to the store for later use
+  const croppedImageUrl = await cropImage(image);
+  const croppedImage = new Image();
+  croppedImage.onload = () => {
+    updateCroppedImageFromStore(croppedImage);
   };
+  croppedImage.src = croppedImageUrl;
+};
 
-  const initializeImportedImageAndStoreIt = (image: HTMLImageElement, file: File) => {
-    userStore.update((store) => {
-      store.image?.initialize(image, file);
-      return store;
-    });
-  };
+const storeSize = (size: number) => {
+  userStore.update((store) => {
+    store.size = size;
+    return store;
+  });
+};
 
-  const updateCroppedImageFromStore = (image: HTMLImageElement) => {
-    userStore.update((store) => {
-      store.croppedImage = image;
-      return store;
-    });
-  };
-  const handleCroppedImageCreation = async (image: HTMLImageElement) => {
-    // If we need to crop, we crop then assign the cropped image to the store for later use
-    const croppedImageUrl = await cropImage(image);
-    const croppedImage = new Image();
-    croppedImage.onload = () => {
-      updateCroppedImageFromStore(croppedImage);
-    };
-    croppedImage.src = croppedImageUrl;
-  };
+type UploadOptions = {
+  automaticMode: boolean;
+  squareImage: boolean;
+};
 
-  const storeSize = (size: number) => {
-    userStore.update((store) => {
-      store.size = size;
-      return store;
-    });
-  }
-
-  // 1. Grab file
-  // 2. Empty stores
-  // 3. Validate file, validate size, stock size
-  // 4. create an image from file
-  // 5. update the stores
-  // 6. if image should be square, crop it
-  // 7. if automatic mode, filter routine
-
+export const upload = async (files: FileList, options: UploadOptions) => {
+  const { automaticMode, squareImage } = options;
   let file = files[0];
-  // we empty the data from the stores
-  emptyDataFromStores();
-  console.log(get(userStore)?.automaticMode);
+  resetStores();
   try {
     validateType(file);
     const size = validateSize(file);
-    // we stock size
     storeSize(size);
-    // we create an image from the file
     const createdImage = await createImageFromFile(file);
-    // we update the store
-    console.log("updating image from store");
     initializeImportedImageAndStoreIt(createdImage, file);
-
-    if (get(appStore)?.mainImageShouldBeSquare) {
-      console.log("image should be square");
-      await handleCroppedImageCreation(createdImage);
-    }
-    if (get(userStore)?.automaticMode) filterRoutine();
+    if (squareImage) await handleCroppedImageCreation(createdImage); 
+    if (automaticMode) filterRoutine();
   } catch (error) {
     console.error(error);
   }

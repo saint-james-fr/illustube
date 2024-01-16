@@ -3,7 +3,7 @@
 
   import Konva from "konva";
   import { initFiltersValue } from "lib/default";
-  import { handleFilterchange } from "lib/filters";
+  import { handleFilterchange } from "lib/konva/filters";
 
   let pixelRatio: number;
 

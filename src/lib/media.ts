@@ -1,3 +1,5 @@
+// This file contains functions for handling media files
+
 export const validateRatio = (ratio: number) => {
   return ratio == 1;
 };

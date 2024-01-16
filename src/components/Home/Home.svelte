@@ -1,15 +1,21 @@
 <script lang="ts">
-  import { userStore, routeStore } from "stores";
+  import { userStore, routeStore, appStore } from "stores";
   import { upload } from "lib/upload";
 
   const enterApplication = (e: Event) => {
     $routeStore.siteRoute = "application";
     const files = (e.target as HTMLInputElement).files;
-    if (files) upload(files);
+    if (files) {
+      let options = {
+        automaticMode: $userStore.automaticMode,
+        squareImage: $appStore.mainImageShouldBeSquare,
+      };
+      upload(files, options);
+    }
   };
 
   const handleManualMode = (e: Event) => {
-    $routeStore.siteRoute = "application";
+    $userStore.automaticMode = false;
     enterApplication(e);
   };
 
