@@ -1,10 +1,10 @@
 import Konva from "konva";
-
+import { hideTransformer, showTransformer } from "./konva/transformer";
+import { filterSettingStore, konvaStore } from "stores";
+import { get } from "svelte/store";
 // imageDownloader
 
-// imageExporter (export to file)
-// EXPORT IMAGE
-export const handleDownload = (uri: string, name: string) => {
+const download = (uri: string, name: string): void => {
   const link = document.createElement("a");
   link.download = `${name}.png`;
   link.href = uri;
@@ -13,26 +13,31 @@ export const handleDownload = (uri: string, name: string) => {
   document.body.removeChild(link);
 };
 
-export const exportImage = (stage: Konva.Stage, img: Konva.Image, pixelRatio: number) => {
+const exportStage = (stage: Konva.Stage, pixelRatio: number): string => {
+  return stage.toDataURL({ pixelRatio });
+};
+
+export const exportImage = (
+  stage: Konva.Stage,
+  img: Konva.Image,
+  pixelRatio: number
+): void => {
   const name = "export";
   if (stage === undefined || img === undefined) return;
-
-  // Obtenez le Transformer de la scène
-  const transformer = stage.find("Transformer")[0];
-  // Cachez le Transformer
-  if (transformer) {
-    transformer?.visible(false);
-    // Redessinez la scène pour que le Transformer disparaisse
-    stage.batchDraw();
+  hideTransformer(stage);
+  // Upscale hack
+  if (
+    get(filterSettingStore).blurRadius == 0 ||
+    get(filterSettingStore).pixelateValue == 0
+  ) {
+    get(konvaStore).bgImage.cache();
   }
   // Exportez la scène
-  // 
-  const uri = stage.toDataURL({ pixelRatio});
-  handleDownload(uri, name);
+  setTimeout(() => {
+    const uri = exportStage(stage, pixelRatio);
+    download(uri, name);
+    showTransformer(stage);
+  }, 2000);
   // Réaffichez le Transformer
-  if (transformer) {
-    transformer.visible(true);
-    // Redessinez la scène pour que le Transformer réapparaisse
-    stage.batchDraw();
-  }
 };
+// Compare this snippet from src/lib/konva/layer.ts:

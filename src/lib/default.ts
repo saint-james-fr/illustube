@@ -1,22 +1,33 @@
 import Konva from "konva";
 import type { TransformerConfig } from "konva/lib/shapes/Transformer";
+import { bytesToMb } from "./file";
+import { cropImage } from "./media";
 
 export const initialImageSettings: ImportedImage = {
   element: new Image(),
+  cropped: null,
   name: "",
   type: "",
   width: 0,
   height: 0,
   ratio: 0,
+  size: 0,
   loaded: false,
-  initialize: function (img: HTMLImageElement, file: File) {
+  initialize: async function (img: HTMLImageElement, file: File) {
     this.element = img;
+    this.cropped = await (async () => {
+      const croppedImage = await cropImage(img);
+      let image = new Image();
+      image.src = croppedImage;
+      return image;
+    })();
     this.name = file.name;
     this.type = file.type;
     this.width = img.width;
     this.height = img.height;
     this.ratio = img.width / img.height;
     this.loaded = true;
+    this.size = bytesToMb(file.size);
   },
   reset: function () {
     this.element = new Image();
@@ -25,14 +36,17 @@ export const initialImageSettings: ImportedImage = {
     this.width = 0;
     this.height = 0;
     this.ratio = 0;
+    this.size = 0;
     this.loaded = false;
   },
 };
 
+export const initialImageStoreSettings = {
+  main: initialImageSettings,
+  bg: initialImageSettings,
+};
+
 export const initialUserSettings: UserStore = {
-  image: initialImageSettings,
-  size: 0,
-  croppedImage: null,
   automaticMode: false,
   hideMainImage: false,
 };
@@ -49,22 +63,17 @@ export const initialRouteSettings: RouteStore = {
 
 export const initialKonvaSettings: KonvaStore = {
   stage: null,
-  backgroundLayer: null,
-  backgroundImage: null,
+  bgLayer: null,
+  bgImage: null,
   mainLayer: null,
   mainImage: null,
-};
-
-export const initialFilterSettings = {
-  blurValue: 0,
-  brightnessValue: 0,
-  contrastValue: 0,
-  hueRotateValue: 0,
-  opacityValue: 100,
-  saturateValue: 0,
-  grayscaleValue: 0,
-  pixelateValue: 1,
-  noiseValue: 0,
+  reset: function () {
+    this.stage = null;
+    this.bgLayer = null;
+    this.bgImage = null;
+    this.mainLayer = null;
+    this.mainImage = null;
+  },
 };
 
 export const initialTransformerSettings: TransformerConfig = {
@@ -88,6 +97,29 @@ export const initialTransformerSettings: TransformerConfig = {
   flipEnabled: false,
 };
 
+export const initialFilterSettings = {
+  blurRadius: 0,
+  brightnessValue: 0,
+  contrastValue: 0,
+  hueRotateValue: 0,
+  opacityValue: 100,
+  saturateValue: 0,
+  grayscaleValue: 0,
+  pixelateValue: 1,
+  noiseValue: 0,
+  reset: function () {
+    this.blurRadius = 0;
+    this.brightnessValue = 0;
+    this.contrastValue = 0;
+    this.hueRotateValue = 0;
+    this.opacityValue = 100;
+    this.saturateValue = 0;
+    this.grayscaleValue = 0;
+    this.pixelateValue = 1;
+    this.noiseValue = 0;
+  },
+};
+
 export const initFiltersValue = {
   minBlurValue: 0,
   maxBlurValue: 45,
@@ -106,13 +138,24 @@ export const initFiltersValue = {
 };
 
 export const filterSettingsAutomatic = {
-  blurValue: 30,
-  brightnessValue: 0,
-  contrastValue: 0,
+  blurRadius: 6,
+  brightnessValue: -0.2,
+  contrastValue: -5,
   hueRotateValue: 0,
   opacityValue: 100,
   saturateValue: 0,
   grayscaleValue: 0,
   pixelateValue: 1,
-  noiseValue: 0,
+  noiseValue: 0.05,
+  reset: function () {
+    this.blurRadius = 30;
+    this.brightnessValue = 0;
+    this.contrastValue = 0;
+    this.hueRotateValue = 0;
+    this.opacityValue = 100;
+    this.saturateValue = 0;
+    this.grayscaleValue = 0;
+    this.pixelateValue = 1;
+    this.noiseValue = 0;
+  },
 };

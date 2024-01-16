@@ -1,16 +1,23 @@
 <script lang="ts">
-  import { userStore, routeStore, appStore } from "stores";
+  import { userStore, routeStore, imageStore } from "stores";
   import { upload } from "lib/upload";
+  import {
+    resetBgImageStore,
+    resetFilterSettingStore,
+    resetKonvaStore,
+    resetMainImageStore,
+  } from "lib/storesFunctions";
+  import { filterRoutine } from "lib/konva/filters";
 
-  const enterApplication = (e: Event) => {
-    $routeStore.siteRoute = "application";
+  const enterApplication = async (e: Event) => {
+    resetBgImageStore();
+    resetFilterSettingStore();
+    resetKonvaStore();
+    resetMainImageStore();
     const files = (e.target as HTMLInputElement).files;
     if (files) {
-      let options = {
-        automaticMode: $userStore.automaticMode,
-        squareImage: $appStore.mainImageShouldBeSquare,
-      };
-      upload(files, options);
+      await upload(files);
+      $routeStore.siteRoute = "application";
     }
   };
 

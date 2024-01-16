@@ -1,10 +1,15 @@
 <script lang="ts">
   import Canvas from "components/Canvas/Canvas.svelte";
   import Settings from "components/Settings/Settings.svelte";
-  import { routeStore } from "stores";
-  import "css/pico.css";
   import ApplicationMenu from "components/ApplicationMenu/ApplicationMenu.svelte";
   import ApplicationHelp from "components/ApplicationHelp/ApplicationHelp.svelte";
+  import { onMount } from "svelte";
+  import { imageStore } from "stores";
+
+  onMount(() => {
+    // on application mount, we set the background to the main image
+    $imageStore.bg = $imageStore.main;
+  });
 </script>
 
 <div class="page_container">
@@ -28,7 +33,6 @@
     grid-template-columns: 50px 300px auto;
     width: 100%;
     height: 100vh;
-    overflow: hidden;
   }
 
   .settings_container {

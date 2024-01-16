@@ -32,3 +32,11 @@ body {
 ._toastContainer li {
   list-style: none;
 }
+
+.gray {
+  filter: invert(100%) brightness(40%);
+}
+
+.primary {
+  color: var(--primary);
+}

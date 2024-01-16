@@ -1,12 +1,28 @@
 <script lang="ts">
-  import { userStore } from "stores";
+  import { konvaStore, appStore, userStore } from "stores";
+  import { exportImage } from "lib/download";
+
+  const handleDownload = async () => {
+    if (!$konvaStore.bgImage || !$konvaStore.bgImage) {
+      return;
+    }
+    exportImage($konvaStore.stage, $konvaStore.bgImage, $appStore.pixelRatio);
+  };
 </script>
 
 {#if $userStore.automaticMode}
-  <p>You're in <span class="automatic">automatic</span> mode. Enter manual mode to access filer settings.</p>
+  <p>
+    You're in <span class="primary">automatic</span> mode. Enter manual mode to access
+    various settings.
+  </p>
 {/if}
 <p>When hovering hover the background, use mouse scroll to zoom in and out.</p>
-<p>When you're done, click on the download icon to download the image.</p>
+<p>
+  When you're done, click <span
+    class="primary download"
+    on:click={handleDownload}>here</span
+  > or on the download icon.
+</p>
 
 <style lang="scss">
   p {
@@ -14,7 +30,7 @@
     line-height: 0.8rem;
   }
 
-  .automatic {
-    color: var(--primary)
+  .download {
+    cursor: pointer;
   }
 </style>

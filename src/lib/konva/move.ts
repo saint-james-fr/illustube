@@ -1,6 +1,6 @@
 import type Konva from "konva";
 
-// We handle here the Konva movements (drag, zoom, etc.) 
+// We handle here the Konva movements (drag, zoom, etc.)
 
 const konvaZoom = (
   img: Konva.Image,
@@ -95,4 +95,9 @@ export const handleWheel = (e: any, img: Konva.Image, layer: Konva.Layer) => {
     img.position(newPos);
   }
   layer.batchDraw();
+};
+
+export const scaleImage = (image: Konva.Image, ratio: number) => {
+  image.scaleX(ratio);
+  image.scaleY(ratio);
 };

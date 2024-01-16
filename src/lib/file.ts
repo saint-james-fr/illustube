@@ -1,3 +1,5 @@
+import { truncateDecimals } from "./math";
+
 export const validateType = (file: File) => {
   const validTypes = [
     "image/jpeg",
@@ -14,18 +16,18 @@ export const validateType = (file: File) => {
   }
 };
 
-export const validateSize = (file: File): number => {
-  const mbToBytes = (mb: number): number => {
-    return mb * 1024 * 1024;
-  };
-  const bytesToMb = (bytes: number): number => {
-    return Math.trunc(bytes / 1024 / 1024);
-  };
+export const mbToBytes = (mb: number): number => {
+  return mb * 1024 * 1024;
+};
+export const bytesToMb = (bytes: number): number => {
+  return truncateDecimals(bytes / 1024 / 1024, 2);;
+};
+
+export const validateSize = (file: File) => {
   // 10mb limit
   const maxSizeInBytes = mbToBytes(15);
   if (file.size > maxSizeInBytes) {
     alert("File too large");
     throw new Error("File too large");
   }
-  return bytesToMb(file.size);
 };

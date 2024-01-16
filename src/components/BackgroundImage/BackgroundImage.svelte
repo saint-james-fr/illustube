@@ -1,31 +1,33 @@
 <script lang="ts">
   import { Image as KonvaImage } from "svelte-konva";
   import { centerImage } from "lib/media";
-  import { userStore, konvaStore, filterSettingStore } from "stores";
+  import { imageStore, konvaStore, userStore } from "stores";
   import { handleDragMove } from "lib/konva/move";
   import Konva from "konva";
   import { onMount, tick } from "svelte";
+  import { filterRoutine } from "lib/konva/filters";
 
+  // TODO : add more filters
   export let canvasContainer: HTMLDivElement;
 
-  // This is binded to the Konva.Image component
-  let backgroundImage: Konva.Image;
+  $: $konvaStore.bgImage = konvaImage;
 
-  $: {
-    if (backgroundImage) $konvaStore.backgroundImage = backgroundImage;
-  }
+  let konvaImage: Konva.Image;
 
   onMount(async () => {
     await tick();
-    backgroundImage.cache();
+    konvaImage.cache();
+    if ($userStore.automaticMode) {
+      filterRoutine();
+    }
   });
 </script>
 
 <KonvaImage
-  bind:handle={backgroundImage}
+  bind:handle={konvaImage}
   on:dragmove={(event) => {
     document.body.style.cursor = "grabbing";
-    handleDragMove(event.detail, backgroundImage, $konvaStore.backgroundLayer);
+    handleDragMove(event.detail, konvaImage, $konvaStore.bgLayer);
   }}
   on:dragend={() => {
     document.body.style.cursor = "grab";
@@ -37,22 +39,22 @@
     document.body.style.cursor = "default";
   }}
   config={{
-    image: $userStore.image.element,
-    width: $userStore.image.width,
-    height: $userStore.image.height,
+    image: $imageStore.bg.element,
+    width: $imageStore.bg.width,
+    height: $imageStore.bg.height,
     x: centerImage(
       canvasContainer.clientWidth,
       canvasContainer.clientHeight,
-      $userStore.image.width,
-      $userStore.image.height
+      $imageStore.bg.width,
+      $imageStore.bg.height
     ).x,
     y: centerImage(
       canvasContainer.clientWidth,
       canvasContainer.clientHeight,
-      $userStore.image.width,
-      $userStore.image.height
+      $imageStore.bg.width,
+      $imageStore.bg.height
     ).y,
     draggable: true,
-    name: "backgroundImage",
+    name: "bg",
   }}
 />

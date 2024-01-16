@@ -1,10 +1,11 @@
 <script lang="ts">
   import BackgroundImage from "components/BackgroundImage/BackgroundImage.svelte";
-  import { userStore, konvaStore, appStore } from "stores";
+  import { userStore, konvaStore, imageStore } from "stores";
   import { handleWheel } from "lib/konva/move";
   import { Stage, Layer } from "svelte-konva";
   import type Konva from "konva";
   import MainImage from "components/MainImage/MainImage.svelte";
+  import { onMount } from "svelte";
 
   let canvasContainer: HTMLDivElement;
   let canvasContainerScalingRatio: number;
@@ -12,13 +13,15 @@
   let stage: Konva.Stage;
   let backgroundLayer: Konva.Layer;
   let mainLayer: Konva.Layer;
+  let stageWidth: number;
+  let stageHeight: number;
 
   $: {
     // This is reactively updated when the user resizes the page
     canvasContainerScalingRatio = Math.min(innerWidth / 1280, 1);
     // We store the konva stage and layers in the store so that we can access them from other components
     $konvaStore.stage = stage;
-    $konvaStore.backgroundLayer = backgroundLayer;
+    $konvaStore.bgLayer = backgroundLayer;
     $konvaStore.mainLayer = mainLayer;
     // We react to changes to the user setting to hide or show the main image
     if (mainLayer) {
@@ -29,6 +32,11 @@
       }
     }
   }
+
+  onMount(() => {
+    stageWidth = canvasContainer.clientWidth;
+    stageHeight = canvasContainer.clientHeight;
+  });
 </script>
 
 <svelte:window bind:innerWidth />
@@ -38,20 +46,16 @@
   bind:this={canvasContainer}
   style="transform: scale({canvasContainerScalingRatio})"
 >
-  {#if $userStore.image.loaded}
+  {#if $imageStore.main.loaded}
     <Stage
       bind:handle={stage}
       config={{
-        width: canvasContainer.clientWidth,
-        height: canvasContainer.clientHeight,
+        width: stageWidth,
+        height: stageHeight,
       }}
       on:wheel={(event) => {
-        if (!$konvaStore.backgroundImage) return;
-        handleWheel(
-          event.detail,
-          $konvaStore.backgroundImage,
-          $konvaStore.backgroundLayer
-        );
+        if (!$konvaStore.bgImage) return;
+        handleWheel(event.detail, $konvaStore.bgImage, $konvaStore.bgLayer);
       }}
     >
       <Layer bind:handle={backgroundLayer}>

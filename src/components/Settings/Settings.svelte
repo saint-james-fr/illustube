@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { appStore, filterSettingStore, konvaStore, userStore} from "stores";
+  import { appStore, filterSettingStore, konvaStore, userStore } from "stores";
 
   import Konva from "konva";
   import { initFiltersValue } from "lib/default";
   import { handleFilterchange } from "lib/konva/filters";
-
-  let pixelRatio: number;
 
   let {
     minBlurValue,
@@ -24,23 +22,20 @@
     maxNoiseValue,
   } = initFiltersValue;
 
-  $: {
-    pixelRatio = $appStore.pixelRatio;
-  }
 </script>
 
 <div class="settings">
-  <form>
-    {#if !$userStore.automaticMode}
+  {#if !$userStore.automaticMode}
+    <form>
       <div class="line">
-        <label for="blurValue">blur</label>
+        <label for="blurRadius">blur</label>
         <input
           type="range"
-          id="blurValue"
+          id="blurRadius"
           min={minBlurValue}
           max={maxBlurValue}
           step="0.3"
-          bind:value={$filterSettingStore.blurValue}
+          bind:value={$filterSettingStore.blurRadius}
           on:input={() => handleFilterchange(Konva.Filters.Blur)}
         />
       </div>
@@ -91,9 +86,7 @@
           step="0.01"
           bind:value={$filterSettingStore.opacityValue}
           on:input={() =>
-            $konvaStore.backgroundImage.opacity(
-              $filterSettingStore.opacityValue
-            )}
+            $konvaStore.bgImage.opacity($filterSettingStore.opacityValue)}
         />
       </div>
 
@@ -129,8 +122,8 @@
         />
         <label for="hideMainImage">Hide center image</label>
       </div>
-    {/if}
-  </form>
+    </form>
+  {/if}
 </div>
 
 <style lang="scss">

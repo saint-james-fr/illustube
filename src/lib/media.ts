@@ -15,7 +15,6 @@ export const centerImage = (
   return { x, y };
 };
 
-
 export const cropImage = (img: HTMLImageElement): Promise<string> => {
   return new Promise((resolve, reject) => {
     try {
@@ -69,4 +68,9 @@ export const createImage = (file: File): Promise<HTMLImageElement> => {
     };
     reader.readAsDataURL(file);
   });
+};
+
+export const findScaleRatio = (imageWidth: number, targetWidth: number) => {
+  const ratio = targetWidth / imageWidth;
+  return ratio;
 };

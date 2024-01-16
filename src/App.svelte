@@ -1,8 +1,9 @@
 <script lang="ts">
   import Application from "components/Application/Application.svelte";
   import Home from "components/Home/Home.svelte";
-  import { routeStore } from "stores";
+  import { routeStore, filterSettingStore } from "stores";
   import Toast from "components/Toast/Toast.svelte";
+  import "css/pico.css";
 
 
 </script>

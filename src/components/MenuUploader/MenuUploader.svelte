@@ -1,16 +1,24 @@
 <script lang="ts">
   import { upload } from "lib/upload";
   import uploadIcon from "assets/icons/upload.png";
-  import { userStore, appStore } from "stores";
+  import { userStore } from "stores";
+  import { filterRoutine } from "lib/konva/filters";
+  import {
+    resetBgImageStore,
+    resetFilterSettingStore,
+    resetKonvaStore,
+    resetMainImageStore,
+  } from "lib/storesFunctions";
 
-  const handleUpload = (e: Event) => {
+  const handleUpload = async (e: Event) => {
     const files = (e.target as HTMLInputElement).files;
     if (files) {
-      let options = {
-        automaticMode: $userStore.automaticMode,
-        squareImage: $appStore.mainImageShouldBeSquare,
-      };
-      upload(files, options);
+      resetBgImageStore();
+      resetFilterSettingStore();
+      resetKonvaStore();
+      resetMainImageStore();
+      await upload(files);
+      if ($userStore.automaticMode) filterRoutine();
     }
   };
 </script>

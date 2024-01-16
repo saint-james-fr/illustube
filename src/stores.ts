@@ -6,18 +6,21 @@ import {
   initialRouteSettings,
   initialKonvaSettings,
   initialFilterSettings,
+  initialImageStoreSettings,
 } from "lib/default";
 
-export const routeStore: Writable<RouteStore> = writable(initialRouteSettings);
-export const appStore: Writable<AppStore> = writable(initialAppSettings);
 export const userStore: Writable<UserStore> = writable(initialUserSettings);
 
-export const imageStore: Writable<ImageStore> = writable({})
+export const appStore: Writable<AppStore> = writable(initialAppSettings);
+
+export const routeStore: Writable<RouteStore> = writable(initialRouteSettings);
 
 export const konvaStore: Writable<KonvaStore> = writable(initialKonvaSettings);
-export const filterSettingStore: Writable<FilterSetting> = writable({
-  ...initialFilterSettings,
-});
 
+export const imageStore: Writable<ImageStore> = writable(
+  initialImageStoreSettings
+);
 
-
+export const filterSettingStore: Writable<FilterSetting> = writable(
+  initialFilterSettings
+);
