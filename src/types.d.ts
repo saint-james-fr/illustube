@@ -1,9 +1,12 @@
-interface AppStore {
-  imageShouldBeSquare: boolean;
-  backgroundImageCoverAndCenter: boolean;
+// Definitions
+// MainImage: image principale au centre
+// BackgroundImage: image de fond, en arrière plan
+
+/**
+ * On stocke ici les réglages globaux de l'application, non liés aux imports de l'utilisateur ou à ses choix.
+ */interface AppStore {
+  mainImageShouldBeSquare: boolean;
   pixelRatio: number;
-  automaticMode: boolean;
-  hideMainImage: boolean;
   downscaleThreshold: number;
 }
 
@@ -15,9 +18,8 @@ interface UserStore {
   size: number,
   image: ImportedImage;
   croppedImage: HTMLImageElement | null;
-  metaData: MetaData;
-  choosedPosition?: number;
-  choosedFilter?: number;
+  automaticMode: boolean;
+  hideMainImage: boolean;
 }
 
 interface ImportedImage {
@@ -42,17 +44,17 @@ interface KonvaStore {
 
 interface ImageManipulation {}
 
-interface MetaData {
-  useMetaData: boolean;
-  artist: string;
-  title: string;
-  album: string;
-  year: string;
-  showArtist: boolean;
-  showTitle: boolean;
-  showAlbum: boolean;
-  showYear: boolean;
-}
+// interface MetaData {
+//   useMetaData: boolean;
+//   artist: string;
+//   title: string;
+//   album: string;
+//   year: string;
+//   showArtist: boolean;
+//   showTitle: boolean;
+//   showAlbum: boolean;
+//   showYear: boolean;
+// }
 
 interface FilterSetting {
   blurValue: number;

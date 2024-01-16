@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { appStore } from "stores";
+  import { userStore } from "stores";
 </script>
 
-{#if $appStore.automaticMode}
+{#if $userStore.automaticMode}
   <p>You're in <span class="automatic">automatic</span> mode. Enter manual mode to access filer settings.</p>
 {/if}
 <p>When hovering hover the background, use mouse scroll to zoom in and out.</p>

@@ -19,7 +19,7 @@
     $konvaStore.backgroundLayer = backgroundLayer;
     $konvaStore.mainLayer = mainLayer;
     if (mainLayer) {
-      if ($appStore.hideMainImage) {
+      if ($userStore.hideMainImage) {
         mainLayer.hide();
       } else {
         mainLayer.show();

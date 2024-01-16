@@ -30,7 +30,7 @@
   $: {
     // Assign proper Image Element to the image variable
     image =
-      $appStore.imageShouldBeSquare && $userStore.croppedImage
+      $appStore.mainImageShouldBeSquare && $userStore.croppedImage
         ? $userStore.croppedImage
         : $userStore.image.element;
     if (image) {

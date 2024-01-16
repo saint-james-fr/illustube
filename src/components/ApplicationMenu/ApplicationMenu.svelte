@@ -2,7 +2,6 @@
   import Uploader from "components/Uploader/Uploader.svelte";
   import {
     appStore,
-    filterSettingStore,
     konvaStore,
     routeStore,
     userStore,
@@ -45,7 +44,7 @@
     if (!$konvaStore.backgroundImage || !$konvaStore.backgroundImage) {
       return;
     }
-    $appStore.automaticMode = true;
+    $userStore.automaticMode = true;
     filterRoutine();
   };
 
@@ -53,7 +52,7 @@
     if (!$konvaStore.backgroundImage || !$konvaStore.backgroundImage) {
       return;
     }
-    $appStore.automaticMode = false;
+    $userStore.automaticMode = false;
     resetFilters();
   };
 
@@ -61,12 +60,6 @@
     if (!$konvaStore.backgroundImage || !$konvaStore.backgroundImage) {
       return;
     }
-    const files = (e.target as HTMLInputElement).files
-    validateSize(file);
-    
-    const newImage = new Image();
-    $userStore.image.element = new Image()
-    
 
     // TODO : impelment this function
   };
@@ -84,7 +77,7 @@
     on:click={handleReset}
     class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
   />
-  {#if $appStore.automaticMode}
+  {#if $userStore.automaticMode}
     <img
       src={settingsIcon}
       alt="reset"

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { appStore, routeStore } from "stores";
+  import { userStore, routeStore } from "stores";
   import { upload } from "lib/upload";
 
   const enterApplication = (e: Event) => {
@@ -14,7 +14,7 @@
   };
 
   const handleAutomaticMode = (e: Event) => {
-    $appStore.automaticMode = true;
+    $userStore.automaticMode = true;
     enterApplication(e);
   };
 </script>

@@ -1,7 +1,6 @@
 import {
   appStore,
   konvaStore,
-  routeStore,
   userStore,
   filterSettingStore,
 } from "stores";
@@ -14,13 +13,9 @@ import { filterRoutine } from "lib/filters";
 export const upload = async (files: FileList) => {
   const emptyDataFromStores = () => {
     userStore.update((store) => {
+      store.size = 0;
       store.croppedImage = null;
       store.image.reset();
-      return store;
-    });
-
-    appStore.update((store) => {
-      store.hideMainImage = false;
       return store;
     });
 
@@ -33,7 +28,7 @@ export const upload = async (files: FileList) => {
     });
   };
 
-  const updateImageFromStore = (image: HTMLImageElement, file: File) => {
+  const initializeImportedImageAndStoreIt = (image: HTMLImageElement, file: File) => {
     userStore.update((store) => {
       store.image?.initialize(image, file);
       return store;
@@ -56,30 +51,41 @@ export const upload = async (files: FileList) => {
     croppedImage.src = croppedImageUrl;
   };
 
-  let file = files[0];
-  // we empty the data from the stores
-  emptyDataFromStores();
-  console.log(get(appStore)?.automaticMode);
-  try {
-    validateType(file);
-    const size = validateSize(file);
-    // we stock size
+  const storeSize = (size: number) => {
     userStore.update((store) => {
       store.size = size;
       return store;
     });
+  }
+
+  // 1. Grab file
+  // 2. Empty stores
+  // 3. Validate file, validate size, stock size
+  // 4. create an image from file
+  // 5. update the stores
+  // 6. if image should be square, crop it
+  // 7. if automatic mode, filter routine
+
+  let file = files[0];
+  // we empty the data from the stores
+  emptyDataFromStores();
+  console.log(get(userStore)?.automaticMode);
+  try {
+    validateType(file);
+    const size = validateSize(file);
+    // we stock size
+    storeSize(size);
     // we create an image from the file
     const createdImage = await createImageFromFile(file);
-    console.log("created image", createdImage);
     // we update the store
     console.log("updating image from store");
-    updateImageFromStore(createdImage, file);
+    initializeImportedImageAndStoreIt(createdImage, file);
 
-    if (get(appStore)?.imageShouldBeSquare) {
+    if (get(appStore)?.mainImageShouldBeSquare) {
       console.log("image should be square");
       await handleCroppedImageCreation(createdImage);
     }
-    if (get(appStore)?.automaticMode) filterRoutine();
+    if (get(userStore)?.automaticMode) filterRoutine();
   } catch (error) {
     console.error(error);
   }

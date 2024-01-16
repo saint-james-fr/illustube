@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { appStore, filterSettingStore, konvaStore } from "stores";
+  import { appStore, filterSettingStore, konvaStore, userStore} from "stores";
 
   import Konva from "konva";
   import { initFiltersValue } from "lib/default";
@@ -31,7 +31,7 @@
 
 <div class="settings">
   <form>
-    {#if !$appStore.automaticMode}
+    {#if !$userStore.automaticMode}
       <div class="line">
         <label for="blurValue">blur</label>
         <input
@@ -125,7 +125,7 @@
         <input
           type="checkbox"
           id="hideMainImage"
-          bind:checked={$appStore.hideMainImage}
+          bind:checked={$userStore.hideMainImage}
         />
         <label for="hideMainImage">Hide center image</label>
       </div>

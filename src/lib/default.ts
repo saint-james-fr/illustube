@@ -29,33 +29,17 @@ export const initialImageSettings: ImportedImage = {
   },
 };
 
-export const initialMetaDataSettings: MetaData = {
-  useMetaData: true,
-  artist: "",
-  title: "",
-  album: "",
-  year: "",
-  showArtist: true,
-  showTitle: true,
-  showAlbum: true,
-  showYear: true,
-};
-
 export const initialUserSettings: UserStore = {
   image: initialImageSettings,
   size: 0,
   croppedImage: null,
-  metaData: initialMetaDataSettings,
-  choosedPosition: undefined,
-  choosedFilter: undefined,
+  automaticMode: false,
+  hideMainImage: false,
 };
 
 export const initialAppSettings: AppStore = {
-  imageShouldBeSquare: true,
-  backgroundImageCoverAndCenter: true,
+  mainImageShouldBeSquare: true,
   pixelRatio: 3,
-  automaticMode: false,
-  hideMainImage: false,
   downscaleThreshold: 7,
 };
 
