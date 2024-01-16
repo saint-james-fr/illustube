@@ -1,6 +1,12 @@
 <script lang="ts">
   import Uploader from "components/Uploader/Uploader.svelte";
-  import { appStore, konvaStore, routeStore, userStore } from "stores";
+  import {
+    appStore,
+    filterSettingStore,
+    konvaStore,
+    routeStore,
+    userStore,
+  } from "stores";
   import homeIcon from "assets/icons/home.png";
   import downloadIcon from "assets/icons/download.png";
   import resetIcon from "assets/icons/reset.png";
@@ -8,7 +14,8 @@
   import baguetteIcon from "assets/icons/baguette.png";
   import backgroundIcon from "assets/icons/background.png";
   import { exportImage } from "lib/download";
-  import { resetFilters } from "lib/filters";
+  import { filterRoutine, resetFilters } from "lib/filters";
+  import { validateSize } from "lib/file";
 
   const handleHome = () => {
     $routeStore.siteRoute = "home";
@@ -39,6 +46,7 @@
       return;
     }
     $appStore.automaticMode = true;
+    filterRoutine();
   };
 
   const handleManualMode = () => {
@@ -46,19 +54,26 @@
       return;
     }
     $appStore.automaticMode = false;
+    resetFilters();
   };
 
   const handleBackgroundChange = () => {
     if (!$konvaStore.backgroundImage || !$konvaStore.backgroundImage) {
       return;
     }
+    const files = (e.target as HTMLInputElement).files
+    validateSize(file);
+    
+    const newImage = new Image();
+    $userStore.image.element = new Image()
+    
 
     // TODO : impelment this function
   };
 </script>
 
 <div class="application_menu">
-  <img src={homeIcon} alt="home" ta id="homeIcon" on:click={handleHome} />
+  <img src={homeIcon} alt="home" id="homeIcon" on:click={handleHome} />
   <div class="uploader_container">
     <Uploader />
   </div>
@@ -69,13 +84,23 @@
     on:click={handleReset}
     class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
   />
-  <img
-    src={baguetteIcon}
-    alt="reset"
-    id="baguetteIcon"
-    on:click={handleAutomaticMode}
-    class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
-  />
+  {#if $appStore.automaticMode}
+    <img
+      src={settingsIcon}
+      alt="reset"
+      id="settingsIcon"
+      on:click={handleManualMode}
+      class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
+    />
+  {:else}
+    <img
+      src={baguetteIcon}
+      alt="reset"
+      id="baguetteIcon"
+      on:click={handleAutomaticMode}
+      class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
+    />
+  {/if}
   <img
     src={backgroundIcon}
     alt="reset"
@@ -83,13 +108,7 @@
     on:click={handleBackgroundChange}
     class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
   />
-  <img
-    src={settingsIcon}
-    alt="reset"
-    id="settingsIcon"
-    on:click={handleManualMode}
-    class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
-  />
+
   <img
     src={downloadIcon}
     alt="download"
@@ -100,7 +119,6 @@
 </div>
 
 <style lang="scss">
-
   $icon_width: 30px;
 
   .application_menu {
@@ -117,14 +135,19 @@
 
   img,
   .uploader_container {
-    height:$icon_width;
-    width:$icon_width;
+    height: $icon_width;
+    width: $icon_width;
     cursor: pointer;
     filter: invert(100%);
   }
 
+
   .gray {
     filter: invert(100%) brightness(40%);
+  }
+
+  #downloadIcon {
+    margin-top: 2rem;
   }
 
   #homeIcon {

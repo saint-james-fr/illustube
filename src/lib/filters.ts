@@ -161,8 +161,8 @@ export const resetFilters = () => {
     return store;
   });
 };
-export const filterRoutine = () => {
-  const setting = loadSetting();
+export const filterRoutine = (setting?: FilterSetting) => {
+  if (!setting) setting = loadSetting();
   updateFilterSettingStore(setting);
   applyFiltersFromSettings(setting);
 };
