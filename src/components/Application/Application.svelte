@@ -3,13 +3,6 @@
   import Settings from "components/Settings/Settings.svelte";
   import ApplicationMenu from "components/ApplicationMenu/ApplicationMenu.svelte";
   import ApplicationHelp from "components/ApplicationHelp/ApplicationHelp.svelte";
-  import { onMount } from "svelte";
-  import { imageStore } from "stores";
-
-  onMount(() => {
-    // on application mount, we set the background to the main image
-    $imageStore.bg = $imageStore.main;
-  });
 </script>
 
 <div class="page_container">

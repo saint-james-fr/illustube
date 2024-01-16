@@ -3,7 +3,45 @@ import type { TransformerConfig } from "konva/lib/shapes/Transformer";
 import { bytesToMb } from "./file";
 import { cropImage } from "./media";
 
-export const initialImageSettings: ImportedImage = {
+export const initialBgSettings: ImportedImage = {
+  element: new Image(),
+  cropped: null,
+  name: "",
+  type: "",
+  width: 0,
+  height: 0,
+  ratio: 0,
+  size: 0,
+  loaded: false,
+  initialize: async function (img: HTMLImageElement, file: File) {
+    this.element = img;
+    this.cropped = await (async () => {
+      const croppedImage = await cropImage(img);
+      let image = new Image();
+      image.src = croppedImage;
+      return image;
+    })();
+    this.name = file.name;
+    this.type = file.type;
+    this.width = img.width;
+    this.height = img.height;
+    this.ratio = img.width / img.height;
+    this.loaded = true;
+    this.size = bytesToMb(file.size);
+  },
+  reset: function () {
+    this.element = new Image();
+    this.name = "";
+    this.type = "";
+    this.width = 0;
+    this.height = 0;
+    this.ratio = 0;
+    this.size = 0;
+    this.loaded = false;
+  },
+};
+
+export const initialMainSettings: ImportedImage = {
   element: new Image(),
   cropped: null,
   name: "",
@@ -42,8 +80,8 @@ export const initialImageSettings: ImportedImage = {
 };
 
 export const initialImageStoreSettings = {
-  main: initialImageSettings,
-  bg: initialImageSettings,
+  main: initialMainSettings,
+  bg: initialBgSettings,
 };
 
 export const initialUserSettings: UserStore = {

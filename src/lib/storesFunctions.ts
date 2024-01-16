@@ -1,4 +1,5 @@
 import { imageStore, konvaStore, filterSettingStore } from "stores";
+import { get } from "svelte/store";
 
 export const resetMainImageStore = () => {
   imageStore.update((store) => {
@@ -26,4 +27,14 @@ export const resetFilterSettingStore = () => {
     store.reset();
     return store;
   });
+};
+
+export const initializeImageInStore = async (
+  image: HTMLImageElement,
+  file: File,
+  storeType: keyof ImageStore
+) => {
+  const store = get(imageStore);
+  await store[storeType].initialize(image, file);
+  imageStore.set(store);
 };

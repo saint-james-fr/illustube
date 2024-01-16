@@ -4,19 +4,22 @@
   import {
     resetBgImageStore,
     resetFilterSettingStore,
-    resetKonvaStore,
     resetMainImageStore,
   } from "lib/storesFunctions";
-  import { filterRoutine } from "lib/konva/filters";
+  import { initializeImageInStore } from "lib/storesFunctions";
 
   const enterApplication = async (e: Event) => {
     resetBgImageStore();
     resetFilterSettingStore();
-    resetKonvaStore();
     resetMainImageStore();
     const files = (e.target as HTMLInputElement).files;
     if (files) {
-      await upload(files);
+      const file = files[0];
+      const image = await upload(file);
+      if (image) {
+        initializeImageInStore(image, file, "main");
+        initializeImageInStore(image, file, "bg");
+      }
       $routeStore.siteRoute = "application";
     }
   };

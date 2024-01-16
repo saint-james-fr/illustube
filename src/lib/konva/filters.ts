@@ -164,8 +164,6 @@ export const resetFilters = () => {
 
 export const filterRoutine = (setting?: FilterSetting) => {
   if (!setting) setting = loadSetting();
-  console.log("we start the filter routine", setting);
   updateFilterSettingStore(setting);
   applyFiltersFromSettings(setting);
-  console.log("we finished the filter routine", setting);
 };

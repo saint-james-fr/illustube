@@ -6,8 +6,8 @@
   import {
     resetBgImageStore,
     resetFilterSettingStore,
-    resetKonvaStore,
     resetMainImageStore,
+    initializeImageInStore,
   } from "lib/storesFunctions";
 
   const handleUpload = async (e: Event) => {
@@ -15,10 +15,14 @@
     if (files) {
       resetBgImageStore();
       resetFilterSettingStore();
-      resetKonvaStore();
       resetMainImageStore();
-      await upload(files);
-      if ($userStore.automaticMode) filterRoutine();
+      const file = files[0];
+      const image = await upload(file);
+      if (image) {
+        initializeImageInStore(image, file, "main");
+        initializeImageInStore(image, file, "bg");
+        if ($userStore.automaticMode) filterRoutine();
+      }
     }
   };
 </script>

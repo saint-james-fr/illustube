@@ -15,9 +15,8 @@
   let konvaImage: Konva.Image;
 
   onMount(async () => {
-    await tick();
-    konvaImage.cache();
     if ($userStore.automaticMode) {
+      await tick();
       filterRoutine();
     }
   });
