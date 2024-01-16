@@ -25,13 +25,10 @@
       <div class="hero_element">
         <h1>Video backgrounds made easy</h1>
         <p>
-          Generate thumbnails and background for your youtube uploads in a
-          breeze.<br />Free and easy.
+          Generate thumbnails and background for your video uploads in a breeze.<br
+          />Free and easy.
         </p>
         <div class="hero_buttons">
-          <label for="manualInput"><span role="button">Get started</span></label
-          >
-          <input id="manualInput" type="file" on:input={handleManualMode} />
           <label for="automaticInput"
             ><span role="button">automatic mode</span></label
           >
@@ -40,6 +37,10 @@
             type="file"
             on:input={handleAutomaticMode}
           />
+          <label for="manualInput"
+            ><span role="button" class="outline">Manual Mode</span></label
+          >
+          <input id="manualInput" type="file" on:input={handleManualMode} />
         </div>
       </div>
     </div>
@@ -81,6 +82,7 @@
   }
 
   .hero_buttons {
+    margin-top: 3rem;
     display: flex;
     width: 50%;
     justify-content: space-between;

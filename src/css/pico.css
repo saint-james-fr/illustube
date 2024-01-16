@@ -215,7 +215,7 @@ kbd {
   --muted-color: hsl(205, 10%, 50%);
   --muted-border-color: hsl(205, 20%, 94%);
   --primary: hsl(190, 47%, 46%);
-  --primary-hover: hsl(195, 90%, 19%);
+  --primary-hover: hsl(190, 47%, 36%);
   --primary-focus: rgba(16, 149, 193, 0.125);
   --primary-inverse: #fff;
   --secondary: hsl(205, 15%, 41%);
@@ -321,7 +321,7 @@ kbd {
     --muted-color: hsl(205, 10%, 50%);
     --muted-border-color: #1f2d38;
     --primary: hsl(190, 47%, 46%);
-    --primary-hover: hsl(195, 90%, 19%);
+    --primary-hover: hsl(190, 47%, 36%);
     --primary-focus: rgba(16, 149, 193, 0.25);
     --primary-inverse: #fff;
     --secondary: hsl(205, 15%, 41%);
@@ -427,8 +427,8 @@ kbd {
   --muted-color: hsl(205, 10%, 50%);
   --muted-border-color: #1f2d38;
   --primary: hsl(190, 47%, 46%);
-  --primary-hover: hsl(195, 90%, 19%);
-  --primary-focus: rgba(16, 149, 193, 0.25);
+  --primary-hover: hsl(190, 47%, 36%);
+  --primary-focus: rgba(5, 6, 7, 0.25);
   --primary-inverse: #fff;
   --secondary: hsl(205, 15%, 41%);
   --secondary-hover: hsl(205, 10%, 50%);

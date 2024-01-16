@@ -1,11 +1,14 @@
 <script lang="ts">
   import Uploader from "components/Uploader/Uploader.svelte";
-  import { appStore, konvaStore, routeStore, filterSettingStore } from "stores";
+  import { appStore, konvaStore, routeStore, userStore } from "stores";
   import homeIcon from "assets/icons/home.png";
   import downloadIcon from "assets/icons/download.png";
   import resetIcon from "assets/icons/reset.png";
+  import settingsIcon from "assets/icons/settings.png";
+  import baguetteIcon from "assets/icons/baguette.png";
+  import backgroundIcon from "assets/icons/background.png";
   import { exportImage } from "lib/download";
-  import { filterRoutine, resetFilters } from "lib/filters";
+  import { resetFilters } from "lib/filters";
 
   const handleHome = () => {
     $routeStore.siteRoute = "home";
@@ -30,10 +33,32 @@
     }
     resetFilters();
   };
+
+  const handleAutomaticMode = () => {
+    if (!$konvaStore.backgroundImage || !$konvaStore.backgroundImage) {
+      return;
+    }
+    $appStore.automaticMode = true;
+  };
+
+  const handleManualMode = () => {
+    if (!$konvaStore.backgroundImage || !$konvaStore.backgroundImage) {
+      return;
+    }
+    $appStore.automaticMode = false;
+  };
+
+  const handleBackgroundChange = () => {
+    if (!$konvaStore.backgroundImage || !$konvaStore.backgroundImage) {
+      return;
+    }
+
+    // TODO : impelment this function
+  };
 </script>
 
 <div class="application_menu">
-  <img src={homeIcon} alt="home" id="homeIcon" on:click={handleHome} />
+  <img src={homeIcon} alt="home" ta id="homeIcon" on:click={handleHome} />
   <div class="uploader_container">
     <Uploader />
   </div>
@@ -42,6 +67,27 @@
     alt="reset"
     id="resetIcon"
     on:click={handleReset}
+    class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
+  />
+  <img
+    src={baguetteIcon}
+    alt="reset"
+    id="baguetteIcon"
+    on:click={handleAutomaticMode}
+    class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
+  />
+  <img
+    src={backgroundIcon}
+    alt="reset"
+    id="backgroundIcon"
+    on:click={handleBackgroundChange}
+    class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
+  />
+  <img
+    src={settingsIcon}
+    alt="reset"
+    id="settingsIcon"
+    on:click={handleManualMode}
     class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
   />
   <img
@@ -54,6 +100,9 @@
 </div>
 
 <style lang="scss">
+
+  $icon_width: 30px;
+
   .application_menu {
     display: flex;
     flex-direction: column;
@@ -68,8 +117,8 @@
 
   img,
   .uploader_container {
-    height: 36px;
-    width: 36px;
+    height:$icon_width;
+    width:$icon_width;
     cursor: pointer;
     filter: invert(100%);
   }

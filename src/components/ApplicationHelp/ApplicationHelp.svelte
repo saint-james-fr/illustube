@@ -10,6 +10,7 @@
 
 <style lang="scss">
   p {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    line-height: 0.8rem;
   }
 </style>

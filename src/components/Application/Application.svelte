@@ -13,8 +13,8 @@
       <ApplicationMenu />
     </div>
     <div class="settings_container">
-        <Settings />
-        <ApplicationHelp />
+      <ApplicationHelp />
+      <Settings />
     </div>
     <div class="drawing_container">
       <Canvas />
