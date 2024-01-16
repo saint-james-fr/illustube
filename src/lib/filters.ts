@@ -145,8 +145,8 @@ const updateFilterSettingStore = (setting: FilterSetting) => {
 };
 
 const loadSetting = () => {
-  console.log("loading setting, automatic?", get(appStore).automaticMode);
-  const setting = get(appStore).automaticMode
+  console.log("loading setting, automatic?", get(userStore).automaticMode);
+  const setting = get(userStore).automaticMode
     ? filterSettingsAutomatic
     : get(filterSettingStore);
   return setting;

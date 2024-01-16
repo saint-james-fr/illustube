@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { appStore, filterSettingStore, konvaStore, userStore } from "stores";
+  import { appStore, filterSettingStore, konvaStore, userStore} from "stores";
 
   import Konva from "konva";
   import { initFiltersValue } from "lib/default";
   import { handleFilterchange } from "lib/filters";
+
+  let pixelRatio: number;
 
   let {
     minBlurValue,
@@ -21,6 +23,10 @@
     minNoiseValue,
     maxNoiseValue,
   } = initFiltersValue;
+
+  $: {
+    pixelRatio = $appStore.pixelRatio;
+  }
 </script>
 
 <div class="settings">
