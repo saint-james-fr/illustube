@@ -36,7 +36,7 @@ interface UserStore {
 /**
  * On stocke ici les images importées.
  */
-interface imageStore {
+interface ImageStore {
   mainImage: ImportedImage;
   backgroundImage: ImportedImage;
 }

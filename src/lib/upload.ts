@@ -1,4 +1,4 @@
-import { konvaStore, userStore, filterSettingStore } from "stores";
+import { konvaStore, userStore, filterSettingStore, imageStore } from "stores";
 import { validateSize, validateType } from "lib/file";
 import { createImage, cropImage } from "lib/media";
 import { initialKonvaSettings, initialFilterSettings } from "lib/default";
