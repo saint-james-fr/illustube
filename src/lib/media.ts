@@ -51,7 +51,7 @@ export const cropImage = (img: HTMLImageElement): Promise<string> => {
   });
 };
 
-export const createImageFromFile = (file: File): Promise<HTMLImageElement> => {
+export const createImage = (file: File): Promise<HTMLImageElement> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {

@@ -1,7 +1,6 @@
-import { appStore, konvaStore, userStore, filterSettingStore } from "stores";
-import { get } from "svelte/store";
+import { konvaStore, userStore, filterSettingStore } from "stores";
 import { validateSize, validateType } from "lib/file";
-import { createImageFromFile, cropImage } from "lib/media";
+import { createImage, cropImage } from "lib/media";
 import { initialKonvaSettings, initialFilterSettings } from "lib/default";
 import { filterRoutine } from "lib/konva/filters";
 
@@ -22,7 +21,7 @@ const resetStores = () => {
   });
 };
 
-const initializeImportedImageAndStoreIt = (
+const storeImage = (
   image: HTMLImageElement,
   file: File
 ) => {
@@ -32,18 +31,16 @@ const initializeImportedImageAndStoreIt = (
   });
 };
 
-const updateCroppedImageFromStore = (image: HTMLImageElement) => {
-  userStore.update((store) => {
-    store.croppedImage = image;
-    return store;
-  });
-};
-const handleCroppedImageCreation = async (image: HTMLImageElement) => {
-  // If we need to crop, we crop then assign the cropped image to the store for later use
+const handleSquareImage = async (image: HTMLImageElement) => {
+  // 1. Crop
   const croppedImageUrl = await cropImage(image);
   const croppedImage = new Image();
+  // 2. Update Store
   croppedImage.onload = () => {
-    updateCroppedImageFromStore(croppedImage);
+    userStore.update((store) => {
+      store.croppedImage = image;
+      return store;
+    });
   };
   croppedImage.src = croppedImageUrl;
 };
@@ -68,9 +65,9 @@ export const upload = async (files: FileList, options: UploadOptions) => {
     validateType(file);
     const size = validateSize(file);
     storeSize(size);
-    const createdImage = await createImageFromFile(file);
-    initializeImportedImageAndStoreIt(createdImage, file);
-    if (squareImage) await handleCroppedImageCreation(createdImage); 
+    const createdImage = await createImage(file);
+    storeImage(createdImage, file);
+    if (squareImage) await handleSquareImage(createdImage);
     if (automaticMode) filterRoutine();
   } catch (error) {
     console.error(error);
