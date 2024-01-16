@@ -1,4 +1,4 @@
-import { konvaStore, appStore, filterSettingStore } from "stores";
+import { konvaStore, appStore, filterSettingStore, userStore } from "stores";
 import { get } from "svelte/store";
 import { filterSettingsAutomatic, initialFilterSettings } from "lib/default";
 import Konva from "konva";
@@ -25,7 +25,11 @@ const manageFiltersArray = (filterToApply: FilterFunction) => {
 };
 
 const cache = (img: any, layer: Konva.Layer) => {
-  img.cache({ pixelRatio: 0.5 });
+  // we downscale if the image is too big, otherwise we keep the original size for filtering
+  let pixelRatio =
+    get(userStore).size > get(appStore).downscaleThreshold ? 0.5 : 1;
+  console.log("pixelRatio", pixelRatio);
+  img.cache({ pixelRatio });
   layer.batchDraw();
 };
 
@@ -38,6 +42,9 @@ const setter = (filterMethod: (value: number) => void, filterValue: number) => {
 
 export const handleFilterchange = (filterToApply: FilterFunction) => {
   if (!get(konvaStore).backgroundImage) return;
+  let backgroundImage = get(konvaStore).backgroundImage;
+  let backgroundLayer = get(konvaStore).backgroundLayer;
+  cache(backgroundImage, backgroundLayer);
   manageFiltersArray(filterToApply);
   switch (filterToApply) {
     case Konva.Filters.Blur:
@@ -79,9 +86,6 @@ export const handleFilterchange = (filterToApply: FilterFunction) => {
     default:
       break;
   }
-  let backgroundImage = get(konvaStore).backgroundImage;
-  let backgroundLayer = get(konvaStore).backgroundLayer;
-  cache(backgroundImage, backgroundLayer);
 };
 
 const applyFiltersFromSettings = (config: FilterSetting) => {

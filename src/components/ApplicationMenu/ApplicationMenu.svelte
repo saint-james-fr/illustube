@@ -1,20 +1,22 @@
 <script lang="ts">
   import Uploader from "components/Uploader/Uploader.svelte";
-  import { appStore, konvaStore, routeStore } from "stores";
+  import { appStore, konvaStore, routeStore, filterSettingStore } from "stores";
   import homeIcon from "assets/icons/home.png";
   import downloadIcon from "assets/icons/download.png";
   import resetIcon from "assets/icons/reset.png";
   import { exportImage } from "lib/download";
-  import { resetFilters } from "lib/filters";
+  import { filterRoutine, resetFilters } from "lib/filters";
 
   const handleHome = () => {
     $routeStore.siteRoute = "home";
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!$konvaStore.backgroundImage || !$konvaStore.backgroundImage) {
       return;
     }
+
+    //
     exportImage(
       $konvaStore.stage,
       $konvaStore.backgroundImage,
@@ -31,6 +33,7 @@
 </script>
 
 <div class="application_menu">
+  <img src={homeIcon} alt="home" id="homeIcon" on:click={handleHome} />
   <div class="uploader_container">
     <Uploader />
   </div>
@@ -48,7 +51,6 @@
     on:click={handleDownload}
     class:gray={!$konvaStore.backgroundImage || !$konvaStore.backgroundImage}
   />
-  <img src={homeIcon} alt="home" id="homeIcon" on:click={handleHome} />
 </div>
 
 <style lang="scss">
@@ -57,7 +59,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: $secondary;
+    background: $background-secondary;
     height: 100%;
     width: 100%;
     gap: 1.3rem;
@@ -74,5 +76,9 @@
 
   .gray {
     filter: invert(100%) brightness(40%);
+  }
+
+  #homeIcon {
+    margin-bottom: 2rem;
   }
 </style>

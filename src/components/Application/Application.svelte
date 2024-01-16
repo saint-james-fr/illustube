@@ -4,6 +4,7 @@
   import { routeStore } from "stores";
   import "css/pico.css";
   import ApplicationMenu from "components/ApplicationMenu/ApplicationMenu.svelte";
+  import ApplicationHelp from "components/ApplicationHelp/ApplicationHelp.svelte";
 </script>
 
 <div class="page_container">
@@ -12,9 +13,8 @@
       <ApplicationMenu />
     </div>
     <div class="settings_container">
-      {#if $routeStore.applicationRoute === "settings"}
         <Settings />
-      {/if}
+        <ApplicationHelp />
     </div>
     <div class="drawing_container">
       <Canvas />
@@ -25,7 +25,7 @@
 <style lang="scss">
   .application_container {
     display: grid;
-    grid-template-columns: 50px 300px auto ;
+    grid-template-columns: 50px 300px auto;
     width: 100%;
     height: 100vh;
     overflow: hidden;
@@ -38,7 +38,8 @@
     align-items: center;
     padding-inline: 10%;
     padding-top: 2rem;
-    background: $secondary;
+    background: $background-secondary;
+    border-right: 1px solid var(--primary);
   }
   .drawing_container {
     background-color: $black;

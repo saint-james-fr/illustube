@@ -3,7 +3,6 @@
 
   const handleSubmit = (event: Event) => {
     event.preventDefault();
-    $routeStore.applicationRoute = "position";
   };
 </script>
 

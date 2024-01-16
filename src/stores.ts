@@ -1,13 +1,11 @@
 import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
-import Konva from "konva";
 import {
   initialUserSettings,
   initialAppSettings,
   initialRouteSettings,
   initialKonvaSettings,
   initialFilterSettings,
-  initialTransformerSettings,
 } from "lib/default";
 
 export const userStore: Writable<UserStore> = writable(initialUserSettings);

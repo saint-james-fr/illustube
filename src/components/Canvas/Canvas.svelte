@@ -63,7 +63,7 @@
 
 <style lang="scss">
   .canvas_container {
-    width: 100%;
+    width: 90%;
     aspect-ratio: 16 / 9;
     background-color: $black;
     transform-origin: center center;

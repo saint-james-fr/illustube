@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { exportImage } from "lib/download";
   import { appStore, filterSettingStore, konvaStore } from "stores";
-  import { onMount } from "svelte";
 
   import Konva from "konva";
   import { initFiltersValue } from "lib/default";
@@ -134,10 +132,10 @@
     {/if}
   </form>
 </div>
+
 <style lang="scss">
   .settings {
     width: 100%;
-    height: 100%;
 
     form {
       height: 100%;
@@ -166,9 +164,8 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       width: 100%;
     }
   }
-
 </style>

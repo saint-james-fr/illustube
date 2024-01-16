@@ -43,6 +43,7 @@ export const initialMetaDataSettings: MetaData = {
 
 export const initialUserSettings: UserStore = {
   image: initialImageSettings,
+  size: 0,
   croppedImage: null,
   metaData: initialMetaDataSettings,
   choosedPosition: undefined,
@@ -55,11 +56,11 @@ export const initialAppSettings: AppStore = {
   pixelRatio: 3,
   automaticMode: false,
   hideMainImage: false,
+  downscaleThreshold: 7,
 };
 
 export const initialRouteSettings: RouteStore = {
   siteRoute: "home",
-  applicationRoute: "upload",
 };
 
 export const initialKonvaSettings: KonvaStore = {

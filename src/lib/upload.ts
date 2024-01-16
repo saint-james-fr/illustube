@@ -12,8 +12,6 @@ import { initialKonvaSettings, initialFilterSettings } from "lib/default";
 import { filterRoutine } from "lib/filters";
 
 export const upload = async (files: FileList) => {
-  const nextRoute = "settings";
-
   const emptyDataFromStores = () => {
     userStore.update((store) => {
       store.croppedImage = null;
@@ -58,22 +56,18 @@ export const upload = async (files: FileList) => {
     croppedImage.src = croppedImageUrl;
   };
 
-  const updateRoute = () => {
-    if (get(routeStore)?.applicationRoute === nextRoute) return;
-
-    routeStore.update((store) => {
-      store.applicationRoute = nextRoute;
-      return store;
-    });
-  };
-
   let file = files[0];
   // we empty the data from the stores
   emptyDataFromStores();
   console.log(get(appStore)?.automaticMode);
   try {
     validateType(file);
-    validateSize(file);
+    const size = validateSize(file);
+    // we stock size
+    userStore.update((store) => {
+      store.size = size;
+      return store;
+    });
     // we create an image from the file
     const createdImage = await createImageFromFile(file);
     console.log("created image", createdImage);
@@ -85,8 +79,7 @@ export const upload = async (files: FileList) => {
       console.log("image should be square");
       await handleCroppedImageCreation(createdImage);
     }
-    updateRoute();
-    filterRoutine();
+    if (get(appStore)?.automaticMode) filterRoutine();
   } catch (error) {
     console.error(error);
   }

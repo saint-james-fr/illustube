@@ -1,14 +1,25 @@
 export const validateType = (file: File) => {
-  const validTypes = ["image/jpeg", "image/png", "image/jpg", "image/gif", "image/svg+xml", "image/svg", "image/webp", ];
+  const validTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/jpg",
+    "image/gif",
+    "image/svg+xml",
+    "image/svg",
+    "image/webp",
+  ];
   if (validTypes.indexOf(file.type) === -1) {
     alert("Invalid File Type");
     throw new Error("Invalid File Type");
   }
 };
 
-export const validateSize = (file: File) => {
+export const validateSize = (file: File): number => {
   const mbToBytes = (mb: number): number => {
-    return mb * 1024 * 1024
+    return mb * 1024 * 1024;
+  };
+  const bytesToMb = (bytes: number): number => {
+    return Math.trunc(bytes / 1024 / 1024);
   };
   // 10mb limit
   const maxSizeInBytes = mbToBytes(15);
@@ -16,5 +27,5 @@ export const validateSize = (file: File) => {
     alert("File too large");
     throw new Error("File too large");
   }
+  return bytesToMb(file.size);
 };
-

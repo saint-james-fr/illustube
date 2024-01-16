@@ -4,14 +4,15 @@ interface AppStore {
   pixelRatio: number;
   automaticMode: boolean;
   hideMainImage: boolean;
+  downscaleThreshold: number;
 }
 
 interface RouteStore {
   siteRoute: "home" | "application" | "credits";
-  applicationRoute: "upload" | "settings";
 }
 
 interface UserStore {
+  size: number,
   image: ImportedImage;
   croppedImage: HTMLImageElement | null;
   metaData: MetaData;
