@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { konvaStore, imageStore, userStore } from "stores";
+  import {
+    konvaStore,
+    imageStore,
+    userStore,
+    filterSettingStore,
+  } from "stores";
   import backgroundIcon from "assets/icons/background.png";
   import { upload } from "lib/upload";
   import { resetBgImageStore } from "lib/storesFunctions";
@@ -12,6 +17,11 @@
     }
     // empty filters
     emptyFilters();
+    // reset filters
+    filterSettingStore.update((store) => {
+      store.reset();
+      return store;
+    });
     // // empty bgImage
     resetBgImageStore();
     const files = (e.target as HTMLInputElement).files;
