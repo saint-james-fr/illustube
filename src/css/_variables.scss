@@ -3,8 +3,10 @@ $black: #081417;
 $white: var(--color);
 $primary: var(--primary);
 $primary-hover: var(--primary-hover);
-$background-primary: #12191f;
-$background-secondary: #0e1820;
+$secondary: var(--secondary);
+$secondary-hover: var(--secondary-hover);
+$background-primary: var(--background-primary);
+$background-secondary:  var(--background-secondary);
 
 /* Screen Sizes */
 $sm: 576px;

@@ -9,3 +9,12 @@
 .hide {
   display: none;
 }
+
+.shadow {
+  $width: 5rem;
+  box-shadow: 0px 0px $width 0px $primary;
+
+  &:hover {
+    box-shadow: 0px 0px $width 0px $primary-hover;
+  }
+}

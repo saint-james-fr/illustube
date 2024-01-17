@@ -3,7 +3,7 @@
 </script>
 
 <p>
-  When you're done, click <span class="primary download" use:download>here</span
+  When you're done, click <span class="primary download" use:download><strong>here</strong></span
   > or on the download icon.
 </p>
 

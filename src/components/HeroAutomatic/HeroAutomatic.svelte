@@ -8,5 +8,5 @@
   };
 </script>
 
-<label for="automaticInput"><span class="button" role="button">automatic mode</span></label>
+<label for="automaticInput"><span class="button shadow" role="button">automatic mode</span></label>
 <input id="automaticInput" class="hide" type="file" on:input={handleAutomaticMode} />
