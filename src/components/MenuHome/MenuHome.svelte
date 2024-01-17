@@ -9,3 +9,4 @@
 
 <img src={homeIcon} alt="home" id="homeIcon" on:click={handleHome} />
 
+
