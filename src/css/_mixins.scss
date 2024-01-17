@@ -1,25 +1,9 @@
-$breakpoint: $md;
-
 @mixin cover-background {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
 }
 
-@mixin container {
-  @include until($sm) {
-    max-width: 90%;
-  }
-  @include until($breakpoint) {
-    max-width: 85%;
-  }
-  @include from($breakpoint) {
-    max-width: 80%;
-  }
-  @include from($lg) {
-    max-width: min(68%, 1200px);
-  }
-}
 
 @mixin until($breakpoint) {
   @media screen and (max-width: $breakpoint) {

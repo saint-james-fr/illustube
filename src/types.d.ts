@@ -12,6 +12,7 @@ interface UserStore {
   automaticMode: boolean;
   hideMainImage: boolean;
   backgroundColor: string;
+  showSettingMobileToggle: boolean;
 }
 
 interface ImageStore {

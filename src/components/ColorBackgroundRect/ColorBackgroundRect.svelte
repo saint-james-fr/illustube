@@ -2,12 +2,25 @@
   import type Konva from "konva";
   import { Rect } from "svelte-konva";
   import { konvaStore } from "stores";
+  import { onMount } from "svelte";
 
+  export let canvasContainer: HTMLDivElement;
   let backgroundColorRect: Konva.Rect;
 
   $: {
     $konvaStore.backgroundColorRect = backgroundColorRect;
+    if (canvasContainer && backgroundColorRect) {
+      backgroundColorRect.width(canvasContainer.clientWidth);
+      backgroundColorRect.height(canvasContainer.clientHeight);
+    }
   }
+
+  onMount(() => {
+    if (canvasContainer && backgroundColorRect) {
+      backgroundColorRect.width(canvasContainer.clientWidth);
+      backgroundColorRect.height(canvasContainer.clientHeight);
+    }
+  });
 </script>
 
 <Rect

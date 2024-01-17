@@ -54,5 +54,12 @@
     width: 50%;
     justify-content: space-between;
     gap: 2rem;
+    @include until($breakpoint) {
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
   }
 </style>

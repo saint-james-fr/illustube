@@ -34,7 +34,15 @@ body {
   font-weight: bold;
   text-transform: uppercase;
   cursor: pointer;
+  transition: all 150ms linear;
 }
+
+label:has([role="button"]),[role="button"] {
+  @include until($breakpoint) {
+    width: 100%;
+  }
+}
+
 
 .settings_container {
   p,

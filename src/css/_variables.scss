@@ -9,10 +9,8 @@ $background-primary: var(--background-primary);
 $background-secondary:  var(--background-secondary);
 
 /* Screen Sizes */
-$sm: 576px;
-$md: 990px;
-$lg: 1440px;
-$xl: 1800px;
+$breakpoint: 960px;
+$lg: 1500px;
 
 /* Z-INDEX */
 $z-index: ();

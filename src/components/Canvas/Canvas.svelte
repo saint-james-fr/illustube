@@ -6,6 +6,7 @@
   import { userStore, konvaStore, imageStore } from "stores";
   import { handleWheel } from "lib/konva/move";
   import { Stage, Layer } from "svelte-konva";
+  import { mobileDevice } from "lib/mobile";
   import type Konva from "konva";
 
   let canvasContainer: HTMLDivElement;
@@ -21,6 +22,9 @@
   $: {
     // This is reactively updated when the user resizes the page
     canvasContainerScalingRatio = Math.min(innerWidth / 1280, 1);
+    if (mobileDevice(innerWidth)) {
+      canvasContainerScalingRatio = 1;
+    }
     // We store the konva stage and layers in the store so that we can access them from other components
     $konvaStore.stage = stage;
     $konvaStore.bgLayer = backgroundLayer;
@@ -34,35 +38,28 @@
         mainLayer.show();
       }
     }
+    if (stage) {
+      stage.width(canvasContainer.clientWidth);
+      stage.height(canvasContainer.clientHeight);
+    }
   }
 
-  onMount(() => {
-    stageWidth = canvasContainer.clientWidth;
-    stageHeight = canvasContainer.clientHeight;
-  });
 </script>
 
 <svelte:window bind:innerWidth />
 
-<div
-  class="canvas_container"
-  bind:this={canvasContainer}
-  style="transform: scale({canvasContainerScalingRatio})"
->
+<div class="canvas_container" bind:this={canvasContainer}>
   {#if $imageStore.main.loaded}
     <Stage
       bind:handle={stage}
-      config={{
-        width: stageWidth,
-        height: stageHeight,
-      }}
+      config={{}}
       on:wheel={(event) => {
         if (!$konvaStore.bgImage) return;
         handleWheel(event.detail, $konvaStore.bgImage, $konvaStore.bgLayer);
       }}
     >
       <Layer bind:handle={backgroundColorRectLayer}>
-        <ColorBackgroundRect />
+        <ColorBackgroundRect {canvasContainer} />
       </Layer>
       <Layer bind:handle={backgroundLayer}>
         <BackgroundImage {canvasContainer} />
@@ -82,5 +79,8 @@
     transform-origin: center center;
     display: flex;
     align-items: center;
+    @include until($breakpoint) {
+      width: 100%;
+    }
   }
 </style>

@@ -8,7 +8,7 @@
     reversed: true,
     intro: { y: 192 },
     pausable: true,
-    duration: 300000,
+    duration: 3000,
     dismissable: false,
     icon: false,
     theme: {

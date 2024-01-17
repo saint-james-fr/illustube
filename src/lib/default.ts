@@ -88,6 +88,7 @@ export const initialUserSettings: UserStore = {
   automaticMode: false,
   hideMainImage: false,
   backgroundColor: "#ffffff",
+  showSettingMobileToggle: true,
 };
 
 export const initialAppSettings: AppStore = {
