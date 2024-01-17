@@ -1,11 +1,10 @@
 /* Colors */
 $black: #081417;
-$white: hsl(205, 20%, 94%);
-$primary: hsl(190, 67%, 59%);
-$primary-hover: hsl(190, 47%, 36%);
-$background-primary: #12191F;
-$background-secondary: #0E1820;
-
+$white: var(--color);
+$primary: var(--primary);
+$primary-hover: var(--primary-hover);
+$background-primary: #12191f;
+$background-secondary: #0e1820;
 
 /* Screen Sizes */
 $sm: 576px;
@@ -14,6 +13,4 @@ $lg: 1440px;
 $xl: 1800px;
 
 /* Z-INDEX */
-$z-index: (
-
-);
+$z-index: ();

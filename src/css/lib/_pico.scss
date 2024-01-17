@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+
+
 :root {
   --font-family: "Rubik", "Segoe UI", "Roboto", "Ubuntu", "Cantarell",
     "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
@@ -199,20 +201,20 @@ kbd {
 
 :root {
   --background-color: #11191f;
-  --color: $white;
-  --h1-color: $white
-  --h2-color: $white;
-  --h3-color: $white;
+  --color: hsl(205, 20%, 94%);
+  --h1-color: var(--color)
+  --h2-color: var(--color);
+  --h3-color: var(--color);
   --h4-color: #c8d1d8;
   --h5-color: hsl(205, 16%, 77%);
   --h6-color: #afbbc4;
   --muted-color: hsl(205, 10%, 50%);
   --muted-border-color: #1f2d38;
-  --primary: $primary;
-  --primary-hover: $primary-hover;
+  --primary: hsl(190, 67%, 59%);
+  --primary-hover: hsl(208, 59%, 63%);
   --primary-focus: rgba(5, 6, 7, 0.25);
-  --primary-inverse: #fff;
-  --secondary: hsl(205, 15%, 41%);
+  --primary-inverse: var(--color);
+  --secondary: #DB904F;
   --secondary-hover: hsl(205, 10%, 50%);
   --secondary-focus: rgba(115, 130, 140, 0.25);
   --secondary-inverse: #fff;
