@@ -2,7 +2,7 @@
   import BackgroundImage from "components/BackgroundImage/BackgroundImage.svelte";
   import ColorBackgroundRect from "components/ColorBackgroundRect/ColorBackgroundRect.svelte";
   import MainImage from "components/MainImage/MainImage.svelte";
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { userStore, konvaStore, imageStore } from "stores";
   import { handleWheel } from "lib/konva/move";
   import { Stage, Layer } from "svelte-konva";
@@ -16,8 +16,9 @@
   let backgroundLayer: Konva.Layer;
   let mainLayer: Konva.Layer;
   let backgroundColorRectLayer: Konva.Layer;
-  let stageWidth: number;
-  let stageHeight: number;
+
+  let sceneWidth: number;
+  let sceneHeight: number;
 
   $: {
     // This is reactively updated when the user resizes the page
@@ -38,21 +39,37 @@
         mainLayer.show();
       }
     }
-    if (stage) {
-      stage.width(canvasContainer.clientWidth);
-      stage.height(canvasContainer.clientHeight);
-    }
   }
 
+  const handleResize = () => {
+    if (!canvasContainer || !stage || !sceneHeight || !sceneWidth) return;
+
+    const parentWidth = canvasContainer.offsetWidth;
+    console.log("parentWidth", parentWidth);
+    const scale = parentWidth / sceneWidth;
+    console.log("scale", scale);
+
+    stage.width(sceneWidth * scale);
+    stage.height(sceneHeight * scale);
+    stage.scale({ x: scale, y: scale });
+
+
+  };
+
+  onMount(async () => {
+    // We wait for the image to load before we can calculate the scene width and height
+    sceneWidth = canvasContainer.offsetWidth;
+    sceneHeight = sceneWidth / 16 * 9;
+  });
 </script>
 
-<svelte:window bind:innerWidth />
+<svelte:window bind:innerWidth on:resize={handleResize} />
 
 <div class="canvas_container" bind:this={canvasContainer}>
   {#if $imageStore.main.loaded}
     <Stage
       bind:handle={stage}
-      config={{}}
+      config={{ width: sceneWidth, height: sceneHeight }}
       on:wheel={(event) => {
         if (!$konvaStore.bgImage) return;
         handleWheel(event.detail, $konvaStore.bgImage, $konvaStore.bgLayer);

@@ -87,7 +87,7 @@ export const initialImageStoreSettings = {
 export const initialUserSettings: UserStore = {
   automaticMode: false,
   hideMainImage: false,
-  backgroundColor: "#ffffff",
+  backgroundColor: "#031313",
   showSettingMobileToggle: true,
 };
 
