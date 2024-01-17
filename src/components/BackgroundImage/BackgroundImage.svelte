@@ -6,18 +6,19 @@
   import Konva from "konva";
   import { onMount, tick } from "svelte";
   import { filterRoutine } from "lib/konva/filters";
-
   // TODO : add more filters
   export let canvasContainer: HTMLDivElement;
-
-  $: $konvaStore.bgImage = konvaImage;
-
   let konvaImage: Konva.Image;
 
+  $: {
+    $konvaStore.bgImage = konvaImage;
+  }
+
   onMount(async () => {
-    if ($userStore.automaticMode) {
-      await tick();
-      filterRoutine();
+    await tick();
+    if (konvaImage && $userStore.automaticMode) {
+      konvaImage.cache();
+      filterRoutine(konvaImage);
     }
   });
 </script>

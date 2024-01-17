@@ -3,13 +3,12 @@
   import baguetteIcon from "assets/icons/baguette.png";
   import { filterRoutine } from "lib/konva/filters";
 
-
-  const handleManualMode = () => {
+  const handleAutomaticMode = () => {
     if (!$konvaStore.mainImage || !$konvaStore.bgImage) {
       return;
     }
     $userStore.automaticMode = true;
-    filterRoutine();
+    filterRoutine($konvaStore.bgImage);
   };
 </script>
 
@@ -17,6 +16,6 @@
   src={baguetteIcon}
   alt="reset"
   id="baguetteIcon"
-  on:click={handleManualMode}
+  on:click={handleAutomaticMode}
   class:gray={!$konvaStore.bgImage || !$konvaStore.bgImage}
 />

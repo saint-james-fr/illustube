@@ -16,14 +16,15 @@
       ? $imageStore.main.cropped
       : $imageStore.main.element;
 
-  let targetWidth = canvasContainer.clientWidth / 3;
+      // TODO : refactor magic number
+  let targetWidth = canvasContainer.clientWidth / 2.3;
   let targetHeight = targetWidth;
   let scaleRatio;
 
   $: $konvaStore.mainImage = konvaImage;
 
   onMount(() => {
-    // Centering the image on mount - this is totaly optional and can be removed
+    // Centering the image on mount and giving it  - this is totaly optional and can be removed
     scaleRatio = findScaleRatio($imageStore.main.width, targetWidth);
     scaleImage(konvaImage, scaleRatio);
     // Attaching transformers on mount

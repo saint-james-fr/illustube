@@ -1,15 +1,19 @@
 <script lang="ts">
   import { konvaStore } from "stores";
   import resetIcon from "assets/icons/reset.png";
-  import { resetFilters } from "lib/konva/filters";
+  import { emptyFilters } from "lib/konva/filters";
   import { toast } from "@zerodevx/svelte-toast";
+  import { resetFilterSettingStore } from "lib/storesFunctions";
+  resetFilterSettingStore();
 
   const handleReset = () => {
     if (!$konvaStore.bgImage || !$konvaStore.bgImage) {
       return;
     }
-    resetFilters();
-    toast.push("Filters reset")
+    resetFilterSettingStore();
+    emptyFilters();
+    $konvaStore.bgImage.cache();
+    toast.push("Filters reset");
   };
 </script>
 

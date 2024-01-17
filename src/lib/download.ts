@@ -25,7 +25,7 @@ export const exportImage = (
   const name = "export";
   if (stage === undefined || img === undefined) return;
   hideTransformer(stage);
-  // Upscale hack
+  // This is a hack to export the image with best resolution possible
   if (
     get(filterSettingStore).blurRadius == 0 ||
     get(filterSettingStore).pixelateValue == 0

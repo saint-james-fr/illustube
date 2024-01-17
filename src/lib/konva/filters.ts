@@ -6,7 +6,7 @@ import {
   userStore,
 } from "stores";
 import { get } from "svelte/store";
-import { filterSettingsAutomatic, initialFilterSettings } from "lib/default";
+import { filterSettingsAutomatic } from "lib/default";
 import Konva from "konva";
 
 type FilterFunction = (typeof Konva.Filters)[keyof typeof Konva.Filters];
@@ -40,55 +40,46 @@ const setter = (filterMethod: (value: number) => void, filterValue: number) => {
   });
 };
 
-export const handleFilterchange = (filterToApply: FilterFunction) => {
-  if (!get(konvaStore).bgImage) return;
+export const handleFilterchange = (
+  image: Konva.Image,
+  filterToApply: FilterFunction
+) => {
+  if (!image) return;
   const threshold = get(appStore).downscaleThreshold;
   const size = get(imageStore).main.size;
   let pixelRatio = size > threshold ? 0.5 : 1;
-  get(konvaStore).bgImage.cache({ pixelRatio });
+  image.cache({ pixelRatio });
 
-  manageFiltersArray(get(konvaStore).bgImage, filterToApply);
+  manageFiltersArray(image, filterToApply);
+  
   switch (filterToApply) {
     case Konva.Filters.Blur:
-      setter(
-        get(konvaStore).bgImage.blurRadius,
-        get(filterSettingStore).blurRadius
-      );
+      setter(image.blurRadius, get(filterSettingStore).blurRadius);
       break;
     case Konva.Filters.Brighten:
-      setter(
-        get(konvaStore).bgImage.brightness,
-        get(filterSettingStore).brightnessValue
-      );
+      setter(image.brightness, get(filterSettingStore).brightnessValue);
       break;
     case Konva.Filters.Contrast:
-      setter(
-        get(konvaStore).bgImage.contrast,
-        get(filterSettingStore).contrastValue
-      );
+      setter(image.contrast, get(filterSettingStore).contrastValue);
       break;
     case Konva.Filters.HSL:
-      setter(
-        get(konvaStore).bgImage.hue,
-        get(filterSettingStore).hueRotateValue
-      );
+      setter(image.hue, get(filterSettingStore).hueRotateValue);
       break;
     case Konva.Filters.Noise:
-      setter(get(konvaStore).bgImage.noise, get(filterSettingStore).noiseValue);
+      setter(image.noise, get(filterSettingStore).noiseValue);
       break;
     case Konva.Filters.Pixelate:
-      setter(
-        get(konvaStore).bgImage.pixelSize,
-        get(filterSettingStore).pixelateValue
-      );
+      setter(image.pixelSize, get(filterSettingStore).pixelateValue);
       break;
     default:
       break;
   }
-
 };
 
-const applyFiltersFromSettings = (config: FilterSetting) => {
+const applyFiltersFromSettings = (
+  image: Konva.Image,
+  config: FilterSetting
+) => {
   const {
     blurRadius,
     brightnessValue,
@@ -102,40 +93,40 @@ const applyFiltersFromSettings = (config: FilterSetting) => {
   const threshold = get(appStore).downscaleThreshold;
   const size = get(imageStore).main.size;
   let pixelRatio = size > threshold ? 0.5 : 1;
-  get(konvaStore).bgImage.cache({ pixelRatio });
+  image.cache({ pixelRatio });
 
   if (blurRadius) {
-    manageFiltersArray(get(konvaStore).bgImage, Konva.Filters.Blur);
-    setter(get(konvaStore).bgImage.blurRadius, blurRadius);
+    manageFiltersArray(image, Konva.Filters.Blur);
+    setter(image.blurRadius, blurRadius);
   }
 
   if (brightnessValue) {
-    manageFiltersArray(get(konvaStore).bgImage, Konva.Filters.Brighten);
-    setter(get(konvaStore).bgImage.brightness, brightnessValue);
+    manageFiltersArray(image, Konva.Filters.Brighten);
+    setter(image.brightness, brightnessValue);
   }
 
   if (contrastValue) {
-    manageFiltersArray(get(konvaStore).bgImage, Konva.Filters.Contrast);
-    setter(get(konvaStore).bgImage.contrast, contrastValue);
+    manageFiltersArray(image, Konva.Filters.Contrast);
+    setter(image.contrast, contrastValue);
   }
 
   if (hueRotateValue) {
-    manageFiltersArray(get(konvaStore).bgImage, Konva.Filters.HSL);
-    setter(get(konvaStore).bgImage.hue, hueRotateValue);
+    manageFiltersArray(image, Konva.Filters.HSL);
+    setter(image.hue, hueRotateValue);
   }
 
   if (noiseValue) {
-    manageFiltersArray(get(konvaStore).bgImage, Konva.Filters.Noise);
-    setter(get(konvaStore).bgImage.noise, noiseValue);
+    manageFiltersArray(image, Konva.Filters.Noise);
+    setter(image.noise, noiseValue);
   }
 
   if (pixelateValue) {
-    manageFiltersArray(get(konvaStore).bgImage, Konva.Filters.Pixelate);
-    setter(get(konvaStore).bgImage.pixelSize, pixelateValue);
+    manageFiltersArray(image, Konva.Filters.Pixelate);
+    setter(image.pixelSize, pixelateValue);
   }
 
   if (config.opacityValue) {
-    setter(get(konvaStore).bgImage.opacity, opacityValue);
+    setter(image.opacity, opacityValue);
   }
 };
 
@@ -153,17 +144,15 @@ const loadSetting = () => {
   return setting;
 };
 
-export const resetFilters = () => {
-  filterSettingStore.set(initialFilterSettings);
+export const emptyFilters = () => {
   konvaStore.update((store) => {
     store.bgImage.filters([]);
     return store;
   });
-  get(konvaStore).bgImage.cache();
 };
 
-export const filterRoutine = (setting?: FilterSetting) => {
+export const filterRoutine = (image: Konva.Image, setting?: FilterSetting) => {
   if (!setting) setting = loadSetting();
   updateFilterSettingStore(setting);
-  applyFiltersFromSettings(setting);
+  applyFiltersFromSettings(image, setting);
 };

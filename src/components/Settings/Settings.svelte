@@ -21,7 +21,6 @@
     minNoiseValue,
     maxNoiseValue,
   } = initFiltersValue;
-
 </script>
 
 <div class="settings">
@@ -36,7 +35,8 @@
           max={maxBlurValue}
           step="0.3"
           bind:value={$filterSettingStore.blurRadius}
-          on:input={() => handleFilterchange(Konva.Filters.Blur)}
+          on:input={() =>
+            handleFilterchange($konvaStore.bgImage, Konva.Filters.Blur)}
         />
       </div>
       <div class="line">
@@ -48,7 +48,8 @@
           max={maxBrightnessValue}
           step="0.01"
           bind:value={$filterSettingStore.brightnessValue}
-          on:input={() => handleFilterchange(Konva.Filters.Brighten)}
+          on:input={() =>
+            handleFilterchange($konvaStore.bgImage, Konva.Filters.Brighten)}
         />
       </div>
 
@@ -60,7 +61,8 @@
           min={minContrastValue}
           max={maxContrastValue}
           bind:value={$filterSettingStore.contrastValue}
-          on:input={() => handleFilterchange(Konva.Filters.Contrast)}
+          on:input={() =>
+            handleFilterchange($konvaStore.bgImage, Konva.Filters.Contrast)}
         />
       </div>
 
@@ -72,7 +74,8 @@
           min={minHueRotateValue}
           max={maxHueRotateValue}
           bind:value={$filterSettingStore.hueRotateValue}
-          on:input={() => handleFilterchange(Konva.Filters.HSL)}
+          on:input={() =>
+            handleFilterchange($konvaStore.bgImage, Konva.Filters.HSL)}
         />
       </div>
 
@@ -99,7 +102,8 @@
           max={maxPixelateValue}
           step="0.5"
           bind:value={$filterSettingStore.pixelateValue}
-          on:input={() => handleFilterchange(Konva.Filters.Pixelate)}
+          on:input={() =>
+            handleFilterchange($konvaStore.bgImage, Konva.Filters.Pixelate)}
         />
       </div>
       <div class="line">
@@ -111,7 +115,8 @@
           max={maxNoiseValue}
           step="0.01"
           bind:value={$filterSettingStore.noiseValue}
-          on:input={() => handleFilterchange(Konva.Filters.Noise)}
+          on:input={() =>
+            handleFilterchange($konvaStore.bgImage, Konva.Filters.Noise)}
         />
       </div>
       <div class="row">

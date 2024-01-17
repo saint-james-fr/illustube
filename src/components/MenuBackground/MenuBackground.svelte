@@ -1,26 +1,30 @@
 <script lang="ts">
-  import { konvaStore, imageStore } from "stores";
+  import { konvaStore, imageStore, userStore } from "stores";
   import backgroundIcon from "assets/icons/background.png";
   import { upload } from "lib/upload";
-  import {
-    resetBgImageStore,
-    resetFilterSettingStore,
-  } from "lib/storesFunctions";
+  import { resetBgImageStore } from "lib/storesFunctions";
   import { initializeImageInStore } from "lib/storesFunctions";
+  import { emptyFilters, filterRoutine } from "lib/konva/filters";
 
   const handleBackgroundChange = async (e: Event) => {
     if (!$konvaStore.bgImage || !$konvaStore.bgImage) {
       return;
     }
-    resetFilterSettingStore();
+    // empty filters
+    emptyFilters();
+    // // empty bgImage
     resetBgImageStore();
     const files = (e.target as HTMLInputElement).files;
     if (files) {
       const file = files[0];
       const image = await upload(file);
       if (image) {
+        // this kind of a hack to clear the cache
         initializeImageInStore(image, file, "bg");
-        console.log($imageStore.bg);
+        if ($konvaStore.bgImage._cache.has("canvas")) {
+          $konvaStore.bgImage._cache.delete("canvas");
+          $konvaStore.bgLayer.batchDraw();
+        }
       }
     }
   };

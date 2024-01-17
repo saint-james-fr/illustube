@@ -7,6 +7,6 @@ export const upload = async (file: File) => {
     validateSize(file);
     return await createImage(file);
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };

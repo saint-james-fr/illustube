@@ -1,8 +1,6 @@
 <script lang="ts">
   import { upload } from "lib/upload";
   import uploadIcon from "assets/icons/upload.png";
-  import { userStore } from "stores";
-  import { filterRoutine } from "lib/konva/filters";
   import {
     resetBgImageStore,
     resetFilterSettingStore,
@@ -21,7 +19,6 @@
       if (image) {
         initializeImageInStore(image, file, "main");
         initializeImageInStore(image, file, "bg");
-        if ($userStore.automaticMode) filterRoutine();
       }
     }
   };

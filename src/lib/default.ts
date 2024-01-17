@@ -92,7 +92,7 @@ export const initialUserSettings: UserStore = {
 export const initialAppSettings: AppStore = {
   mainImageShouldBeSquare: true,
   pixelRatio: 3,
-  downscaleThreshold: 7,
+  downscaleThreshold: 2,
 };
 
 export const initialRouteSettings: RouteStore = {

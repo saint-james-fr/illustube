@@ -33,10 +33,10 @@ body {
   list-style: none;
 }
 
-.gray {
-  filter: invert(100%) brightness(40%);
-}
+.button {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
 
-.primary {
-  color: var(--primary);
 }

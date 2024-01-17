@@ -58,16 +58,12 @@
         handleWheel(event.detail, $konvaStore.bgImage, $konvaStore.bgLayer);
       }}
     >
-      {#if $imageStore.bg}
-        <Layer bind:handle={backgroundLayer}>
-          <BackgroundImage {canvasContainer} />
-        </Layer>
-      {/if}
-      {#if $imageStore.main}
-        <Layer bind:handle={mainLayer}>
-          <MainImage {canvasContainer} />
-        </Layer>
-      {/if}
+      <Layer bind:handle={backgroundLayer}>
+        <BackgroundImage {canvasContainer} />
+      </Layer>
+      <Layer bind:handle={mainLayer}>
+        <MainImage {canvasContainer} />
+      </Layer>
     </Stage>
   {/if}
 </div>
