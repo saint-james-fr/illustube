@@ -9,7 +9,7 @@
   import { upload } from "lib/upload";
   import { resetBgImageStore } from "lib/storesFunctions";
   import { initializeImageInStore } from "lib/storesFunctions";
-  import { emptyFilters } from "lib/konva/filters";
+  import { emptyFilters, filterRoutine } from "lib/konva/filters";
 
   const handleBackgroundChange = async (e: Event) => {
     if (!$konvaStore.bgImage || !$konvaStore.bgImage) {
@@ -34,6 +34,14 @@
         if ($konvaStore.bgImage._cache.has("canvas")) {
           $konvaStore.bgImage._cache.delete("canvas");
           $konvaStore.bgLayer.batchDraw();
+          // Set Time out hack to make sure the image is loaded
+          if ($userStore.automaticMode) {
+            setTimeout(() => {
+              $konvaStore.bgImage.cache();
+              filterRoutine($konvaStore.bgImage);
+              $konvaStore.bgLayer.batchDraw();
+            }, 100);
+          }
         }
       }
     }

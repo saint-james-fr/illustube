@@ -181,7 +181,7 @@ export const initFiltersValue = {
 };
 
 export const filterSettingsAutomatic = {
-  blurRadius: 6,
+  blurRadius: 12,
   brightnessValue: -0.2,
   contrastValue: -5,
   hueRotateValue: 0,
@@ -191,7 +191,7 @@ export const filterSettingsAutomatic = {
   pixelateValue: 1,
   noiseValue: 0.05,
   reset: function () {
-    this.blurRadius = 30;
+    this.blurRadius = 0;
     this.brightnessValue = 0;
     this.contrastValue = 0;
     this.hueRotateValue = 0;
