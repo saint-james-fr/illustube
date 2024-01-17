@@ -87,6 +87,7 @@ export const initialImageStoreSettings = {
 export const initialUserSettings: UserStore = {
   automaticMode: false,
   hideMainImage: false,
+  backgroundColor: "#ffffff",
 };
 
 export const initialAppSettings: AppStore = {
@@ -105,12 +106,16 @@ export const initialKonvaSettings: KonvaStore = {
   bgImage: null,
   mainLayer: null,
   mainImage: null,
+  backgroundColorRectLayer: null,
+  backgroundColorRect: null,
   reset: function () {
     this.stage = null;
     this.bgLayer = null;
     this.bgImage = null;
     this.mainLayer = null;
     this.mainImage = null;
+    this.backgroundColorRectLayer = null;
+    this.backgroundColorRect = null;
   },
 };
 

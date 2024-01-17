@@ -11,6 +11,7 @@ interface AppStore {
 interface UserStore {
   automaticMode: boolean;
   hideMainImage: boolean;
+  backgroundColor: string;
 }
 
 interface ImageStore {
@@ -38,6 +39,8 @@ interface KonvaStore {
   bgImage: Konva.Image | null;
   mainImage: Konva.Image | null;
   mainLayer: Konva.Layer | null;
+  backgroundColorRectLayer: Konva.Layer | null;
+  backgroundColorRect: Konva.Rect | null;
   reset: () => void;
 }
 

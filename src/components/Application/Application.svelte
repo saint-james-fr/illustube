@@ -3,6 +3,7 @@
   import Settings from "components/Settings/Settings.svelte";
   import ApplicationMenu from "components/ApplicationMenu/ApplicationMenu.svelte";
   import ApplicationHelp from "components/ApplicationHelp/ApplicationHelp.svelte";
+  import SettingsDownload from "components/SettingsDownload/SettingsDownload.svelte";
 </script>
 
 <div class="page_container">
@@ -13,6 +14,7 @@
     <div class="settings_container">
       <ApplicationHelp />
       <Settings />
+      <SettingsDownload />
     </div>
     <div class="drawing_container">
       <Canvas />
@@ -37,6 +39,7 @@
     padding-top: 2rem;
     background: $background-secondary;
     border-right: 1px solid var(--primary);
+
   }
   .drawing_container {
     background-color: $black;

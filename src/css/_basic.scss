@@ -29,14 +29,18 @@ body {
   margin: 0 auto;
 }
 
-._toastContainer li {
-  list-style: none;
-}
 
 .button {
   text-align: center;
   font-weight: bold;
   text-transform: uppercase;
   cursor: pointer;
+}
 
+.settings_container {
+  p,
+  label {
+    font-size: 0.85rem;
+    line-height: 0.8rem;
+  }
 }

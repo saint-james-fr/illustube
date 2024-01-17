@@ -2,21 +2,14 @@
   import { konvaStore, appStore } from "stores";
   import downloadIcon from "assets/icons/download.png";
   import { exportImage } from "lib/download";
-
-  const handleDownload = async () => {
-    if (!$konvaStore.bgImage || !$konvaStore.bgImage) {
-      return;
-    }
-
-    //
-    exportImage($konvaStore.stage, $konvaStore.bgImage, $appStore.pixelRatio);
-  };
+  import { toast } from "@zerodevx/svelte-toast";
+  import { download } from "lib/actions";
 </script>
 
 <img
   src={downloadIcon}
   alt="download"
   id="downloadIcon"
-  on:click={handleDownload}
+  use:download
   class:gray={!$konvaStore.bgImage || !$konvaStore.bgImage}
 />

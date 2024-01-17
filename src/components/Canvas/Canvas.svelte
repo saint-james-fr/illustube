@@ -1,11 +1,12 @@
 <script lang="ts">
   import BackgroundImage from "components/BackgroundImage/BackgroundImage.svelte";
+  import ColorBackgroundRect from "components/ColorbackgroundRect/ColorbackgroundRect.svelte";
+  import MainImage from "components/MainImage/MainImage.svelte";
+  import { onMount } from "svelte";
   import { userStore, konvaStore, imageStore } from "stores";
   import { handleWheel } from "lib/konva/move";
   import { Stage, Layer } from "svelte-konva";
   import type Konva from "konva";
-  import MainImage from "components/MainImage/MainImage.svelte";
-  import { onMount } from "svelte";
 
   let canvasContainer: HTMLDivElement;
   let canvasContainerScalingRatio: number;
@@ -13,6 +14,7 @@
   let stage: Konva.Stage;
   let backgroundLayer: Konva.Layer;
   let mainLayer: Konva.Layer;
+  let backgroundColorRectLayer: Konva.Layer;
   let stageWidth: number;
   let stageHeight: number;
 
@@ -23,6 +25,7 @@
     $konvaStore.stage = stage;
     $konvaStore.bgLayer = backgroundLayer;
     $konvaStore.mainLayer = mainLayer;
+    $konvaStore.backgroundColorRectLayer = backgroundColorRectLayer;
     // We react to changes to the user setting to hide or show the main image
     if (mainLayer) {
       if ($userStore.hideMainImage) {
@@ -58,6 +61,9 @@
         handleWheel(event.detail, $konvaStore.bgImage, $konvaStore.bgLayer);
       }}
     >
+      <Layer bind:handle={backgroundColorRectLayer}>
+        <ColorBackgroundRect />
+      </Layer>
       <Layer bind:handle={backgroundLayer}>
         <BackgroundImage {canvasContainer} />
       </Layer>

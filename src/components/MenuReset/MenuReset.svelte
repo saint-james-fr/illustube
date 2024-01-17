@@ -13,7 +13,7 @@
     resetFilterSettingStore();
     emptyFilters();
     $konvaStore.bgImage.cache();
-    toast.push("Filters reset");
+    toast.push("Filters have been reset.");
   };
 </script>
 

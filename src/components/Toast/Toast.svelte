@@ -7,13 +7,14 @@
   const options = {
     reversed: true,
     intro: { y: 192 },
-    duration: 5000,
+    pausable: true,
+    duration: 3000,
     dismissable: false,
     icon: false,
     theme: {
-      "--toastBackground": "hsl(190, 47%, 46%);",
-      "--toastProgressBackground": "white",
-      "--toastColor": "black",
+      "--toastBackground": "white;",
+      "--toastProgressBackground": "hsl(190, 47%, 46%)",
+      "--toastColor": "hsl(190, 47%, 46%)",
     },
   };
 </script>

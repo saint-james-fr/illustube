@@ -39,7 +39,8 @@
 </div>
 
 <style lang="scss">
-  $icon_width: 30px;
+  $icon_width: 28px;
+  $margin: 2rem;
 
   .application_menu {
     display: flex;
@@ -50,7 +51,7 @@
     height: 100%;
     width: 100%;
     gap: 1.3rem;
-    border-inline: 1px solid var(--primary);
+    border-inline: 1px solid $primary;
   }
 
   .menu_item_container {
@@ -60,10 +61,10 @@
     filter: invert(100%);
 
     &:has(img#downloadIcon) {
-      margin-top: 3rem;
+      margin-top: $margin;
     }
     &:has(img#homeIcon) {
-      margin-bottom: 3rem;
+      margin-bottom: $margin;
     }
   }
 </style>

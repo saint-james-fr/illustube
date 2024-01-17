@@ -127,6 +127,18 @@
         />
         <label for="hideMainImage">Hide center image</label>
       </div>
+      <div class="row colorPicker">
+        <!-- color picker -->
+        <input
+        type="color"
+        id="backgroundColor"
+        bind:value={$userStore.backgroundColor}
+        on:input={() => {
+          $konvaStore.backgroundColorRect.fill($userStore.backgroundColor);
+        }}
+        />
+        <label for="backgroundColor">Background color</label>
+      </div>
     </form>
   {/if}
 </div>
@@ -139,13 +151,11 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      margin-bottom: 0;
     }
 
     label {
       text-transform: capitalize;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      padding-top: 0.3rem;
     }
 
     .line {
@@ -164,6 +174,24 @@
       align-items: center;
       justify-content: flex-start;
       width: 100%;
+    }
+
+    .colorPicker {
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      
+      input {
+        max-width: 50px;
+        height: 28px;
+        padding: 4px;
+        margin-bottom: 0;
+      }
+
+      label {
+        margin-bottom: 0;
+        padding-left: 3px;
+      }
     }
   }
 </style>

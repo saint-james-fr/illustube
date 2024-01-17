@@ -9,7 +9,7 @@
   import { upload } from "lib/upload";
   import { resetBgImageStore } from "lib/storesFunctions";
   import { initializeImageInStore } from "lib/storesFunctions";
-  import { emptyFilters, filterRoutine } from "lib/konva/filters";
+  import { emptyFilters } from "lib/konva/filters";
 
   const handleBackgroundChange = async (e: Event) => {
     if (!$konvaStore.bgImage || !$konvaStore.bgImage) {
