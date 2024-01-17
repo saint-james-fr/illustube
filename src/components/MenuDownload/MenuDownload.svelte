@@ -20,9 +20,3 @@
   on:click={handleDownload}
   class:gray={!$konvaStore.bgImage || !$konvaStore.bgImage}
 />
-
-<style lang="scss">
-  #downloadIcon {
-    margin-top: 2rem;
-  }
-</style>

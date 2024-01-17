@@ -8,8 +8,6 @@
   import MenuHome from "components/MenuHome/MenuHome.svelte";
 
   import { userStore } from "stores";
-
-
 </script>
 
 <div class="application_menu">
@@ -17,12 +15,6 @@
     <MenuHome />
   </div>
 
-  <div class="menu_item_container">
-    <MenuUploader />
-  </div>
-  <div class="menu_item_container">
-    <MenuReset />
-  </div>
   {#if $userStore.automaticMode}
     <div class="menu_item_container">
       <MenuManual />
@@ -33,7 +25,13 @@
     </div>
   {/if}
   <div class="menu_item_container">
+    <MenuUploader />
+  </div>
+  <div class="menu_item_container">
     <MenuBackground />
+  </div>
+  <div class="menu_item_container">
+    <MenuReset />
   </div>
   <div class="menu_item_container">
     <MenuDownload />
@@ -60,5 +58,12 @@
     width: $icon_width;
     cursor: pointer;
     filter: invert(100%);
+
+    &:has(img#downloadIcon) {
+      margin-top: 3rem;
+    }
+    &:has(img#homeIcon) {
+      margin-bottom: 3rem;
+    }
   }
 </style>

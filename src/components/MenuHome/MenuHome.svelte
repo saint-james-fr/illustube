@@ -9,8 +9,3 @@
 
 <img src={homeIcon} alt="home" id="homeIcon" on:click={handleHome} />
 
-<style lang="scss">
-  #homeIcon {
-    margin-bottom: 2rem;
-  }
-</style>
