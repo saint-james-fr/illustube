@@ -214,9 +214,9 @@ kbd {
   --primary-hover: hsl(208, 59%, 63%);
   --primary-focus: rgba(5, 6, 7, 0.25);
   --primary-inverse: var(--color);
-  --secondary: #DB904F;
-  --secondary-hover: hsl(205, 10%, 50%);
-  --secondary-focus: rgba(115, 130, 140, 0.25);
+  --secondary: var(--primary);
+  --secondary-hover: var(--primary-hover);
+  --secondary-focus: var(--primary-focus);
   --secondary-inverse: #fff;
   --contrast: hsl(205, 20%, 94%);
   --contrast-hover: #fff;
@@ -249,11 +249,11 @@ kbd {
   --switch-background-color: #374956;
   --switch-color: var(--primary-inverse);
   --switch-checked-background-color: var(--primary);
-  --range-border-color: #24333e;
+  --range-border-color: var(--muted-border-color);
   --range-active-border-color: hsl(205, 25%, 23%);
   --range-thumb-border-color: var(--background-color);
   --range-thumb-color: var(--secondary);
-  --range-thumb-hover-color: var(--secondary-hover);
+  --range-thumb-hover-color: var(--primary);
   --range-thumb-active-color: var(--primary);
   --table-border-color: var(--muted-border-color);
   --table-row-stripped-background-color: rgba(115, 130, 140, 0.05);
@@ -1546,9 +1546,9 @@ input:not(
 }
 [type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-top: -0.5rem;
+  width: 1rem;
+  height: 1rem;
+  margin-top: -0.38rem;
   border: 2px solid var(--range-thumb-border-color);
   border-radius: 50%;
   background-color: var(--range-thumb-color);
