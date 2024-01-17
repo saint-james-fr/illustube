@@ -8,13 +8,11 @@
     reversed: true,
     intro: { y: 192 },
     pausable: true,
-    duration: 3000,
+    duration: 300000,
     dismissable: false,
     icon: false,
     theme: {
-      "--toastBackground": "white;",
       "--toastProgressBackground": "hsl(190, 47%, 46%)",
-      "--toastColor": "hsl(190, 47%, 46%)",
     },
   };
 </script>

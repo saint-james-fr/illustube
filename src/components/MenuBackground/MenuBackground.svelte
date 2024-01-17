@@ -1,15 +1,12 @@
 <script lang="ts">
-  import {
-    konvaStore,
-    imageStore,
-    userStore,
-    filterSettingStore,
-  } from "stores";
+  import { konvaStore, userStore, filterSettingStore } from "stores";
   import backgroundIcon from "assets/icons/background.png";
   import { upload } from "lib/upload";
   import { resetBgImageStore } from "lib/storesFunctions";
   import { initializeImageInStore } from "lib/storesFunctions";
   import { emptyFilters, filterRoutine } from "lib/konva/filters";
+
+  import { tippy } from "svelte-tippy";
 
   const handleBackgroundChange = async (e: Event) => {
     if (!$konvaStore.bgImage || !$konvaStore.bgImage) {
@@ -49,9 +46,17 @@
 </script>
 
 <form>
-  <label for="backgroundUpload"
-    ><img src={backgroundIcon} alt="background icon" /></label
+  <span
+    use:tippy={{
+      content: "CHANGE BACKGROUND",
+      placement: "right",
+      animation: "perspective-subtle",
+    }}
   >
+    <label for="backgroundUpload"
+      ><img src={backgroundIcon} alt="background icon" /></label
+    >
+  </span>
   <input
     type="file"
     id="backgroundUpload"

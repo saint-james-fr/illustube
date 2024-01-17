@@ -1,9 +1,9 @@
 <script lang="ts">
   import Application from "components/Application/Application.svelte";
   import Home from "components/Home/Home.svelte";
-  import { routeStore, filterSettingStore, konvaStore } from "stores";
+  import { routeStore, konvaStore } from "stores";
   import Toast from "components/Toast/Toast.svelte";
-  import "css/pico.css";
+  import "tippy.js/animations/perspective-subtle.css";
 
   $: {
     if ($konvaStore.stage) console.log($konvaStore.stage);

@@ -3,6 +3,8 @@
   import baguetteIcon from "assets/icons/baguette.png";
   import { filterRoutine } from "lib/konva/filters";
 
+  import { tippy } from "svelte-tippy";
+
   const handleAutomaticMode = () => {
     if (!$konvaStore.mainImage || !$konvaStore.bgImage) {
       return;
@@ -12,10 +14,18 @@
   };
 </script>
 
-<img
-  src={baguetteIcon}
-  alt="reset"
-  id="baguetteIcon"
-  on:click={handleAutomaticMode}
-  class:gray={!$konvaStore.bgImage || !$konvaStore.bgImage}
-/>
+<span
+  use:tippy={{
+    content: "AUTOMATIC MODE",
+    placement: "right",
+    animation: "perspective-subtle",
+  }}
+>
+  <img
+    src={baguetteIcon}
+    alt="reset"
+    id="baguetteIcon"
+    on:click={handleAutomaticMode}
+    class:gray={!$konvaStore.bgImage || !$konvaStore.bgImage}
+  />
+</span>

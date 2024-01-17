@@ -4,7 +4,7 @@
   import { emptyFilters } from "lib/konva/filters";
   import { toast } from "@zerodevx/svelte-toast";
   import { resetFilterSettingStore } from "lib/storesFunctions";
-  resetFilterSettingStore();
+  import { tippy } from "svelte-tippy";
 
   const handleReset = () => {
     if (!$konvaStore.bgImage || !$konvaStore.bgImage) {
@@ -17,10 +17,18 @@
   };
 </script>
 
-<img
-  src={resetIcon}
-  alt="reset"
-  id="resetIcon"
-  on:click={handleReset}
-  class:gray={!$konvaStore.bgImage || !$konvaStore.bgImage}
-/>
+<span
+  use:tippy={{
+    content: "RESET FILTERS",
+    placement: "right",
+    animation: "perspective-subtle",
+  }}
+>
+  <img
+    src={resetIcon}
+    alt="reset"
+    id="resetIcon"
+    on:click={handleReset}
+    class:gray={!$konvaStore.bgImage || !$konvaStore.bgImage}
+  />
+</span>

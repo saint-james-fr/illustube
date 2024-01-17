@@ -199,17 +199,17 @@ kbd {
 
 :root {
   --background-color: #11191f;
-  --color: hsl(205, 20%, 94%);
-  --h1-color: var(var(--color))
-  --h2-color: var(--color);
-  --h3-color: var(--color);
+  --color: $white;
+  --h1-color: $white
+  --h2-color: $white;
+  --h3-color: $white;
   --h4-color: #c8d1d8;
   --h5-color: hsl(205, 16%, 77%);
   --h6-color: #afbbc4;
   --muted-color: hsl(205, 10%, 50%);
   --muted-border-color: #1f2d38;
-  --primary: hsl(190, 67%, 59%);
-  --primary-hover: hsl(190, 47%, 36%);
+  --primary: $primary;
+  --primary-hover: $primary-hover;
   --primary-focus: rgba(5, 6, 7, 0.25);
   --primary-inverse: #fff;
   --secondary: hsl(205, 15%, 41%);
