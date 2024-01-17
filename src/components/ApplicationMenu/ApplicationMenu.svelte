@@ -7,25 +7,14 @@
   import MenuDownload from "components/MenuDownload/MenuDownload.svelte";
   import MenuHome from "components/MenuHome/MenuHome.svelte";
 
-  import { Tooltip, tooltip } from "@svelte-plugins/tooltips";
 
   import { userStore } from "stores";
 </script>
 
 <div class="application_menu">
   <div class="menu_item_container">
-    <u
-      use:tooltip={{
-        content: "MenuHome",
-        position: "right",
-        animation: "alide",
-        autoposition: true,
-        // @ts-ignore
-        style: { backgroundColor: "blue" },
-      }}
-    >
+
       <MenuHome />
-    </u>
   </div>
 
   {#if $userStore.automaticMode}
@@ -72,6 +61,9 @@
     width: $icon_width;
     cursor: pointer;
     filter: invert(100%);
+
+    u tooltip {
+    }
 
     &:has(img#downloadIcon) {
       margin-top: $margin;

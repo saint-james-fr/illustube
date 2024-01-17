@@ -1,12 +1,31 @@
 <script lang="ts">
   import { routeStore } from "stores";
   import homeIcon from "assets/icons/home.png";
+  import { tooltip } from "@svelte-plugins/tooltips";
+  import { onMount } from "svelte";
 
   const handleHome = () => {
     $routeStore.siteRoute = "home";
   };
+
+  onMount(() => {
+    const tooltip = document.querySelector(".tooltip") as HTMLElement
+    if (tooltip) {
+      tooltip.style.inset = "0";
+    }
+
+  });
 </script>
 
-<img src={homeIcon} alt="home" id="homeIcon" on:click={handleHome} />
-
-
+<span
+  use:tooltip={{
+    content: "Home",
+    position: "right",
+    animation: "alide",
+    duration: 100,
+    // @ts-ignore
+    style: { backgroundColor: "blue" },
+  }}
+>
+  <img src={homeIcon} alt="home" id="homeIcon" on:click={handleHome} />
+</span>
