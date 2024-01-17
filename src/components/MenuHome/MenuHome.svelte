@@ -9,22 +9,19 @@
   };
 
   onMount(() => {
-    const tooltip = document.querySelector(".tooltip") as HTMLElement
+    const tooltip = document.querySelector(".tooltip") as HTMLElement;
     if (tooltip) {
       tooltip.style.inset = "0";
     }
-
   });
 </script>
 
 <span
+  title="Home"
   use:tooltip={{
-    content: "Home",
     position: "right",
-    animation: "alide",
-    duration: 100,
-    // @ts-ignore
-    style: { backgroundColor: "blue" },
+    animation: "slide",
+    action: "hover",
   }}
 >
   <img src={homeIcon} alt="home" id="homeIcon" on:click={handleHome} />

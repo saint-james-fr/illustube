@@ -13,7 +13,6 @@
 
 <div class="application_menu">
   <div class="menu_item_container">
-
       <MenuHome />
   </div>
 
@@ -62,8 +61,6 @@
     cursor: pointer;
     filter: invert(100%);
 
-    u tooltip {
-    }
 
     &:has(img#downloadIcon) {
       margin-top: $margin;
