@@ -1,6 +1,6 @@
 <script lang="ts">
   import BackgroundImage from "components/BackgroundImage/BackgroundImage.svelte";
-  import ColorBackgroundRect from "components/ColorbackgroundRect/ColorbackgroundRect.svelte";
+  import ColorBackgroundRect from "components/ColorBackgroundRect/ColorBackgroundRect.svelte";
   import MainImage from "components/MainImage/MainImage.svelte";
   import { onMount } from "svelte";
   import { userStore, konvaStore, imageStore } from "stores";
