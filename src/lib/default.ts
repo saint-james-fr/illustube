@@ -135,7 +135,7 @@ export const initialTransformerSettings: TransformerConfig = {
   anchorFill: "#fffaf2",
   anchorStrokeWidth: 2,
   anchorCornerRadius: 10,
-  anchorStroke: "#1e90ff",
+  anchorStroke: "#081417",
   anchorSize: 10,
   centeredScaling: true,
   flipEnabled: false,

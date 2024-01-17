@@ -190,7 +190,7 @@
 
       label {
         margin-bottom: 0;
-        padding-left: 3px;
+        padding-left: 0.5rem;
       }
     }
   }

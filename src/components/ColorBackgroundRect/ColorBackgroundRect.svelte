@@ -30,6 +30,6 @@
     y: 0,
     width: 1280,
     height: 720,
-    fill: "white",
+    fill: "#081417",
   }}
 />

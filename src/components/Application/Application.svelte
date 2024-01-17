@@ -46,7 +46,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     padding-inline: 10%;
     background: $background-secondary;
     border-right: 1px solid var(--primary);

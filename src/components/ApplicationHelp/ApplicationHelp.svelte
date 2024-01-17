@@ -2,10 +2,10 @@
   import {userStore } from "stores";
 </script>
 
-<p>When hovering hover the background, use mouse scroll to zoom in and out.</p>
+<p>When hovering on the background image, scroll to resize.</p>
 {#if $userStore.automaticMode}
   <p>
     You're in <span class="primary"><strong>automatic</strong></span> mode. Enter manual mode to access
-    various settings.
+    more features.
   </p>
 {/if}
