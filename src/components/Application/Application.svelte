@@ -5,7 +5,8 @@
   import ApplicationHelp from "components/ApplicationHelp/ApplicationHelp.svelte";
   import SettingsDownload from "components/SettingsDownload/SettingsDownload.svelte";
   import ApplicationMobileToggle from "components/ApplicationMobileToggle/ApplicationMobileToggle.svelte";
-  import { userStore } from "stores";
+  import AIPromptInput from "components/AIPromptInput/AIPromptInput.svelte";
+  import { userStore, aiModalStore } from "stores";
 
   let showSettingMobileToggle: boolean;
   $: {
@@ -29,6 +30,11 @@
     <ApplicationMobileToggle />
   </div>
 </div>
+
+<AIPromptInput
+  bind:isOpen={$aiModalStore.isOpen}
+  mode={$aiModalStore.mode}
+/>
 
 <style lang="scss">
   .application_container {

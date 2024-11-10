@@ -1,20 +1,20 @@
 <script lang="ts">
-  import MenuUploader from "components/MenuUploader/MenuUploader.svelte";
-  import MenuReset from "components/MenuReset/MenuReset.svelte";
-  import MenuManual from "components/MenuManual/MenuManual.svelte";
+  import MenuHome from "components/MenuHome/MenuHome.svelte";
   import MenuAutomatic from "components/MenuAutomatic/MenuAutomatic.svelte";
+  import MenuManual from "components/MenuManual/MenuManual.svelte";
+  import MenuUploader from "components/MenuUploader/MenuUploader.svelte";
   import MenuBackground from "components/MenuBackground/MenuBackground.svelte";
   import MenuMainImage from "components/MenuMainImage/MenuMainImage.svelte";
+  import MenuAI from "components/MenuAI/MenuAI.svelte";
+  import MenuReset from "components/MenuReset/MenuReset.svelte";
   import MenuDownload from "components/MenuDownload/MenuDownload.svelte";
-  import MenuHome from "components/MenuHome/MenuHome.svelte";
-
 
   import { userStore } from "stores";
 </script>
 
 <div class="application_menu">
   <div class="menu_item_container">
-      <MenuHome />
+    <MenuHome />
   </div>
 
   {#if $userStore.automaticMode}
@@ -34,6 +34,9 @@
   </div>
   <div class="menu_item_container">
     <MenuMainImage />
+  </div>
+  <div class="menu_item_container">
+    <MenuAI />
   </div>
   <div class="menu_item_container">
     <MenuReset />
@@ -64,7 +67,6 @@
     width: $icon_width;
     cursor: pointer;
     filter: invert(100%);
-
 
     &:has(img#downloadIcon) {
       margin-top: $margin;

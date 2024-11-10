@@ -62,3 +62,8 @@ interface FilterSetting {
   noiseValue: number;
   reset: () => void;
 }
+
+interface AIModalStore {
+  isOpen: boolean;
+  mode: "automatic" | "manual";
+}

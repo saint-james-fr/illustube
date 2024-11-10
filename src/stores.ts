@@ -40,3 +40,8 @@ apiKeyStore.subscribe((state) => {
     sessionStorage.removeItem("apiKey");
   }
 });
+
+export const aiModalStore = writable<AIModalStore>({
+  isOpen: false,
+  mode: "automatic",
+});

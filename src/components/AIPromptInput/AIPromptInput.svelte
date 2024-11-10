@@ -1,12 +1,20 @@
 <script lang="ts">
-  import { userStore } from "stores";
+  import { userStore, aiModalStore } from "stores";
   import { generateAIImage } from "lib/ai";
   import { enterApplication } from "lib/navigation";
-  import { clearApiKey } from "lib/auth";
   import closeIcon from "assets/icons/close.png";
+  import { clearApiKey } from "lib/auth";
 
   export let isOpen = false;
   export let mode: "automatic" | "manual";
+
+  // Sync local props with store when they change
+  $: if (isOpen !== $aiModalStore.isOpen) {
+    aiModalStore.update((store) => ({ ...store, isOpen }));
+  }
+  $: if (mode !== $aiModalStore.mode) {
+    aiModalStore.update((store) => ({ ...store, mode }));
+  }
 
   let prompt = "";
   let isLoading = false;
@@ -112,7 +120,7 @@
     span {
       display: block;
       margin-bottom: 0.5rem;
-      color: var(--primary-inverse)
+      color: var(--primary-inverse);
     }
   }
 

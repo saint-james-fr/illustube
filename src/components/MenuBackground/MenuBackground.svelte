@@ -1,6 +1,6 @@
 <script lang="ts">
   import { konvaStore, userStore, filterSettingStore } from "stores";
-  import backgroundIcon from "assets/icons/sparkles.png";
+  import backgroundIcon from "assets/icons/background.png";
   import { upload } from "lib/upload";
   import { resetBgImageStore } from "lib/storesFunctions";
   import { initializeImageInStore } from "lib/storesFunctions";

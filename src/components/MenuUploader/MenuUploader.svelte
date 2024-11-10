@@ -29,7 +29,7 @@
 <form>
   <span
     use:tippy={{
-      content: "UPLOAD",
+      content: "CHANGE ALL",
       placement: "right",
       animation: "perspective-subtle",
     }}
