@@ -1,6 +1,6 @@
 <script lang="ts">
   import { konvaStore, userStore } from "stores";
-  import mainImageIcon from "assets/icons/home.png";
+  import mainImageIcon from "assets/icons/background.png";
   import { upload } from "lib/upload";
   import { resetMainImageStore } from "lib/storesFunctions";
   import { initializeImageInStore } from "lib/storesFunctions";

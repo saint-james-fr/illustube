@@ -9,7 +9,7 @@
 </script>
 
 <label for="manualInput"
-  ><span role="button" class="button outline">Manual Mode</span></label
+  ><span role="button" class="button outline">Manual</span></label
 >
 <input id="manualInput" class="hide" type="file" on:input={handleManualMode} />
 

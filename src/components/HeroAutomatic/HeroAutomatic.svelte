@@ -9,7 +9,7 @@
 </script>
 
 <label for="automaticInput"
-  ><span class="button shadow" role="button">automatic mode</span></label
+  ><span class="button shadow" role="button">automatic</span></label
 >
 <input
   id="automaticInput"

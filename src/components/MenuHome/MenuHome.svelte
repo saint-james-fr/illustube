@@ -3,7 +3,6 @@
   import homeIcon from "assets/icons/home.png";
   import { tippy } from "svelte-tippy";
 
-
   const handleHome = () => {
     $routeStore.siteRoute = "home";
   };
