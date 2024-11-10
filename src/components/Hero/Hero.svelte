@@ -13,6 +13,16 @@
           Generate thumbnails and background for your video uploads in a breeze.<br
           />Free and easy.
         </p>
+        <div class="details">
+          <p>
+            <strong>Automatic mode</strong> handles for you everything. <br />
+            <strong>Manual mode </strong>gives you full control. <br />
+            <strong>AI mode</strong> generates an image based on your prompt for
+            automatic mode.
+            <br />
+            You can switch modes at any time.
+          </p>
+        </div>
         <div class="hero_buttons">
           <HeroAutomatic />
           <HeroManual />
@@ -46,6 +56,12 @@
 
     p {
       font-weight: bold;
+      text-align: center;
+    }
+
+    .details p {
+      font-weight: normal;
+      font-size: 0.8rem;
       text-align: center;
     }
   }
