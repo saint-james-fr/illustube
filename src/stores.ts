@@ -25,7 +25,18 @@ export const filterSettingStore: Writable<FilterSetting> = writable(
   initialFilterSettings
 );
 
-export const apiKeyStore = writable<ApiKeyStore>({
-  key: '',
-  isValid: false
+const storedApiKey = sessionStorage.getItem("apiKey");
+const initialApiKeyState: ApiKeyStore = storedApiKey
+  ? JSON.parse(storedApiKey)
+  : { key: "", isValid: false };
+
+export const apiKeyStore = writable<ApiKeyStore>(initialApiKeyState);
+
+// Subscribe to changes and update sessionStorage
+apiKeyStore.subscribe((state) => {
+  if (state.key && state.isValid) {
+    sessionStorage.setItem("apiKey", JSON.stringify(state));
+  } else {
+    sessionStorage.removeItem("apiKey");
+  }
 });

@@ -2,10 +2,8 @@
   import { createEventDispatcher } from "svelte";
   import { userStore } from "stores";
   import { generateAIImage } from "lib/ai";
-  import { initializeImageInStore } from "lib/storesFunctions";
   import { enterApplication } from "lib/navigation";
-
-  const dispatch = createEventDispatcher();
+  import { clearApiKey } from "lib/auth";
 
   export let isOpen = false;
   export let mode: "automatic" | "manual";
@@ -69,6 +67,7 @@
       <button type="button" class="outline" on:click={() => (isOpen = false)}>
         Cancel
       </button>
+      <div class="outline" on:click={clearApiKey}>Clear API Key</div>
     </form>
   </article>
 </dialog>

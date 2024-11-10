@@ -4,9 +4,14 @@
 
   const dispatch = createEventDispatcher();
 
-  let apiKey = "";
+  let apiKey = $apiKeyStore.key || "";
   let isLoading = false;
   let error = "";
+
+  // If we already have a valid key, dispatch immediately
+  if ($apiKeyStore.isValid) {
+    dispatch("keyValidated");
+  }
 
   const validateApiKey = async (key: string): Promise<boolean> => {
     try {
@@ -34,7 +39,7 @@
       const isValid = await validateApiKey(apiKey);
 
       if (isValid) {
-        apiKeyStore.update((store) => ({
+        apiKeyStore.update(() => ({
           key: apiKey,
           isValid: true,
         }));
@@ -69,7 +74,9 @@
     {#if error}
       <small class="error">{error}</small>
     {/if}
-    <button type="submit" aria-busy={isLoading}>Validate Key</button>
+    <button type="submit" aria-busy={isLoading}>
+      {$apiKeyStore.isValid ? 'Update Key' : 'Validate Key'}
+    </button>
   </form>
 </article>
 
