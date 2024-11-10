@@ -1,20 +1,11 @@
 <script lang="ts">
-  import { userStore, aiModalStore } from "stores";
+  import { userStore } from "stores";
   import { generateAIImage } from "lib/ai";
   import { enterApplication } from "lib/navigation";
   import closeIcon from "assets/icons/close.png";
   import { clearApiKey } from "lib/auth";
 
   export let isOpen = false;
-  export let mode: "automatic" | "manual";
-
-  // Sync local props with store when they change
-  $: if (isOpen !== $aiModalStore.isOpen) {
-    aiModalStore.update((store) => ({ ...store, isOpen }));
-  }
-  $: if (mode !== $aiModalStore.mode) {
-    aiModalStore.update((store) => ({ ...store, mode }));
-  }
 
   let prompt = "";
   let isLoading = false;
@@ -32,7 +23,6 @@
 
       const image = await generateAIImage(prompt);
       if (image) {
-        $userStore.automaticMode = mode === "automatic";
         // Convert base64 to File object
         const file = await fetch(image)
           .then((res) => res.blob())
@@ -49,6 +39,11 @@
     } finally {
       isLoading = false;
     }
+  };
+
+  const handleClearApiKey = () => {
+    clearApiKey();
+    isOpen = false;
   };
 </script>
 
@@ -74,10 +69,16 @@
       {#if error}
         <small class="error">{error}</small>
       {/if}
+      <label
+        style="display: flex; align-items: center; gap: 0.2rem; margin-bottom: 1rem; font-size: 0.8rem;"
+      >
+        <input type="checkbox" bind:checked={$userStore.automaticMode} />
+        <div>Automatic mode</div>
+      </label>
       <button type="submit" class="button" aria-busy={isLoading}>
         Generate
       </button>
-      <button type="button" class="button outline" on:click={clearApiKey}>
+      <button type="button" class="button outline" on:click={handleClearApiKey}>
         Clear API key
       </button>
     </form>

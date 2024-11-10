@@ -65,5 +65,4 @@ interface FilterSetting {
 
 interface AIModalStore {
   isOpen: boolean;
-  mode: "automatic" | "manual";
 }

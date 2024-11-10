@@ -43,5 +43,4 @@ apiKeyStore.subscribe((state) => {
 
 export const aiModalStore = writable<AIModalStore>({
   isOpen: false,
-  mode: "automatic",
 });

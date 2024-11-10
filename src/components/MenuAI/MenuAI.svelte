@@ -7,7 +7,7 @@
     if (!$konvaStore.mainImage || !$konvaStore.bgImage) {
       return;
     }
-    aiModalStore.set({ isOpen: true, mode: "automatic" });
+    aiModalStore.set({ isOpen: true });
   };
 </script>
 

@@ -31,10 +31,7 @@
   </div>
 </div>
 
-<AIPromptInput
-  bind:isOpen={$aiModalStore.isOpen}
-  mode={$aiModalStore.mode}
-/>
+<AIPromptInput bind:isOpen={$aiModalStore.isOpen} />
 
 <style lang="scss">
   .application_container {
@@ -67,7 +64,7 @@
     align-items: center;
     position: relative;
     @include from($lg) {
-      border-right: 1px solid $primary
+      border-right: 1px solid $primary;
     }
   }
 
