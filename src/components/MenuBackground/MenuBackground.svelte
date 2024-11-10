@@ -12,6 +12,9 @@
     if (!$konvaStore.bgImage || !$konvaStore.bgImage) {
       return;
     }
+    if (e && !(e.target as HTMLInputElement).files) {
+      return;
+    }
     // empty filters
     emptyFilters();
     // reset filters

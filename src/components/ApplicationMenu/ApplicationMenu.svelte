@@ -4,6 +4,7 @@
   import MenuManual from "components/MenuManual/MenuManual.svelte";
   import MenuAutomatic from "components/MenuAutomatic/MenuAutomatic.svelte";
   import MenuBackground from "components/MenuBackground/MenuBackground.svelte";
+  import MenuMainImage from "components/MenuMainImage/MenuMainImage.svelte";
   import MenuDownload from "components/MenuDownload/MenuDownload.svelte";
   import MenuHome from "components/MenuHome/MenuHome.svelte";
 
@@ -30,6 +31,9 @@
   </div>
   <div class="menu_item_container">
     <MenuBackground />
+  </div>
+  <div class="menu_item_container">
+    <MenuMainImage />
   </div>
   <div class="menu_item_container">
     <MenuReset />
