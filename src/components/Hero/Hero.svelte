@@ -1,6 +1,7 @@
 <script>
   import HeroAutomatic from "components/HeroAutomatic/HeroAutomatic.svelte";
   import HeroManual from "components/HeroManual/HeroManual.svelte";
+  import HeroAIMode from "components/HeroAIMode/HeroAIMode.svelte";
 </script>
 
 <div class="hero">
@@ -15,6 +16,7 @@
         <div class="hero_buttons">
           <HeroAutomatic />
           <HeroManual />
+          <HeroAIMode />
         </div>
       </div>
     </div>
@@ -50,11 +52,13 @@
 
   .hero_buttons {
     margin-top: 3rem;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     width: 50%;
     justify-content: space-between;
     gap: 2rem;
     @include until($breakpoint) {
+      display: flex;
       width: 100%;
       flex-direction: column;
       justify-content: center;

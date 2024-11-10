@@ -14,5 +14,4 @@
 <input id="manualInput" class="hide" type="file" on:input={handleManualMode} />
 
 <style lang="scss">
-
 </style>
