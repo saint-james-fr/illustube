@@ -17,8 +17,7 @@
           <p>
             <strong>Automatic mode</strong> handles for you everything. <br />
             <strong>Manual mode </strong>gives you full control. <br />
-            <strong>AI mode</strong> generates an image based on your prompt for
-            automatic mode.
+            <strong>AI mode</strong> generates an image based on your prompt.
             <br />
             You can switch modes at any time.
           </p>
