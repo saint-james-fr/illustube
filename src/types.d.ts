@@ -20,6 +20,11 @@ interface ImageStore {
   bg: ImportedImage;
 }
 
+interface ApiKeyStore {
+  key: string;
+  isValid: boolean;
+}
+
 interface ImportedImage {
   element: HTMLImageElement;
   cropped: HTMLImageElement | null;

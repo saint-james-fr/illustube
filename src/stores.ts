@@ -24,3 +24,8 @@ export const imageStore: Writable<ImageStore> = writable(
 export const filterSettingStore: Writable<FilterSetting> = writable(
   initialFilterSettings
 );
+
+export const apiKeyStore = writable<ApiKeyStore>({
+  key: '',
+  isValid: false
+});

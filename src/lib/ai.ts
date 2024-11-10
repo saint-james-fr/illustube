@@ -1,12 +1,18 @@
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
-const API_URL = "https://api.openai.com/v1/images/generations";
+import { get } from "svelte/store";
+import { apiKeyStore } from "stores";
 
 export const generateAIImage = async (prompt: string): Promise<string> => {
-  const response = await fetch(API_URL, {
+  const { key, isValid } = get(apiKeyStore);
+
+  if (!isValid || !key) {
+    throw new Error("Please provide a valid API key");
+  }
+
+  const response = await fetch("https://api.openai.com/v1/images/generations", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY}`,
+      Authorization: `Bearer ${key}`,
     },
     body: JSON.stringify({
       prompt,
