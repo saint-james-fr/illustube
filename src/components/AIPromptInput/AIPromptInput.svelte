@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
   import { userStore } from "stores";
   import { generateAIImage } from "lib/ai";
   import { enterApplication } from "lib/navigation";
   import { clearApiKey } from "lib/auth";
+  import closeIcon from "assets/icons/close.png";
 
   export let isOpen = false;
   export let mode: "automatic" | "manual";
@@ -48,6 +48,9 @@
   <article>
     <header>
       <h3>Generate AI Image</h3>
+      <div class="api" on:click={() => (isOpen = false)}>
+        <img src={closeIcon} />
+      </div>
     </header>
     <form on:submit|preventDefault={handleSubmit}>
       <label for="prompt">
@@ -63,11 +66,12 @@
       {#if error}
         <small class="error">{error}</small>
       {/if}
-      <button type="submit" aria-busy={isLoading}> Generate </button>
-      <button type="button" class="outline" on:click={() => (isOpen = false)}>
-        Cancel
+      <button type="submit" class="button" aria-busy={isLoading}>
+        Generate
       </button>
-      <div class="outline" on:click={clearApiKey}>Clear API Key</div>
+      <button type="button" class="button outline" on:click={clearApiKey}>
+        Clear API key
+      </button>
     </form>
   </article>
 </dialog>
@@ -78,6 +82,24 @@
 
     @include until($breakpoint) {
       width: 100%;
+    }
+
+    h3 {
+      margin: 0;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .api {
+    img {
+      width: 25px;
+      filter: invert(1);
+      cursor: pointer;
     }
   }
   dialog {
@@ -102,5 +124,9 @@
     gap: 1rem;
     justify-content: flex-end;
     margin-top: 1rem;
+  }
+
+  #prompt {
+    cursor: text;
   }
 </style>
