@@ -112,6 +112,7 @@
     span {
       display: block;
       margin-bottom: 0.5rem;
+      color: var(--primary-inverse)
     }
   }
 
