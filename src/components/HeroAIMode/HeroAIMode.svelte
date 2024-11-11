@@ -39,7 +39,6 @@
 
 <AIPromptInput
   bind:isOpen={showPromptInput}
-  mode="automatic"
   on:mainImageGenerated={handleMainImageGenerated}
 />
 

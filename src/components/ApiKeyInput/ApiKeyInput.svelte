@@ -1,7 +1,9 @@
 <script lang="ts">
   import { apiKeyStore } from "stores";
   import { createEventDispatcher } from "svelte";
+  import closeIcon from "assets/icons/close.png";
 
+  export let isOpen = true;
   const dispatch = createEventDispatcher();
 
   let apiKey = $apiKeyStore.key || "";
@@ -56,7 +58,12 @@
 </script>
 
 <article>
-  <h3>Enter your OpenAI API Key</h3>
+  <header>
+    <h3>Enter your OpenAI API Key</h3>
+    <div class="api" on:click={() => (isOpen = false)}>
+      <img src={closeIcon} alt="Close" />
+    </div>
+  </header>
   <p>
     To use AI features, you'll need to provide your OpenAI API key. Your key is
     stored locally and never sent to our servers.
@@ -75,7 +82,7 @@
       <small class="error">{error}</small>
     {/if}
     <button type="submit" aria-busy={isLoading}>
-      {$apiKeyStore.isValid ? 'Update Key' : 'Validate Key'}
+      {$apiKeyStore.isValid ? "Update Key" : "Validate Key"}
     </button>
   </form>
 </article>
@@ -89,9 +96,27 @@
     p {
       font-size: 0.8rem;
     }
+
+    h3 {
+      margin: 0;
+    }
   }
 
   .error {
     color: var(--error-color);
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .api {
+    img {
+      width: 25px;
+      filter: invert(1);
+      cursor: pointer;
+    }
   }
 </style>
