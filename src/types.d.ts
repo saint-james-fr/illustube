@@ -65,4 +65,5 @@ interface FilterSetting {
 
 interface AIModalStore {
   isOpen: boolean;
+  showApiKeyInput?: boolean;
 }

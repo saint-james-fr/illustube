@@ -6,6 +6,7 @@
   import SettingsDownload from "components/SettingsDownload/SettingsDownload.svelte";
   import ApplicationMobileToggle from "components/ApplicationMobileToggle/ApplicationMobileToggle.svelte";
   import AIPromptInput from "components/AIPromptInput/AIPromptInput.svelte";
+  import ApiKeyInput from "components/ApiKeyInput/ApiKeyInput.svelte";
   import { userStore, aiModalStore } from "stores";
 
   let showSettingMobileToggle: boolean;
@@ -32,6 +33,14 @@
 </div>
 
 <AIPromptInput bind:isOpen={$aiModalStore.isOpen} />
+<dialog open={$aiModalStore.showApiKeyInput}>
+  <ApiKeyInput 
+    on:close={() => aiModalStore.set({ isOpen: $aiModalStore.isOpen, showApiKeyInput: false })}
+    on:keyValidated={() => {
+      aiModalStore.set({ isOpen: true, showApiKeyInput: false });
+    }}
+  />
+</dialog>
 
 <style lang="scss">
   .application_container {
