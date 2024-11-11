@@ -60,7 +60,7 @@
 
     .details p {
       font-weight: normal;
-      font-size: 0.8rem;
+      font-size: 1rem;
       text-align: center;
     }
   }

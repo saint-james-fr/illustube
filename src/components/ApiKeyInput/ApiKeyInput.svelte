@@ -80,7 +80,7 @@
     {#if error}
       <small class="error">{error}</small>
     {/if}
-    <button type="submit" aria-busy={isLoading}>
+    <button class="button" type="submit" aria-busy={isLoading}>
       {$apiKeyStore.isValid ? "Update Key" : "Validate Key"}
     </button>
   </form>
@@ -93,12 +93,16 @@
     padding: 2rem;
 
     p {
-      font-size: 0.8rem;
+      font-size: 1rem;
     }
 
     h3 {
       margin: 0;
     }
+  }
+
+  input {
+    cursor: text;
   }
 
   .error {

@@ -70,7 +70,7 @@
         <small class="error">{error}</small>
       {/if}
       <label
-        style="display: flex; align-items: center; gap: 0.2rem; margin-bottom: 1rem; font-size: 0.8rem;"
+        style="display: flex; align-items: center; gap: 0.2rem; margin-bottom: 1rem; font-size: 0.9rem;"
       >
         <input type="checkbox" bind:checked={$userStore.automaticMode} />
         <div>Automatic mode</div>
@@ -88,6 +88,7 @@
 <style lang="scss">
   article {
     width: 500px;
+    padding: 0;
 
     @include until($breakpoint) {
       width: 100%;
