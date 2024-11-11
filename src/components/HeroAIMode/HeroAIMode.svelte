@@ -34,7 +34,10 @@
 </button>
 
 <dialog open={showApiKeyInput}>
-  <ApiKeyInput on:keyValidated={handleKeyValidated} />
+  <ApiKeyInput
+    on:close={() => (showApiKeyInput = false)}
+    on:keyValidated={handleKeyValidated}
+  />
 </dialog>
 
 <AIPromptInput

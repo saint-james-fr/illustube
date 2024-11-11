@@ -3,7 +3,6 @@
   import { createEventDispatcher } from "svelte";
   import closeIcon from "assets/icons/close.png";
 
-  export let isOpen = true;
   const dispatch = createEventDispatcher();
 
   let apiKey = $apiKeyStore.key || "";
@@ -60,7 +59,7 @@
 <article>
   <header>
     <h3>Enter your OpenAI API Key</h3>
-    <div class="api" on:click={() => (isOpen = false)}>
+    <div class="api" on:click={() => dispatch("close")}>
       <img src={closeIcon} alt="Close" />
     </div>
   </header>
