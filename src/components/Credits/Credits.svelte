@@ -9,7 +9,6 @@
     right: 0;
     padding: 10px;
     font-size: 12px;
-
     @media (max-width: 768px) {
       right: unset;
       left: 0;

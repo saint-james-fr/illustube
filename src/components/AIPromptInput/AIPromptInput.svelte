@@ -88,7 +88,7 @@
 <style lang="scss">
   article {
     width: 500px;
-    padding: 0;
+    margin: 0 auto;
 
     @include until($breakpoint) {
       width: 100%;
